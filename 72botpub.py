@@ -3,9 +3,18 @@ from datetime import datetime,time, tzinfo, timedelta
 from telegram import InlineQueryResultArticle, InputTextMessageContent,InlineKeyboardMarkup,InlineKeyboardButton
 from telegram.ext import Updater,CommandHandler,MessageHandler,Filters,InlineQueryHandler,JobQueue
 '''not sure if need to import'''
-#遊戲部ID:-1001232423456
+#遊戲部ID:
+'''
+command list
+start-名為72的偶像
+help-72能做什麼?
+time-現在幾點
+gdmn-早安
+kenka-吵架
+c-test function count members
+'''
 
-updater=Updater(token='TOKEN')
+updater=Updater(token='')
 
 dispatcher = updater.dispatcher
 import logging
@@ -79,16 +88,23 @@ def gdmn(bot,update):
 	bot.send_message(chat_id=update.message.chat_id,text=text)
 	
 	
-	custom_keyboard = [['/start', '/gdmn'], ['72', '找飯店'],['そらそら']]
+	#custom_keyboard = [['/start', '/gdmn'], ['72', '找飯店'],['そらそら']]
 	
-	reply_markup = telegram.ReplyKeyboardMarkup(keyboard=custom_keyboard,one_time_keyboard=True)#one_time_kb:initial false ,dissapear after touch once
+	#reply_markup = telegram.ReplyKeyboardMarkup(keyboard=custom_keyboard,one_time_keyboard=True)#one_time_kb:initial false ,dissapear after touch once
 	
-	bot.send_message(chat_id=chat_id, text="KeyBoard test~~", reply_markup=reply_markup)
+	#bot.send_message(chat_id=chat_id, text="KeyBoard test~~", reply_markup=reply_markup)
 
 
 	
 gdmn_handler=CommandHandler('gdmn',gdmn)
 dispatcher.add_handler(gdmn_handler)
+def count(bot,update):
+	count=bot.get_chat_members_count(chat_id=-1001232423456)
+	text=str(count)
+	bot.send_message(chat_id=update.message.chat_id,text=text)
+	
+count_handler=CommandHandler('c',count)
+dispatcher.add_handler(count_handler)
 
 
 
@@ -101,9 +117,47 @@ def tis(bot,update):
 tis_handler=CommandHandler('time',tis)
 dispatcher.add_handler(tis_handler)
 
+def kenka(bot,update):
+	text='$888 你要我打誰？'
+	text=text.replace("$888",str(update.message.from_user.first_name))
+	bot.send_message(chat_id=update.message.chat_id,text=text)
+	
+	
+kenka_handler=CommandHandler('kenka',kenka)
+dispatcher.add_handler(kenka_handler)
+
+def punch(bot,update,args):
+	bot.send_chat_action(chat_id=update.message.chat_id, action=telegram.ChatAction.TYPING)
+	text = ' '.join(args)+'吃我木蘭飛彈ㄅ'
+	bot.send_message(chat_id=update.message.chat_id, text=text)
+	
+punch_handler = CommandHandler('punch', punch, pass_args=True)
+dispatcher.add_handler(punch_handler)
+def caps(bot, update, args):
+	bot.send_chat_action(chat_id=update.message.chat_id, action=telegram.ChatAction.TYPING)
+	text_caps = ' '.join(args).upper()
+	bot.send_message(chat_id=update.message.chat_id, text=text_caps)
+
+caps_handler = CommandHandler('caps', caps, pass_args=True)
+dispatcher.add_handler(caps_handler)
 
 
 
+def inline_ku(bot,update):
+	query=update.inline_query.query+"?\nくっ......"
+	
+	if not query:
+		return
+	results = list()
+	result=InlineQueryResultArticle(
+		id=query.upper(),
+		title='KU',
+		input_message_content=InputTextMessageContent(query)
+		)
+	bot.answer_inline_query(update.inline_query.id, results)
+
+inline_ku_handler = InlineQueryHandler(inline_ku)
+dispatcher.add_handler(inline_ku_handler)
 
 def sora(bot,update):
 	#an filter handler
@@ -111,11 +165,12 @@ def sora(bot,update):
 	test=update.message.text
 	if test=="そらそら":
 		bot.send_message(chat_id=update.message.chat_id, text="我愛そらそら")
-		
+	elif test=="我愛そらそら":
+		bot.send_message(chat_id=update.message.chat_id,text="我愛そらそら一生一世")
 	elif test=="飯店" or test=="找飯店":
 		bot.send_message(chat_id=update.message.chat_id, text="TRIVAGO!!!!!!!!!!")
 	elif test=="72" :
-		bot.send_message(chat_id=update.message.chat_id, text="939393939393939393!!!!!!!!!!")
+		#bot.send_message(chat_id=update.message.chat_id, text="939393939393939393!!!!!!!!!!")
 		bot.send_sticker(chat_id=update.message.chat_id, sticker="CAADBQAD5gQAAsZRxhVjgK6PcwABUaUC")
 	elif test=='下班':
 		time = datetime.now().strftime("%H:%M:%S")
@@ -123,7 +178,8 @@ def sora(bot,update):
 		#datetime.datetime.now()
 		bot.send_message(chat_id=update.message.chat_id,text=time)
 	else:
-		bot.send_sticker(chat_id=update.message.chat_id, sticker="CAADBQAD5gQAAsZRxhVjgK6PcwABUaUC")
+		bot.send_message(chat_id=update.message.chat_id, text="不要玩弄我ㄉ感情")
+		#bot.send_sticker(chat_id=update.message.chat_id, sticker="CAADBQAD5gQAAsZRxhVjgK6PcwABUaUC")#CAADBQAD5gQAAsZRxhVjgK6PcwABUaUC
 
 #Method: channels.inviteToChannel
 #Result: {"_":"rpc_error","error_code":400,"error_message":"USER_KICKED"}
@@ -147,30 +203,6 @@ dispatcher.add_handler(trivago_handler)'''
 echo_handler = MessageHandler(Filters.text, echo)
 dispatcher.add_handler(echo_handler)'''
 
-def caps(bot, update, args):
-	bot.send_chat_action(chat_id=update.message.chat_id, action=telegram.ChatAction.TYPING)
-	text_caps = ' '.join(args).upper()
-	bot.send_message(chat_id=update.message.chat_id, text=text_caps)
-
-caps_handler = CommandHandler('caps', caps, pass_args=True)
-dispatcher.add_handler(caps_handler)
-
-
-def inline_ku(bot,update):
-	query=update.inline_query.query+"?\nくっ......"
-	
-	if not query:
-		return
-	results = list()
-	result=InlineQueryResultArticle(
-		id=query.upper(),
-		title='KU',
-		input_message_content=InputTextMessageContent(query)
-		)
-	bot.answer_inline_query(update.inline_query.id, results)
-
-inline_ku_handler = InlineQueryHandler(inline_ku)
-dispatcher.add_handler(inline_ku_handler)
 
 def unknown(bot, update):
 	bot.send_message(chat_id=update.message.chat_id, text="すみません、よく分かりません。")
