@@ -424,7 +424,8 @@ dispatcher.add_handler(echo_handler)'''
 
 
 def unknown(bot, update):
-	bot.send_message(chat_id=update.message.chat_id, text="すみません、よく分かりません。")
+	if update.message.entities.user.id==bot.get_me().id:
+		bot.send_message(chat_id=update.message.chat_id, text="すみません、よく分かりません。")
 def wake(bot,update):
 	bot.send_message(chat_id=580276512, text="すみません、よく分かりません。")
 
