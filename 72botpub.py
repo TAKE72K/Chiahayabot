@@ -425,13 +425,14 @@ dispatcher.add_handler(echo_handler)'''
 
 def unknown(bot, update):
 	bot.send_message(chat_id=update.message.chat_id, text="すみません、よく分かりません。")
-
+def wake(bot,update):
+	bot.send_message(chat_id=580276512, text="すみません、よく分かりません。")
 
 
 def main():
 	updater = Updater(token)
 	dispatcher = updater.dispatcher
-	
+	job_minute = updater.job_queue.run_repeating(wake, interval=5, first=0)
 	dispatcher.add_handler(CommandHandler('title',title,pass_args=True))
 	dispatcher.add_handler(CommandHandler('start', start))
 	dispatcher.add_handler(CommandHandler('help', help))
