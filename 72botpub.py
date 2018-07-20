@@ -1,9 +1,15 @@
 ﻿import telegram
 import re
 import random
+import os
 from datetime import datetime,time, tzinfo, timedelta
 from telegram import InlineQueryResultArticle, InputTextMessageContent,InlineKeyboardMarkup,InlineKeyboardButton
 from telegram.ext import Updater,CommandHandler,MessageHandler,Filters,InlineQueryHandler,JobQueue
+debug_mode=False
+
+if debug_mode is False:
+    token = os.environ['TELEGRAM_TOKEN']
+    # token will taken by heroku
 '''not sure if need to import'''
 #遊戲部ID:-1001232423456
 '''
@@ -17,7 +23,7 @@ grave-擔當太尊而猝死的P用
 c-test function count members
 '''
 
-updater=Updater(token='')
+updater = Updater(token)
 
 dispatcher = updater.dispatcher
 import logging
