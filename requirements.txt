@@ -1,0 +1,11 @@
+# List of required packages (Dependencies)
+future>=0.16.0
+certifi
+
+# If you need to specify a version
+
+
+# Or you need not a pip package, @'...' specifies git branch
+# git+https://github.com/Kylmakalle/pyTelegramBotAPI.git@feature-BotAPIV3
+
+# Or you have .zip library
