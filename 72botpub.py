@@ -441,3 +441,6 @@ updater.start_polling()
 updater.idle()
 
 updater.stop()
+
+if __name__ == '__main__':
+    main()
