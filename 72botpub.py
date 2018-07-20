@@ -141,8 +141,7 @@ def title(bot,update,args):
 			bot.send_message(chat_id=update.message.chat_id,text='Bot:Auth comfirm')
 		else:
 			bot.send_message(chat_id=update.message.chat_id,text='Bot:Not enough rights to change chat title')
-title_handler=CommandHandler('title',title,pass_args=True)
-dispatcher.add_handler(title_handler)
+
 
 
 
@@ -418,7 +417,8 @@ def unknown(bot, update):
 def main():
 	updater = Updater(token)
 	dispatcher = updater.dispatcher
-
+	
+	dispatcher.add_handler(CommandHandler('title',title,pass_args=True))
 	dispatcher.add_handler(CommandHandler('start', start))
 	dispatcher.add_handler(CommandHandler('help', help))
 	dispatcher.add_handler(CommandHandler('linkstart',invite))
