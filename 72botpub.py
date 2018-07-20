@@ -146,11 +146,7 @@ dispatcher.add_handler(title_handler)
 
 
 
-def stk(bot,update):
-	if update.message.sticker!=None:
-		bot.send_message(chat_id=update.message.chat_id,text=update.message.sticker.file_id)
-stk_handler=CommandHandler('stk',stk)
-dispatcher.add_handler(stk_handler)
+
 
 def gdmn(bot,update):
 	#a good morning func
