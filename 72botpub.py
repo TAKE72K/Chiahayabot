@@ -6,6 +6,7 @@ import logging
 from datetime import datetime,time, tzinfo, timedelta
 from telegram import InlineQueryResultArticle, InputTextMessageContent,InlineKeyboardMarkup,InlineKeyboardButton
 from telegram.ext import Updater,CommandHandler,MessageHandler,Filters,InlineQueryHandler,JobQueue
+import python3pickledb as pickledb
 debug_mode=False
 
 if debug_mode is False:
