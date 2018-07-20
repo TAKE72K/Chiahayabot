@@ -2,6 +2,7 @@
 import re
 import random
 import os
+import logging
 from datetime import datetime,time, tzinfo, timedelta
 from telegram import InlineQueryResultArticle, InputTextMessageContent,InlineKeyboardMarkup,InlineKeyboardButton
 from telegram.ext import Updater,CommandHandler,MessageHandler,Filters,InlineQueryHandler,JobQueue
@@ -23,11 +24,11 @@ grave-擔當太尊而猝死的P用
 c-test function count members
 '''
 
-updater = Updater(token)
 
-dispatcher = updater.dispatcher
-import logging
+
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',level=logging.INFO)
+
+logger = logging.getLogger(__name__)
 
 def build_menu(buttons,
                n_cols,
@@ -101,16 +102,12 @@ def help(bot,update):
 	bot.send_message(chat_id=update.message.chat_id, text='私のコマンドリストです：\n/start-名為72的偶像\n/help-72能做什麼?\n/time-現在幾點\n/gdmn-早安\n/kenka-吵架\n/grave-擔當太尊而猝死的P用\n/c-test function count members')
 	
 
-start_handler = CommandHandler('start', start)
-help_handler = CommandHandler('help', help)
-dispatcher.add_handler(start_handler)
-dispatcher.add_handler(help_handler)
+
 
 def invite(bot,update):
 	bot.send_message(chat_id=update.message.chat_id, text='加入阿克西斯教，just now')
 	bot.export_chat_invite_link(chat_id=update.message.chat_id)
-invite_handler=CommandHandler('linkstart',invite)
-dispatcher.add_handler(invite_handler)
+
 
 def title(bot,update,args):
 	title = ' '.join(args)
@@ -167,7 +164,7 @@ def gdmn(bot,update):
 	chat_id = message.chat.id
 	bot.send_chat_action(chat_id=update.message.chat_id, action=telegram.ChatAction.TYPING)
 	#replace $username
-	text=text.replace("$username",str(update.message.from_user.first_name))
+	text=text.replace("$username",update.message.from_user.first_name)
 	
 	#bot.send_photo(chat_id,photo='AgADBQADSagxG3VSeVaStO9CCRE_trYo1TIABKGMGsglQ3cr9BoCAAEC')
 	#doc:photo=a filelike object ,suggest to be replace with file_id
@@ -180,11 +177,8 @@ def gdmn(bot,update):
 	#reply_markup = telegram.ReplyKeyboardMarkup(keyboard=custom_keyboard,one_time_keyboard=True)#one_time_kb:initial false ,dissapear after touch once
 	
 	#bot.send_message(chat_id=chat_id, text="KeyBoard test~~", reply_markup=reply_markup)
-
-
 	
-gdmn_handler=CommandHandler('gdmn',gdmn)
-dispatcher.add_handler(gdmn_handler)
+
 def count(bot,update):
 	time = datetime.now().strftime("%H:%M:%S")
 	time='現在時間:'+time
@@ -192,8 +186,7 @@ def count(bot,update):
 	text='室內人數'+str(count)+'\n'+time
 	bot.send_message(chat_id=update.message.chat_id,text=text)
 	
-count_handler=CommandHandler('c',count)
-dispatcher.add_handler(count_handler)
+
 
 def grave(bot,update):
 	par=random.randint(0,1)
@@ -265,8 +258,7 @@ def grave(bot,update):
 		
 		
 		
-grave_handler=CommandHandler('grave',grave)
-dispatcher.add_handler(grave_handler)
+
 
 '''
 　　　／￣￣〈￣￣＼ :.＼ 
@@ -316,8 +308,6 @@ def tis(bot,update):
 	#datetime.datetime.now()
 	bot.send_message(chat_id=update.message.chat_id,text=time)
 	
-tis_handler=CommandHandler('time',tis)
-dispatcher.add_handler(tis_handler)
 
 def kenka(bot,update):
 	text='$888 你要我打誰？'
@@ -325,23 +315,20 @@ def kenka(bot,update):
 	bot.send_message(chat_id=update.message.chat_id,text=text)
 	
 	
-kenka_handler=CommandHandler('kenka',kenka)
-dispatcher.add_handler(kenka_handler)
+
 
 def punch(bot,update,args):
 	bot.send_chat_action(chat_id=update.message.chat_id, action=telegram.ChatAction.TYPING)
 	text = ' '.join(args)+'吃我木蘭飛彈ㄅ'
 	bot.send_message(chat_id=update.message.chat_id, text=text)
 	
-punch_handler = CommandHandler('punch', punch, pass_args=True)
-dispatcher.add_handler(punch_handler)
+
 def caps(bot, update, args):
 	bot.send_chat_action(chat_id=update.message.chat_id, action=telegram.ChatAction.TYPING)
 	text_caps = ' '.join(args).upper()
 	bot.send_message(chat_id=update.message.chat_id, text=text_caps)
 
-caps_handler = CommandHandler('caps', caps, pass_args=True)
-dispatcher.add_handler(caps_handler)
+
 
 
 
@@ -358,8 +345,8 @@ def inline_ku(bot,update):
 		)
 	bot.answer_inline_query(update.inline_query.id, results)
 
-inline_ku_handler = InlineQueryHandler(inline_ku)
-dispatcher.add_handler(inline_ku_handler)
+#inline_ku_handler = InlineQueryHandler(inline_ku)
+#dispatcher.add_handler(inline_ku_handler)
 
 def sora(bot,update):
 	#an filter handler
@@ -407,8 +394,7 @@ def sora(bot,update):
 
 #Method: channels.inviteToChannel
 #Result: {"_":"rpc_error","error_code":400,"error_message":"USER_KICKED"}
-sora_handler=MessageHandler(Filters.all,sora)
-dispatcher.add_handler(sora_handler)
+
 
 '''def trivago(bot,update):
 	test=update.message.text
@@ -431,16 +417,30 @@ dispatcher.add_handler(echo_handler)'''
 def unknown(bot, update):
 	bot.send_message(chat_id=update.message.chat_id, text="すみません、よく分かりません。")
 
-unknown_handler = MessageHandler(Filters.command, unknown)
-dispatcher.add_handler(unknown_handler)
 
 
+def main():
+	updater = Updater(token)
+	dispatcher = updater.dispatcher
+
+	dispatcher.add_handler(CommandHandler('start', start))
+	dispatcher.add_handler(CommandHandler('help', help))
+	dispatcher.add_handler(CommandHandler('linkstart',invite))
+	dispatcher.add_handler(CommandHandler('gdmn',gdmn))
+	dispatcher.add_handler(CommandHandler('count',count))
+	dispatcher.add_handler(CommandHandler('grave',grave))
+	dispatcher.add_handler(CommandHandler('time',tis))
+	dispatcher.add_handler(CommandHandler('kenka',kenka))
+	dispatcher.add_handler(CommandHandler('punch', punch, pass_args=True))
+	dispatcher.add_handler(CommandHandler('caps', caps, pass_args=True))
+	dispatcher.add_handler(MessageHandler(Filters.command, unknown))
+	dispatcher.add_handler(MessageHandler(Filters.all,sora))
+	
+	
+	updater.start_polling()
+	updater.idle()
 
 
-updater.start_polling()
-updater.idle()
-
-updater.stop()
 
 if __name__ == '__main__':
     main()
