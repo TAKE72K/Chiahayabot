@@ -31,6 +31,13 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 
 logger = logging.getLogger(__name__)
 
+db = pickledb.load('bot72.db', True)
+ndb=pickledb.load('bot72n.db', True)
+if not db.get('chats'):
+    db.set('chats', [])
+if not ndb.get('nickname'):
+    db.set('nickname', [])
+
 def build_menu(buttons,
                n_cols,
                header_buttons=None,
@@ -143,7 +150,9 @@ def title(bot,update,args):
 		else:
 			bot.send_message(chat_id=update.message.chat_id,text='Bot:Not enough rights to change chat title')
 
-
+def set_name(bot,update,args):
+	name=' '.join(args)
+	ndb.set(str(update.message.from_user.id),name)
 
 
 
@@ -160,7 +169,11 @@ def gdmn(bot,update):
 	chat_id = message.chat.id
 	bot.send_chat_action(chat_id=update.message.chat_id, action=telegram.ChatAction.TYPING)
 	#replace $username
-	text=text.replace("$username",update.message.from_user.first_name)
+	name=ndb.get(str(update.message.from_user.id))
+	if name==None:
+		text=text.replace("$username",str(update.message.from_user.first_name))
+	else:
+		text=text.replace("$username",name)
 	
 	#bot.send_photo(chat_id,photo='AgADBQADSagxG3VSeVaStO9CCRE_trYo1TIABKGMGsglQ3cr9BoCAAEC')
 	#doc:photo=a filelike object ,suggest to be replace with file_id
@@ -424,6 +437,7 @@ def main():
 	dispatcher.add_handler(CommandHandler('help', help))
 	dispatcher.add_handler(CommandHandler('linkstart',invite))
 	dispatcher.add_handler(CommandHandler('gdmn',gdmn))
+	dispatcher.add_handler(CommandHandler('set',set_name,pass_args=True))
 	dispatcher.add_handler(CommandHandler('count',count))
 	dispatcher.add_handler(CommandHandler('grave',grave))
 	dispatcher.add_handler(CommandHandler('time',tis))
