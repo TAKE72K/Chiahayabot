@@ -432,7 +432,7 @@ def wake(bot,update):
 def main():
 	updater = Updater(token)
 	dispatcher = updater.dispatcher
-	job_minute = updater.job_queue.run_repeating(wake, interval=5, first=0)
+	job_minute = updater.job_queue.run_repeating(wake, interval=600, first=0)
 	dispatcher.add_handler(CommandHandler('title',title,pass_args=True))
 	dispatcher.add_handler(CommandHandler('start', start))
 	dispatcher.add_handler(CommandHandler('help', help))
