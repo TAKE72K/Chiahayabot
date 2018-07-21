@@ -47,7 +47,7 @@ if not ndb.get('nickname'):
     db.set('nickname', [])
 
 scope = ['https://spreadsheets.google.com/feeds']
-creds = ServiceAccountCredentials.from_json(json)
+creds = ServiceAccountCredentials.from_json_keyfile_name('auth.json', scope)
 client = gspread.authorize(creds)
 
 
