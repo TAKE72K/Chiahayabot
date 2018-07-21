@@ -9,8 +9,16 @@ from telegram.ext import Updater,CommandHandler,MessageHandler,Filters,InlineQue
 import python3pickledb as pickledb
 debug_mode=False
 
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
+
+
+
+
 if debug_mode is False:
     token = os.environ['TELEGRAM_TOKEN']
+    json=os.environ['JSON']
+	spreadsheet_key=os.environ['SPREAD']
     # token will taken by heroku
 '''not sure if need to import'''
 #遊戲部ID:-1001232423456
@@ -37,6 +45,30 @@ if not db.get('chats'):
     db.set('chats', [])
 if not ndb.get('nickname'):
     db.set('nickname', [])
+
+scope = ['https://spreadsheets.google.com/feeds']
+creds = ServiceAccountCredentials.from_json(json)
+client = gspread.authorize(creds)
+
+
+sheet = client.open_by_key(spreadsheet_key).sheet1
+
+def get_cell(key_word,sheet):
+    try:
+        cell=sheet.find(key_word)
+    except:#not find
+        return None
+    else:
+        return cell
+
+
+
+
+
+
+
+
+
 
 def build_menu(buttons,
                n_cols,
@@ -151,10 +183,18 @@ def title(bot,update,args):
 			bot.send_message(chat_id=update.message.chat_id,text='Bot:Not enough rights to change chat title')
 
 def set_name(bot,update,args):
-	name=' '.join(args)
-	ndb.set(str(update.message.from_user.id),name)
-
-
+    if args!=None:
+        bot.send_message(chat_id=update.message.chat_id,text='input emep')
+		return
+    else:
+        name=' '.join(args)
+		try:
+			cell=sheet.find(str(update.message.from_user.id))
+		except:#not found
+			sheet.insert_row([update.message.from_user.id,name], 2)
+			bot.send_message(chat_id=update.message.chat_id,text='Bot:Not enough rights to change chat title')
+		else:
+			sheet.update_cell(cell.row,cell.col+1,name)
 
 
 def gdmn(bot,update):
