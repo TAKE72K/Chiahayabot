@@ -183,7 +183,7 @@ def title(bot,update,args):
             bot.send_message(chat_id=update.message.chat_id,text='Bot:Not enough rights to change chat title')
 
 def set_name(bot,update,args):
-    if args!=None:
+    if not args:
         bot.send_message(chat_id=update.message.chat_id,text='input emep')
         return
     else:
