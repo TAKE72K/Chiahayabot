@@ -209,7 +209,13 @@ def gdmn(bot,update):
     chat_id = message.chat.id
     bot.send_chat_action(chat_id=update.message.chat_id, action=telegram.ChatAction.TYPING)
     #replace $username
-    name=ndb.get(str(update.message.from_user.id))
+    try:
+        cellid=sheet.find(str(update.message.from_user.id))
+    except:
+        name=None
+    else:
+        name=sheet.cell(cellid.row,cellid.col+1).value
+    #name=ndb.get(str(update.message.from_user.id))
     if name==None:
         text=text.replace("$username",str(update.message.from_user.first_name))
     else:
