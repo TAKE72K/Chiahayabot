@@ -181,6 +181,7 @@ def set_name(bot,update,args):
     scope = ['https://spreadsheets.google.com/feeds']
     creds = ServiceAccountCredentials.from_json_keyfile_name('auth.json', scope)
     client = gspread.authorize(creds)
+    sheet = client.open_by_key(spreadsheet_key)
     if not args:
         bot.send_message(chat_id=update.message.chat_id,text='input emep')
         return
@@ -201,6 +202,7 @@ def gdmn(bot,update):
     scope = ['https://spreadsheets.google.com/feeds']
     creds = ServiceAccountCredentials.from_json_keyfile_name('auth.json', scope)
     client = gspread.authorize(creds)
+    sheet = client.open_by_key(spreadsheet_key)
     bot.send_chat_action(chat_id=update.message.chat_id, action=telegram.ChatAction.TYPING)#type effect
     
     
@@ -485,7 +487,7 @@ def main():
 
 
 
-    sheet = client.open_by_key(spreadsheet_key)
+    
     job_minute = updater.job_queue.run_repeating(wake, interval=600, first=0)
     dispatcher.add_handler(CommandHandler('title',title,pass_args=True))
     dispatcher.add_handler(CommandHandler('start', start))
