@@ -46,12 +46,7 @@ if not db.get('chats'):
 if not ndb.get('nickname'):
     db.set('nickname', [])
 
-scope = ['https://spreadsheets.google.com/feeds']
-creds = ServiceAccountCredentials.from_json_keyfile_name('auth.json', scope)
-client = gspread.authorize(creds)
 
-
-sheet = client.open_by_key(spreadsheet_key)
 
 def get_cell(key_word,worksheet):
     try:
@@ -481,6 +476,12 @@ def wake(bot,update):
 def main():
     updater = Updater(token)
     dispatcher = updater.dispatcher
+    scope = ['https://spreadsheets.google.com/feeds']
+    creds = ServiceAccountCredentials.from_json_keyfile_name('auth.json', scope)
+    client = gspread.authorize(creds)
+
+
+    sheet = client.open_by_key(spreadsheet_key)
     job_minute = updater.job_queue.run_repeating(wake, interval=600, first=0)
     dispatcher.add_handler(CommandHandler('title',title,pass_args=True))
     dispatcher.add_handler(CommandHandler('start', start))
