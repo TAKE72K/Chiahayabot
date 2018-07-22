@@ -51,11 +51,11 @@ creds = ServiceAccountCredentials.from_json_keyfile_name('auth.json', scope)
 client = gspread.authorize(creds)
 
 
-sheet = client.open_by_key(spreadsheet_key).sheet1
+sheet = client.open_by_key(spreadsheet_key)
 
-def get_cell(key_word,sheet):
+def get_cell(key_word,worksheet):
     try:
-        cell=sheet.find(key_word)
+        cell=worksheet.find(key_word)
     except:#not find
         return None
     else:
@@ -188,13 +188,14 @@ def set_name(bot,update,args):
         return
     else:
         name=' '.join(args)
+		nsheet=sheet.worksheet('name')
         try:
-            cell=sheet.find(str(update.message.from_user.id))
+            cell=nsheet.find(str(update.message.from_user.id))
         except:#not found
-            sheet.insert_row([update.message.from_user.id,name], 2)
+            nsheet.insert_row([update.message.from_user.id,name], 2)
             bot.send_message(chat_id=update.message.chat_id,text='Bot:Not enough rights to change chat title')
         else:
-            sheet.update_cell(cell.row,cell.col+1,name)
+            nsheet.update_cell(cell.row,cell.col+1,name)
 
 
 def gdmn(bot,update):
@@ -210,11 +211,12 @@ def gdmn(bot,update):
     bot.send_chat_action(chat_id=update.message.chat_id, action=telegram.ChatAction.TYPING)
     #replace $username
     try:
-        cellid=sheet.find(str(update.message.from_user.id))
+		nsheet=sheet.worksheet('name')
+        cellid=nsheet.find(str(update.message.from_user.id))
     except:
         name=None
     else:
-        name=sheet.cell(cellid.row,cellid.col+1).value
+        name=nsheet.cell(cellid.row,cellid.col+1).value
     #name=ndb.get(str(update.message.from_user.id))
     if name==None:
         text=text.replace("$username",str(update.message.from_user.first_name))
