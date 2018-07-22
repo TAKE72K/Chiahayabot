@@ -178,6 +178,9 @@ def title(bot,update,args):
             bot.send_message(chat_id=update.message.chat_id,text='Bot:Not enough rights to change chat title')
 
 def set_name(bot,update,args):
+    scope = ['https://spreadsheets.google.com/feeds']
+    creds = ServiceAccountCredentials.from_json_keyfile_name('auth.json', scope)
+    client = gspread.authorize(creds)
     if not args:
         bot.send_message(chat_id=update.message.chat_id,text='input emep')
         return
@@ -195,6 +198,9 @@ def set_name(bot,update,args):
 
 def gdmn(bot,update):
     #a good morning func
+	scope = ['https://spreadsheets.google.com/feeds']
+    creds = ServiceAccountCredentials.from_json_keyfile_name('auth.json', scope)
+    client = gspread.authorize(creds)
     bot.send_chat_action(chat_id=update.message.chat_id, action=telegram.ChatAction.TYPING)#type effect
     
     
@@ -476,9 +482,7 @@ def wake(bot,update):
 def main():
     updater = Updater(token)
     dispatcher = updater.dispatcher
-    scope = ['https://spreadsheets.google.com/feeds']
-    creds = ServiceAccountCredentials.from_json_keyfile_name('auth.json', scope)
-    client = gspread.authorize(creds)
+
 
 
     sheet = client.open_by_key(spreadsheet_key)
