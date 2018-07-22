@@ -198,7 +198,7 @@ def set_name(bot,update,args):
 
 def gdmn(bot,update):
     #a good morning func
-	scope = ['https://spreadsheets.google.com/feeds']
+    scope = ['https://spreadsheets.google.com/feeds']
     creds = ServiceAccountCredentials.from_json_keyfile_name('auth.json', scope)
     client = gspread.authorize(creds)
     bot.send_chat_action(chat_id=update.message.chat_id, action=telegram.ChatAction.TYPING)#type effect
