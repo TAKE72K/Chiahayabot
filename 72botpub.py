@@ -188,7 +188,7 @@ def set_name(bot,update,args):
         return
     else:
         name=' '.join(args)
-		nsheet=sheet.worksheet('name')
+        nsheet=sheet.worksheet('name')
         try:
             cell=nsheet.find(str(update.message.from_user.id))
         except:#not found
@@ -211,7 +211,7 @@ def gdmn(bot,update):
     bot.send_chat_action(chat_id=update.message.chat_id, action=telegram.ChatAction.TYPING)
     #replace $username
     try:
-		nsheet=sheet.worksheet('name')
+        nsheet=sheet.worksheet('name')
         cellid=nsheet.find(str(update.message.from_user.id))
     except:
         name=None
