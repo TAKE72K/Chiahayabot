@@ -518,6 +518,7 @@ def main():
     dispatcher.add_handler(CommandHandler('start', start))
     dispatcher.add_handler(CommandHandler('help', help))
     dispatcher.add_handler(CommandHandler('linkstart',invite))
+    dispatcher.add_handler(CommandHandler('bomb',bomb))
     dispatcher.add_handler(CommandHandler('gdmn',gdmn))
     dispatcher.add_handler(CommandHandler('set',set_name,pass_args=True))
     dispatcher.add_handler(CommandHandler('count',count))
