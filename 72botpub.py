@@ -246,7 +246,7 @@ def count(bot,update):
     text='室內人數'+str(count)+'\n'+time
     bot.send_message(chat_id=update.message.chat_id,text=text)
     
-def bomb(bot,update):
+def bomb(bot,update,args):
     text=('≡=- -=≡≡≡=- =＝≡\n'
     '　　 ノ⌒⌒⌒ヽ\n'
     '　 (( ⌒ ⌒ ヾ ))\n'
@@ -261,7 +261,11 @@ def bomb(bot,update):
     'A咀=-　ノ从ヽ　 -=F味\n'
     'FH品=--　　　--==E唄H\n'
     'H呈幵Fﾛ==---==呵且F品\n')
-    ta='剛才聽到如月千早唱的歌'
+    if not args:
+        ta='剛才聽到如月千早唱的歌'
+    else:
+        ta='剛才$event'
+        ta=ta.replace('$event',''.join(args))
     tb='熱情奔放、創意無限、燃點起我$username心中的一團火'
     tc='我$username感覺到，在這個時刻，要爆了。'
     tb=tb.replace('$username',update.message.from_user.first_name)
@@ -518,7 +522,7 @@ def main():
     dispatcher.add_handler(CommandHandler('start', start))
     dispatcher.add_handler(CommandHandler('help', help))
     dispatcher.add_handler(CommandHandler('linkstart',invite))
-    dispatcher.add_handler(CommandHandler('bomb',bomb))
+    dispatcher.add_handler(CommandHandler('bomb',bomb,pass_args=True))
     dispatcher.add_handler(CommandHandler('gdmn',gdmn))
     dispatcher.add_handler(CommandHandler('set',set_name,pass_args=True))
     dispatcher.add_handler(CommandHandler('count',count))
