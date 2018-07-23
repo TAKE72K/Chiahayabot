@@ -246,7 +246,32 @@ def count(bot,update):
     text='室內人數'+str(count)+'\n'+time
     bot.send_message(chat_id=update.message.chat_id,text=text)
     
-
+def bomb(bot,update):
+    text=('≡=- -=≡≡≡=- =＝≡\n'
+    '　　 ノ⌒⌒⌒ヽ\n'
+    '　 (( ⌒ ⌒ ヾ ))\n'
+    '　(( 　⌒　⌒　 ))\n'
+    '=- `(（　　　）)ノ-=\n'
+    '≡＝ヽヽ|　|ノノ＝=≡\n'
+    '　 ノ⌒~|i |~⌒ヽ\n'
+    '嚇( (~⌒|| |⌒~) )=噐\n'
+    '噐ヽ ﾞ～⌒～⌒″ノ=咫\n'
+    '咫=-ﾞー～―～ー″-=哥\n'
+    '哥-　　 ||||　　 -歌A\n'
+    'A咀=-　ノ从ヽ　 -=F味\n'
+    'FH品=--　　　--==E唄H\n'
+    'H呈幵Fﾛ==---==呵且F品\n')
+    ta='剛才聽到如月千早唱的歌'
+    tb='熱情奔放、創意無限、燃點起我$username心中的一團火'
+    tc='我$username感覺到，在這個時刻，要爆了。'
+    tb=tb.replace('$username',update.message.from_user.first_name)
+    tc=tc.replace('$username',update.message.from_user.first_name)
+    bot.send_message(chat_id=update.message.chat_id,text=ta)
+    bot.send_message(chat_id=update.message.chat_id,text=tb)
+    bot.send_chat_action(chat_id=update.message.chat_id, action=telegram.ChatAction.TYPING)
+    bot.send_message(chat_id=update.message.chat_id,text=tc)
+    bot.send_chat_action(chat_id=update.message.chat_id, action=telegram.ChatAction.TYPING)
+    bot.send_message(chat_id=update.message.chat_id,text=text)
 
 def grave(bot,update):
     par=random.randint(0,1)
