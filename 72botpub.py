@@ -422,7 +422,11 @@ def sora(bot,update):
     #an filter handler
     #predict to be unable if privacy mode is on(st bot can't heard text filter real time)
     test=str(update.message.text)
-    
+
+    chat_id=update.message.chat_id
+    lmessage_id=update.message.message_id
+    list=[chat_id,lmessage_id]
+    work_sheet_push(list,'last_message)
     if test.find('我也愛そらそら')!=-1:
         bot.send_message(chat_id=update.message.chat_id, text="我愛そらそら一生一世")
     elif test.find('我愛そらそら')!=-1:
@@ -475,6 +479,7 @@ def main():
 
 
     #job
+    jd=False
     job_minute = updater.job_queue.run_repeating(wake, interval=600, first=0)
     job_his = updater.job_queue.run_repeating(history, interval=600, first=0)
     #command
