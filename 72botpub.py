@@ -430,11 +430,11 @@ def sora(bot,update):
     lmessage_id=update.message.message_id
     list=[chat_id,lmessage_id]
     try:
-        cell=nsheet.find(chat_id)
+        cell=worksheet.find(chat_id)
     except:#not found
-        nsheet.insert_row(list, 2)
+        worksheet.insert_row(list, 2)
     else:
-        nsheet.update_cell(cell.row,cell.col+1,lmessage_id)
+        worksheet.update_cell(cell.row,cell.col+1,lmessage_id)
     
     
     test=str(update.message.text)
