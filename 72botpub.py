@@ -375,17 +375,25 @@ def grave(bot,update):
 
 def history(bot,job):
     chat_id=-1001232423456
+    
     time = datetime.now().strftime("%d %m %y %H:%M:%S")
+    
     scope = ['https://spreadsheets.google.com/feeds']
     creds = ServiceAccountCredentials.from_json_keyfile_name('auth.json', scope)
     client = gspread.authorize(creds)
     sheet = client.open_by_key(spreadsheet_key)
     worksheet=sheet.worksheet('last_message')
+    
     c=get_cell(str(chat_id),worksheet)
     message_id=worksheet.cell(c.row,c.col+1).value
     count=bot.get_chat_members_count(chat_id)
     list=[str(chat_id),time,message_id,str(count)]
     work_sheet_push(list,'gr')
+    
+    w=get_cell(str(chat_id),worksheet)
+    water=worksheet.cell(w.row,w.col+2).value-worksheet.cell(w.row+1,w.col+2).value
+    human=worksheet.cell(w.row,w.col+3).value-worksheet.cell(w.row+1,w.col+3).value
+    bot.send_message(chat_id=-313454366,text=str(water)+'    '+str(human))
 
 def tis(bot,update):
     time = datetime.now().strftime("%H:%M:%S")
