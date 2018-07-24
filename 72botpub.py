@@ -460,7 +460,7 @@ def sora(bot,update):
             bot.send_message(chat_id=-313454366,text=update.message.sticker.file_id)
 
 def unknown(bot, update):
-    if update.message.entities.user.id==bot.get_me().id:
+    if update.message.entities[user].id==bot.get_me().id:
         bot.send_message(chat_id=update.message.chat_id, text="すみません、よく分かりません。")
 
 def wake(bot,update):
