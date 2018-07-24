@@ -406,7 +406,7 @@ def history(bot,job):
     else:
         weather='765劇場愚人節'
     rate=rate.replace('$weather',weather)
-    bot.send_message(chat_id=-313454366,text=rate)
+    bot.send_message(chat_id=-1001232423456,text=rate)
 
 def tis(bot,update):
     time = datetime.now().strftime("%H:%M:%S")
@@ -523,7 +523,7 @@ def main():
     #job
     jd=False
     job_minute = updater.job_queue.run_repeating(wake, interval=600, first=0)
-    job_his = updater.job_queue.run_repeating(history, interval=600, first=0)
+    job_his = updater.job_queue.run_repeating(history, interval=1800, first=0)
     #command
     dispatcher.add_handler(CommandHandler('title',title,pass_args=True))
     dispatcher.add_handler(CommandHandler('start', start))
