@@ -372,12 +372,12 @@ def grave(bot,update):
 
 
 
-def history(bot,job,update)
+def history(bot,job)
     chat_id=-1001232423456
     time = datetime.now().strftime("%d %m %y %H:%M:%S")
     message_id=''
     count=bot.get_chat_members_count(chat_id)
-    list=[time,message_id,count]
+    list=[time,message_id,str(count)]
     work_sheet_push(list,chat_id)
 
 def tis(bot,update):
