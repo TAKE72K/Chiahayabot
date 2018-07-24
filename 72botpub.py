@@ -372,7 +372,7 @@ def grave(bot,update):
 
 
 
-def history(bot,job)
+def history(bot,job):
     chat_id=-1001232423456
     time = datetime.now().strftime("%d %m %y %H:%M:%S")
     message_id=''
