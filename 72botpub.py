@@ -78,12 +78,12 @@ def work_sheet_push(values,worksheet_name):
     #attach mine for example
     #try to set in environ values but got fail
     client = gspread.authorize(creds)
-    worksheet = client.open_by_key(spreadsheet_key)
+    spreadsheet = client.open_by_key(spreadsheet_key)
     try:
-        worksheet=sheet.worksheet(worksheet_name)
+        worksheet=spreadsheet.worksheet(worksheet_name)
     except:#there is no this worksheet
-        sheet.add_worksheet(woksheet_name,len(values),2)
-        worksheet=sheet.worksheet(worksheet_name)
+        spreadsheet.add_worksheet(woksheet_name,len(values),2)
+        worksheet=spreadsheet.worksheet(worksheet_name)
         worksheet.insert_row(values,2)
     else:
         worksheet.insert_row(values,2)
@@ -97,7 +97,8 @@ def work_sheet_pop(key,woksheet_name):
     #attach mine for example
     #try to set in environ values but got fail
     client = gspread.authorize(creds)
-    worksheet = client.open_by_key(spreadsheet_key)
+    spreadsheet = client.open_by_key(spreadsheet_key)
+    worksheet=spreadsheet.worksheet(worksheet_name)
     cell=get_cell(key,worksheet)
     if cell!=None:
         row=worksheet.row_values(cell.row)
