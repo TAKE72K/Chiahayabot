@@ -390,6 +390,7 @@ def history(bot,job):
     list=[str(chat_id),time,message_id,str(count)]
     work_sheet_push(list,'gr')
     
+    worksheet=sheet.worksheet('gr')
     w=get_cell(str(chat_id),worksheet)
     water=worksheet.cell(w.row,w.col+2).value-worksheet.cell(w.row+1,w.col+2).value
     human=worksheet.cell(w.row,w.col+3).value-worksheet.cell(w.row+1,w.col+3).value
