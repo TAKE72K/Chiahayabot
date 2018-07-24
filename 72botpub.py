@@ -7,11 +7,9 @@ from datetime import datetime,time, tzinfo, timedelta
 from telegram import InlineQueryResultArticle, InputTextMessageContent,InlineKeyboardMarkup,InlineKeyboardButton
 from telegram.ext import Updater,CommandHandler,MessageHandler,Filters,InlineQueryHandler,JobQueue
 import python3pickledb as pickledb
-debug_mode=False
-
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
-
+debug_mode=False
 
 
 
@@ -33,20 +31,11 @@ grave-擔當太尊而猝死的P用
 c-test function count members
 '''
 
-
+#tool func
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',level=logging.INFO)
 
 logger = logging.getLogger(__name__)
-
-db = pickledb.load('bot72.db', True)
-ndb=pickledb.load('bot72n.db', True)
-if not db.get('chats'):
-    db.set('chats', [])
-if not ndb.get('nickname'):
-    db.set('nickname', [])
-
-
 
 def get_cell(key_word,worksheet):
     try:
@@ -55,15 +44,6 @@ def get_cell(key_word,worksheet):
         return None
     else:
         return cell
-
-
-
-
-
-
-
-
-
 
 def build_menu(buttons,
                n_cols,
@@ -82,22 +62,7 @@ def fullen(s):
     '''
     Convert all ASCII characters to the full-width counterpart.
     '''
-    return str(s).translate(HALF2FULL)
-'''
-def HalfToFull(s):
-    n = []
-    s = s.decode('utf-8')
-    for char in s:
-        num = ord(char)
-        if num == 0x3000:
-            num = 32
-        elif 0xFF01 <= num <= 0xFF5E:
-            num -= 0xfee0 
-        num = unichr(num)
-        n.append(num)
-        
-    return ''.join(n)
-'''    
+    return str(s).translate(HALF2FULL)  
     
 class GMT8(tzinfo):
     def utcoffset(self, dt):
@@ -128,23 +93,22 @@ def start(bot, update):
         InlineKeyboardButton(text='start',switch_inline_query='/start',switch_inline_current_chat='/start'),
         InlineKeyboardButton(text='about 72',url='https://imasml-theater-wiki.gamerch.com/%E5%A6%82%E6%9C%88%E5%8D%83%E6%97%A9#content_2_13')
         ]
+    
     reply_markup = InlineKeyboardMarkup(build_menu(button_list, n_cols=1))
     bot.send_message(chat_id=update.message.chat_id, text="A menu test", reply_markup=reply_markup)
-    
     '''test of inline button'''
+
 def help(bot,update):
     bot.send_chat_action(chat_id=update.message.chat_id, action=telegram.ChatAction.TYPING)
     bot.send_message(chat_id=update.message.chat_id, text='私のコマンドリストです：\n/start-名為72的偶像\n/help-72能做什麼?\n/time-現在幾點\n/gdmn-早安\n/kenka-吵架\n/grave-擔當太尊而猝死的P用\n/c-test function count members')
     
-
-
-
 def invite(bot,update):
+#generate unvite link
     bot.send_message(chat_id=update.message.chat_id, text='加入阿克西斯教，just now')
     bot.export_chat_invite_link(chat_id=update.message.chat_id)
 
-
 def title(bot,update,args):
+#change group title
     title = ' '.join(args)
     adminlist=update.message.chat.get_administrators()
     is_admin=False
@@ -163,8 +127,6 @@ def title(bot,update,args):
             bot.send_message(chat_id=update.message.chat_id,text='title changed')
         else:
             bot.send_message(chat_id=update.message.chat_id,text='Bot:Not enough rights to change chat title')
-        
-        
     else:
         test='list:your id'+str(update.message.from_user.id)+'\n'+'admin id:'
         for i in adminlist:
@@ -196,7 +158,6 @@ def set_name(bot,update,args):
         else:
             nsheet.update_cell(cell.row,cell.col+1,name)
 
-
 def gdmn(bot,update):
     #a good morning func
     scope = ['https://spreadsheets.google.com/feeds']
@@ -204,8 +165,7 @@ def gdmn(bot,update):
     client = gspread.authorize(creds)
     sheet = client.open_by_key(spreadsheet_key)
     bot.send_chat_action(chat_id=update.message.chat_id, action=telegram.ChatAction.TYPING)#type effect
-    
-    
+
     text=" $username P、おはようございます。今日も一日頑張るぞい"
     #aoba kawaii na--
     
@@ -231,13 +191,11 @@ def gdmn(bot,update):
     
     bot.send_message(chat_id=update.message.chat_id,text=text)
     
-    
     #custom_keyboard = [['/start', '/gdmn'], ['72', '找飯店'],['そらそら']]
     
     #reply_markup = telegram.ReplyKeyboardMarkup(keyboard=custom_keyboard,one_time_keyboard=True)#one_time_kb:initial false ,dissapear after touch once
     
     #bot.send_message(chat_id=chat_id, text="KeyBoard test~~", reply_markup=reply_markup)
-    
 
 def count(bot,update):
     time = datetime.now().strftime("%H:%M:%S")
@@ -323,9 +281,6 @@ def grave(bot,update):
                 text=text.replace('$pname',plist[0])
                 text=text.replace('$s2',plist[1])
                 text=text.replace('$s3',plist[2])
-                
-                
-            
         bot.send_message(chat_id=update.message.chat_id,text=text)
     if par>0:
         top='　　 ＿ \n'
@@ -344,10 +299,6 @@ def grave(bot,update):
             op+=t
         op+=bas
         bot.send_message(chat_id=update.message.chat_id,text=op)
-        
-        
-        
-
 
 '''
 　　　／￣￣〈￣￣＼ :.＼ 
@@ -397,29 +348,20 @@ def tis(bot,update):
     #datetime.datetime.now()
     bot.send_message(chat_id=update.message.chat_id,text=time)
     
-
 def kenka(bot,update):
     text='$888 你要我打誰？'
     text=text.replace("$888",str(update.message.from_user.first_name))
     bot.send_message(chat_id=update.message.chat_id,text=text)
     
-    
-
-
 def punch(bot,update,args):
     bot.send_chat_action(chat_id=update.message.chat_id, action=telegram.ChatAction.TYPING)
     text = ' '.join(args)+'吃我木蘭飛彈ㄅ'
     bot.send_message(chat_id=update.message.chat_id, text=text)
     
-
 def caps(bot, update, args):
     bot.send_chat_action(chat_id=update.message.chat_id, action=telegram.ChatAction.TYPING)
     text_caps = ' '.join(args).upper()
     bot.send_message(chat_id=update.message.chat_id, text=text_caps)
-
-
-
-
 
 def inline_ku(bot,update):
     query=update.inline_query.query+"?\nくっ......"
@@ -477,36 +419,13 @@ def sora(bot,update):
             bot.send_message(chat_id=update.message.chat_id,text=text)
         if update.message.sticker!=None and update.message.chat.id==-313454366:
             bot.send_message(chat_id=-313454366,text=update.message.sticker.file_id)
-        
-            
-        #bot.send_sticker(chat_id=update.message.chat_id, sticker="CAADBQAD5gQAAsZRxhVjgK6PcwABUaUC")#CAADBQAD5gQAAsZRxhVjgK6PcwABUaUC
-
-#Method: channels.inviteToChannel
-#Result: {"_":"rpc_error","error_code":400,"error_message":"USER_KICKED"}
-
-
-'''def trivago(bot,update):
-    test=update.message.text
-    if test=="飯店":
-        bot.send_message(chat_id=update.message.chat_id, text="TRIVAGO!!!!!")
-
-
-trivago_handler=MessageHandler(Filters.text,trivago)
-dispatcher.add_handler(trivago_handler)'''
-
-'''def echo(bot, update):
-    #bot.send_message(chat_id=update.message.chat_id, text="くっ......")
-    bot.send_document(chat_id=update.message.chat_id, document="CAADBQAD5gQAAsZRxhVjgK6PcwABUaUC")
-    bot.send_sticker(chat_id=update.message.chat_id, sticker="CAADBQAD5gQAAsZRxhVjgK6PcwABUaUC")
-    
-echo_handler = MessageHandler(Filters.text, echo)
-dispatcher.add_handler(echo_handler)'''
-
 
 def unknown(bot, update):
     if update.message.entities.user.id==bot.get_me().id:
         bot.send_message(chat_id=update.message.chat_id, text="すみません、よく分かりません。")
+
 def wake(bot,update):
+#prevent bot from going to sleep
     bot.send_message(chat_id=580276512, text="すみません、よく分かりません。")
 
 
@@ -516,8 +435,10 @@ def main():
 
 
 
-    
+    #job
     job_minute = updater.job_queue.run_repeating(wake, interval=600, first=0)
+
+    #command
     dispatcher.add_handler(CommandHandler('title',title,pass_args=True))
     dispatcher.add_handler(CommandHandler('start', start))
     dispatcher.add_handler(CommandHandler('help', help))
@@ -531,10 +452,11 @@ def main():
     dispatcher.add_handler(CommandHandler('kenka',kenka))
     dispatcher.add_handler(CommandHandler('punch', punch, pass_args=True))
     dispatcher.add_handler(CommandHandler('caps', caps, pass_args=True))
+    #filters
     dispatcher.add_handler(MessageHandler(Filters.command, unknown))
     dispatcher.add_handler(MessageHandler(Filters.all,sora))
     
-    
+    #start bot
     updater.start_polling()
     updater.idle()
 
