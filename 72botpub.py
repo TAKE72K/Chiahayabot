@@ -379,7 +379,7 @@ def history(bot,job):
     message_id=''
     count=bot.get_chat_members_count(chat_id)
     list=[time,message_id,str(count)]
-    work_sheet_push(list,chat_id)
+    work_sheet_push(list,'gr')
 
 def tis(bot,update):
     time = datetime.now().strftime("%H:%M:%S")
@@ -460,7 +460,7 @@ def sora(bot,update):
             bot.send_message(chat_id=-313454366,text=update.message.sticker.file_id)
 
 def unknown(bot, update):
-    if update.message.entities[user].id==bot.get_me().id:
+    if update.message.entities[4].id==bot.get_me().id:
         bot.send_message(chat_id=update.message.chat_id, text="すみません、よく分かりません。")
 
 def wake(bot,update):
