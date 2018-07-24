@@ -428,9 +428,9 @@ def sora(bot,update):
     worksheet=sheet.worksheet('last_message')
     chat_id=update.message.chat_id
     lmessage_id=update.message.message_id
-    list=[chat_id,lmessage_id]
+    list=[str(chat_id),lmessage_id]
     try:
-        cell=worksheet.find(chat_id)
+        cell=worksheet.find(str(chat_id))
     except:#not found
         worksheet.insert_row(list, 2)
     else:
