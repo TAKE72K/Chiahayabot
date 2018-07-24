@@ -426,7 +426,7 @@ def sora(bot,update):
     chat_id=update.message.chat_id
     lmessage_id=update.message.message_id
     list=[chat_id,lmessage_id]
-    work_sheet_push(list,'last_message)
+    work_sheet_push(list,'last_message')
     if test.find('我也愛そらそら')!=-1:
         bot.send_message(chat_id=update.message.chat_id, text="我愛そらそら一生一世")
     elif test.find('我愛そらそら')!=-1:
