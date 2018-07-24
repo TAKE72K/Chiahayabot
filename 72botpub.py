@@ -421,12 +421,27 @@ def inline_ku(bot,update):
 def sora(bot,update):
     #an filter handler
     #predict to be unable if privacy mode is on(st bot can't heard text filter real time)
-    test=str(update.message.text)
-
+    scope = ['https://spreadsheets.google.com/feeds']
+    creds = ServiceAccountCredentials.from_json_keyfile_name('auth.json', scope)
+    client = gspread.authorize(creds)
+    sheet = client.open_by_key(spreadsheet_key)
+    worksheet=sheet.worksheet('last_message')
     chat_id=update.message.chat_id
     lmessage_id=update.message.message_id
     list=[chat_id,lmessage_id]
-    work_sheet_push(list,'last_message')
+    try:
+        cell=nsheet.find(chat_id)
+    except:#not found
+        nsheet.insert_row(list, 2)
+    else:
+        nsheet.update_cell(cell.row,cell.col+1,lmessage_id)
+    
+    
+    test=str(update.message.text)
+    
+
+    
+    #work_sheet_push(list,'last_message')
     if test.find('我也愛そらそら')!=-1:
         bot.send_message(chat_id=update.message.chat_id, text="我愛そらそら一生一世")
     elif test.find('我愛そらそら')!=-1:
