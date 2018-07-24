@@ -82,7 +82,7 @@ def work_sheet_push(values,worksheet_name):
     try:
         worksheet=spreadsheet.worksheet(worksheet_name)
     except:#there is no this worksheet
-        spreadsheet.add_worksheet(woksheet_name,len(values),2)
+        spreadsheet.add_worksheet(worksheet_name,len(values),2)
         worksheet=spreadsheet.worksheet(worksheet_name)
         worksheet.insert_row(values,2)
     else:
