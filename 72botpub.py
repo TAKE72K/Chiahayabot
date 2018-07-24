@@ -392,8 +392,8 @@ def history(bot,job):
     
     worksheet=sheet.worksheet('gr')
     w=get_cell(str(chat_id),worksheet)
-    water=worksheet.cell(w.row,w.col+2).value-worksheet.cell(w.row+1,w.col+2).value
-    human=worksheet.cell(w.row,w.col+3).value-worksheet.cell(w.row+1,w.col+3).value
+    water=int(worksheet.cell(w.row,w.col+2).value)-int(worksheet.cell(w.row+1,w.col+2).value)
+    human=int(worksheet.cell(w.row,w.col+3).value)-int(worksheet.cell(w.row+1,w.col+3).value)
     bot.send_message(chat_id=-313454366,text=str(water)+'    '+str(human))
 
 def tis(bot,update):
