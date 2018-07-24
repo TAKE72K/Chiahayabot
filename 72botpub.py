@@ -71,7 +71,39 @@ class GMT8(tzinfo):
         return timedelta(0)
     def tzname(self,dt):
         return "TAIWAN"
-    
+def work_sheet_push(values,worksheet_name):
+    scope = ['https://spreadsheets.google.com/feeds']
+    creds = ServiceAccountCredentials.from_json_keyfile_name('auth.json', scope)
+    #got from google api
+    #attach mine for example
+    #try to set in environ values but got fail
+    client = gspread.authorize(creds)
+    worksheet = client.open_by_key(spreadsheet_key)
+    try:
+        worksheet=sheet.worksheet(worksheet_name)
+    except:#there is no this worksheet
+        sheet.add_worksheet(woksheet_name,len(values),2)
+        worksheet=sheet.worksheet(worksheet_name)
+        worksheet.insert_row(values,2)
+    else:
+        worksheet.insert_row(values,2)
+#usage (values[list of string],worksheet_name[string])
+#put a list of value and push to worksheet
+
+def work_sheet_pop(key,woksheet_name):
+    scope = ['https://spreadsheets.google.com/feeds']
+    creds = ServiceAccountCredentials.from_json_keyfile_name('auth.json', scope)
+    #got from google api
+    #attach mine for example
+    #try to set in environ values but got fail
+    client = gspread.authorize(creds)
+    worksheet = client.open_by_key(spreadsheet_key)
+    cell=get_cell(key,worksheet)
+    if cell!=None:
+        row=worksheet.row_values(cell.row)
+        worksheet.delete_row(cell.row)
+    else:
+        return None     
 #tool func
 '''
 daily_remind=updater.job_queue
@@ -340,7 +372,13 @@ def grave(bot,update):
 
 
 
-
+def history(bot,job,update)
+    chat_id=-1001232423456
+    time = datetime.now().strftime("%d %m %y %H:%M:%S")
+    message_id=update.message.message_id
+    count=bot.get_chat_members_count(chat_id)
+    list=[time,message_id,count]
+    work_sheet_push(list,chat_id)
 
 def tis(bot,update):
     time = datetime.now().strftime("%H:%M:%S")
@@ -437,7 +475,7 @@ def main():
 
     #job
     job_minute = updater.job_queue.run_repeating(wake, interval=600, first=0)
-
+    job_his = updater.job_queue.run_repeating(history, interval=600, first=0)
     #command
     dispatcher.add_handler(CommandHandler('title',title,pass_args=True))
     dispatcher.add_handler(CommandHandler('start', start))
