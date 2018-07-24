@@ -394,7 +394,19 @@ def history(bot,job):
     w=get_cell(str(chat_id),worksheet)
     water=int(worksheet.cell(w.row,w.col+2).value)-int(worksheet.cell(w.row+1,w.col+2).value)
     human=int(worksheet.cell(w.row,w.col+3).value)-int(worksheet.cell(w.row+1,w.col+3).value)
-    bot.send_message(chat_id=-313454366,text=str(water)+'    '+str(human))
+    rate='在過去的半小時內，水量上漲了$water個千早的高度，出現了$human個野生的P，看來今天是$weather'
+    rate=rate.replace('$water',str(water))
+    rate=rate.replace('$human',str(human))
+    if water<50:
+        weather='風和日麗的好天氣'
+    elif water>=50 and water<100:
+        weather='下著雨的衝浪天'
+    elif water>=100 and water<150:
+        weather='人狼泛舟的颱風天'
+    else:
+        weather='765劇場愚人節'
+    rate=rate.replace('$weather',weather)
+    bot.send_message(chat_id=-313454366,text=rate)
 
 def tis(bot,update):
     time = datetime.now().strftime("%H:%M:%S")
