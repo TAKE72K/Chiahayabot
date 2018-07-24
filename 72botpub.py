@@ -376,9 +376,15 @@ def grave(bot,update):
 def history(bot,job):
     chat_id=-1001232423456
     time = datetime.now().strftime("%d %m %y %H:%M:%S")
-    message_id=''
+    scope = ['https://spreadsheets.google.com/feeds']
+    creds = ServiceAccountCredentials.from_json_keyfile_name('auth.json', scope)
+    client = gspread.authorize(creds)
+    sheet = client.open_by_key(spreadsheet_key)
+    worksheet=sheet.worksheet('last_message')
+    c=get_cell(str(chat_id),worksheet)
+    message_id=worlsheet.cell(c.row,c.col+1).value
     count=bot.get_chat_members_count(chat_id)
-    list=[time,message_id,str(count)]
+    list=[str(chat_id),time,message_id,str(count)]
     work_sheet_push(list,'gr')
 
 def tis(bot,update):
