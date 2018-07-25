@@ -576,6 +576,7 @@ def main():
     dispatcher.add_handler(CommandHandler('bomb',bomb,pass_args=True))
     dispatcher.add_handler(CommandHandler('gdmn',gdmn))
     dispatcher.add_handler(CommandHandler('set',set_name,pass_args=True))
+    dispatcher.add_handler(CommandHandler('dice',dice,pass_args=True))
     dispatcher.add_handler(CommandHandler('count',count))
     dispatcher.add_handler(CommandHandler('grave',grave))
     dispatcher.add_handler(CommandHandler('time',tis))
