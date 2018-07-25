@@ -414,7 +414,7 @@ def history(bot,job):
         weather='765劇場愚人節'
     rate=rate.replace('$weather',weather)
     if water!=0 or human!=0:
-    bot.send_message(chat_id=-1001232423456,text=rate)
+        bot.send_message(chat_id=-1001232423456,text=rate)
 
 def tis(bot,update):
     time = datetime.now().strftime("%H:%M:%S")
