@@ -3,7 +3,8 @@ import re
 import random
 import os
 import logging
-from datetime import datetime,time, tzinfo, timedelta
+from datetime import datetime, tzinfo, timedelta
+from datetime import time as stime
 from telegram import InlineQueryResultArticle, InputTextMessageContent,InlineKeyboardMarkup,InlineKeyboardButton
 from telegram.ext import Updater,CommandHandler,MessageHandler,Filters,InlineQueryHandler,JobQueue
 import python3pickledb as pickledb
@@ -394,18 +395,25 @@ def history(bot,job):
     w=get_cell(str(chat_id),worksheet)
     water=int(worksheet.cell(w.row,w.col+2).value)-int(worksheet.cell(w.row+1,w.col+2).value)
     human=int(worksheet.cell(w.row,w.col+3).value)-int(worksheet.cell(w.row+1,w.col+3).value)
-    rate='在過去的半小時內，水量上漲了$water個千早的高度，出現了$human個野生的P，看來今天是$weather'
+    rate='在過去的幾個小時內，水量上漲了$water個千早的高度，出現了$human個野生的P，看來今天是$weather'
     rate=rate.replace('$water',str(water))
     rate=rate.replace('$human',str(human))
-    if water<50:
+    if water<200:
         weather='風和日麗的好天氣'
-    elif water>=50 and water<100:
+    elif water>=200 and water<250:
         weather='下著雨的衝浪天'
-    elif water>=100 and water<150:
+    elif water>=250 and water<400:
         weather='人狼泛舟的颱風天'
+    elif water>=400 and water<650:
+        weather='美咲不能釣魚的一天'
+    elif water>=650 and water<700:
+        weather='志保阿克亞雨宮天'
+    elif water>=700 and water<850:
+        weather='南南東方向颱風來襲，已發佈陸警'
     else:
         weather='765劇場愚人節'
     rate=rate.replace('$weather',weather)
+    if water!=0 or human!=0:
     bot.send_message(chat_id=-1001232423456,text=rate)
 
 def tis(bot,update):
@@ -522,8 +530,10 @@ def main():
 
     #job
     jd=False
+    history_t=[stime(1,0,0),stime(7,0,0),stime(13,0,0),stime(19,0,0)]
     job_minute = updater.job_queue.run_repeating(wake, interval=600, first=0)
-    job_his = updater.job_queue.run_repeating(history, interval=1800, first=900)
+    for t in history_t:
+        job_his = updater.job_queue.run_daily(history,history_t[t])
     #command
     dispatcher.add_handler(CommandHandler('title',title,pass_args=True))
     dispatcher.add_handler(CommandHandler('start', start))
