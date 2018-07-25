@@ -533,7 +533,7 @@ def main():
     history_t=[stime(1,0,0),stime(7,0,0),stime(13,0,0),stime(19,0,0)]
     job_minute = updater.job_queue.run_repeating(wake, interval=600, first=0)
     for t in history_t:
-        job_his = updater.job_queue.run_daily(history,history_t[t])
+        job_his = updater.job_queue.run_daily(history,t)
     #command
     dispatcher.add_handler(CommandHandler('title',title,pass_args=True))
     dispatcher.add_handler(CommandHandler('start', start))
