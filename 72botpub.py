@@ -8,6 +8,7 @@ from datetime import datetime, tzinfo, timedelta
 from datetime import time as stime
 from telegram import InlineQueryResultArticle, InputTextMessageContent,InlineKeyboardMarkup,InlineKeyboardButton
 from telegram.ext import Updater,CommandHandler,MessageHandler,Filters,InlineQueryHandler,JobQueue
+from telegram.ext.dispatcher import run_async
 import python3pickledb as pickledb
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
@@ -438,6 +439,7 @@ def caps(bot, update, args):
     text_caps = ' '.join(args).upper()
     bot.send_message(chat_id=update.message.chat_id, text=text_caps)
 
+@run_async
 def dice(bot,update,args):
     """Send a message when the command /dice is issued."""
     dice=['⚀','⚁','⚂','⚃','⚄','⚅']
@@ -558,7 +560,7 @@ def wake(bot,update):
 
 
 def main():
-    updater = Updater(token)
+    updater = Updater(token,workers=10)
     dispatcher = updater.dispatcher
 
 
