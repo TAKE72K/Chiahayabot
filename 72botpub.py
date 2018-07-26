@@ -440,7 +440,7 @@ def caps(bot, update, args):
 
 def dice(bot,update,args):
     """Send a message when the command /dice is issued."""
-    dice=['?','?','?','?','?','?']
+    dice=['⚀','⚁','⚂','⚃','⚄','⚅']
     count=[0,0,0,0,0,0]
     text=''
     
