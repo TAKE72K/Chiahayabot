@@ -380,7 +380,7 @@ def grave(bot,update):
 def history(bot,job):
     chat_id=-1001232423456
     
-    time = datetime.now().strftime("%d %m %y %H:%M:%S")
+    time = datetime.now().strftime("%y/%m/%d %H:%M:%S")
     
     scope = ['https://spreadsheets.google.com/feeds']
     creds = ServiceAccountCredentials.from_json_keyfile_name('auth.json', scope)
