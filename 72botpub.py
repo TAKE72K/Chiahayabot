@@ -416,7 +416,7 @@ def history(bot,job):
     else:
         weather='765劇場愚人節'
     rate=rate.replace('$weather',weather)
-    if water>100 or human!=0:
+    if water>20 or human!=0:
         bot.send_message(chat_id=-1001232423456,text=rate)
 
 def tis(bot,update):
