@@ -1,6 +1,7 @@
 ﻿import telegram
 import re
 import random
+from random import randrange
 import os
 import logging
 from datetime import datetime, tzinfo, timedelta
@@ -406,14 +407,14 @@ def history(bot,job):
         weather='人狼泛舟的颱風天'
     elif water>=400 and water<650:
         weather='美咲不能釣魚的一天'
-    elif water>=650 and water<700:
+    elif water>=650 and water<1000:
         weather='志保阿克亞雨宮天'
-    elif water>=700 and water<850:
+    elif water>=1000 and water<1500:
         weather='南南東方向颱風來襲，已發佈陸警'
     else:
         weather='765劇場愚人節'
     rate=rate.replace('$weather',weather)
-    if water!=0 or human!=0:
+    if water>100 or human!=0:
         bot.send_message(chat_id=-1001232423456,text=rate)
 
 def tis(bot,update):
@@ -564,7 +565,7 @@ def main():
 
     #job
     jd=False
-    history_t=[stime(1,0,0),stime(7,0,0),stime(13,0,0),stime(19,0,0)]
+    history_t=[stime(3,0,0),stime(9,0,0),stime(15,0,0),stime(21,0,0)]
     job_minute = updater.job_queue.run_repeating(wake, interval=600, first=0)
     for t in history_t:
         job_his = updater.job_queue.run_daily(history,t)
@@ -576,7 +577,7 @@ def main():
     dispatcher.add_handler(CommandHandler('bomb',bomb,pass_args=True))
     dispatcher.add_handler(CommandHandler('gdmn',gdmn))
     dispatcher.add_handler(CommandHandler('set',set_name,pass_args=True))
-    dispatcher.add_handler(CommandHandler('dice',dice,pass_args=True))
+    dispatcher.add_handler(CommandHandler('dice',dice,pass_args=True))#dic
     dispatcher.add_handler(CommandHandler('count',count))
     dispatcher.add_handler(CommandHandler('grave',grave))
     dispatcher.add_handler(CommandHandler('time',tis))
