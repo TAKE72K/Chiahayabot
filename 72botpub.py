@@ -4,6 +4,7 @@ import random
 from random import randrange
 import os
 import logging
+import time
 from datetime import datetime, tzinfo, timedelta
 from datetime import time as stime
 from telegram import InlineQueryResultArticle, InputTextMessageContent,InlineKeyboardMarkup,InlineKeyboardButton
