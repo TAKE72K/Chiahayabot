@@ -609,7 +609,7 @@ def main():
     dispatcher.add_handler(CommandHandler('grave',grave))
     dispatcher.add_handler(CommandHandler('time',tis))
     dispatcher.add_handler(CommandHandler('kenka',kenka))
-    dispatcher.add_handler(CommandHandler('q',quote))
+    dispatcher.add_handler(CommandHandler('quote',quote))
     dispatcher.add_handler(CommandHandler('punch', punch, pass_args=True))
     dispatcher.add_handler(CommandHandler('caps', caps, pass_args=True))
     dispatcher.add_handler(CommandHandler('r', restart, filters=Filters.user(user_id=580276512)))
