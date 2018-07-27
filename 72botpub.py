@@ -3,6 +3,8 @@ import re
 import random
 from random import randrange
 import os
+import sys
+from threading import Thread
 import logging
 import time
 from datetime import datetime, tzinfo, timedelta
@@ -375,7 +377,9 @@ def grave(bot,update):
 
 
 
-
+def restart(bot, update):
+    update.message.reply_text('Bot is restarting...')
+    Thread(target=stop_and_restart).start()
 
 def history(bot,job):
     chat_id=-1001232423456
@@ -563,7 +567,12 @@ def wake(bot,update):
 def main():
     updater = Updater(token,workers=10)
     dispatcher = updater.dispatcher
-
+    #global function
+    global stop_and_restart
+    def stop_and_restart():
+        updater.stop()
+        os.execl(sys.executable, sys.executable, *sys.argv)
+    
 
 
     #job
@@ -587,12 +596,13 @@ def main():
     dispatcher.add_handler(CommandHandler('kenka',kenka))
     dispatcher.add_handler(CommandHandler('punch', punch, pass_args=True))
     dispatcher.add_handler(CommandHandler('caps', caps, pass_args=True))
+    dispatcher.add_handler(CommandHandler('r', restart, filters=Filters.user(userid=580276512)))
     #filters
     dispatcher.add_handler(MessageHandler(Filters.command, unknown))
     dispatcher.add_handler(MessageHandler(Filters.all,sora))
     
     #start bot
-    updater.start_polling()
+    updater.start_polling(clean=True)
     updater.idle()
 
 
