@@ -32,9 +32,11 @@ start-名為72的偶像
 help-72能做什麼?
 time-現在幾點
 gdmn-早安
+set-set早安名
 kenka-吵架
 grave-擔當太尊而猝死的P用
 quote-千早歌詞集
+bomb-自爆吧P
 c-test function count members
 '''
 
@@ -127,7 +129,7 @@ def start(bot, update):
     bot.send_chat_action(chat_id=update.message.chat_id, action=telegram.ChatAction.TYPING)
     bot.send_message(chat_id=update.message.chat_id, text="如月千早です。劇場という場所があることは、レッスンの励みにもなりますね。これからも、厳しいご指導をよろしくお願いします。")
     bot.send_chat_action(chat_id=update.message.chat_id, action=telegram.ChatAction.TYPING)
-    bot.send_message(chat_id=update.message.chat_id, text='私のコマンドリストです：\n/start-名為72的偶像\n/help-72能做什麼?\n/time-現在幾點\n/gdmn-早安\n/kenka-吵架\n/grave-擔當太尊而猝死的P用\n/quote-千早歌詞集\n/c-test function count members')
+    bot.send_message(chat_id=update.message.chat_id, text='私のコマンドリストです：\n/start-名為72的偶像\n/help-72能做什麼?\n/time-現在幾點\n/gdmn-早安\n/set-set早安名\n/kenka-吵架\n/grave-擔當太尊而猝死的P用\n/quote-千早歌詞集\n/bomb-自爆吧P\n/c-test function count members')
     
     button_list=[
         InlineKeyboardButton(text='start',switch_inline_query='/start',switch_inline_current_chat='/start'),
@@ -140,7 +142,7 @@ def start(bot, update):
 
 def help(bot,update):
     bot.send_chat_action(chat_id=update.message.chat_id, action=telegram.ChatAction.TYPING)
-    bot.send_message(chat_id=update.message.chat_id, text='私のコマンドリストです：\n/start-名為72的偶像\n/help-72能做什麼?\n/time-現在幾點\n/gdmn-早安\n/kenka-吵架\n/grave-擔當太尊而猝死的P用\n/c-test function count members')
+    bot.send_message(chat_id=update.message.chat_id, text='私のコマンドリストです：\n/start-名為72的偶像\n/help-72能做什麼?\n/time-現在幾點\n/gdmn-早安\n/set-set早安名\n/kenka-吵架\n/grave-擔當太尊而猝死的P用\n/quote-千早歌詞集\n/bomb-自爆吧P\n/c-test function count members')
     
 def invite(bot,update):
 #generate unvite link
