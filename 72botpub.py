@@ -34,6 +34,7 @@ time-現在幾點
 gdmn-早安
 kenka-吵架
 grave-擔當太尊而猝死的P用
+quote-千早歌詞集
 c-test function count members
 '''
 
@@ -126,7 +127,7 @@ def start(bot, update):
     bot.send_chat_action(chat_id=update.message.chat_id, action=telegram.ChatAction.TYPING)
     bot.send_message(chat_id=update.message.chat_id, text="如月千早です。劇場という場所があることは、レッスンの励みにもなりますね。これからも、厳しいご指導をよろしくお願いします。")
     bot.send_chat_action(chat_id=update.message.chat_id, action=telegram.ChatAction.TYPING)
-    bot.send_message(chat_id=update.message.chat_id, text='私のコマンドリストです：\n/start-名為72的偶像\n/help-72能做什麼?\n/time-現在幾點\n/gdmn-早安\n/kenka-吵架\n/grave-擔當太尊而猝死的P用\n/c-test function count members')
+    bot.send_message(chat_id=update.message.chat_id, text='私のコマンドリストです：\n/start-名為72的偶像\n/help-72能做什麼?\n/time-現在幾點\n/gdmn-早安\n/kenka-吵架\n/grave-擔當太尊而猝死的P用\n/quote-千早歌詞集\n/c-test function count members')
     
     button_list=[
         InlineKeyboardButton(text='start',switch_inline_query='/start',switch_inline_current_chat='/start'),
@@ -444,6 +445,18 @@ def caps(bot, update, args):
     text_caps = ' '.join(args).upper()
     bot.send_message(chat_id=update.message.chat_id, text=text_caps)
 
+def quote(bot,update):
+    scope = ['https://spreadsheets.google.com/feeds']
+    creds = ServiceAccountCredentials.from_json_keyfile_name('auth.json', scope)
+    client = gspread.authorize(creds)
+    with open('spreadsheet_key') as f:
+        spreadsheet_key = f.read().strip()
+    sheet = client.open_by_key(spreadsheet_key)
+    qsheet=sheet.worksheet('quote')
+    quote=qsheet.get_all_values()
+    num=random.randint(0,len(quote)-1)
+    text='<pre>'+quote[num][0]+'</pre>\n'+'-----<b>'+quote[num][1]+'</b> より'
+    bot.send_message(chat_id=update.message.chat_id,text=text,parse_mode='HTML')
 @run_async
 def dice(bot,update,args):
     """Send a message when the command /dice is issued."""
@@ -594,6 +607,7 @@ def main():
     dispatcher.add_handler(CommandHandler('grave',grave))
     dispatcher.add_handler(CommandHandler('time',tis))
     dispatcher.add_handler(CommandHandler('kenka',kenka))
+    dispatcher.add_handler(CommandHandler('q',quote))
     dispatcher.add_handler(CommandHandler('punch', punch, pass_args=True))
     dispatcher.add_handler(CommandHandler('caps', caps, pass_args=True))
     dispatcher.add_handler(CommandHandler('r', restart, filters=Filters.user(user_id=580276512)))
