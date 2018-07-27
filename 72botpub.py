@@ -466,7 +466,7 @@ def realtime_history(bot,update):
     else:
         weather='765劇場愚人節'
     rate=rate.replace('$weather',weather)
-    bot.send_message(chat_id=update.message.chat_id,text=rate,reply_to_message_id=update.message.from_user.id)
+    bot.send_message(chat_id=-1001232423456,text=rate,reply_to_message_id=update.message.from_user.id)
 
 
 def tis(bot,update):
@@ -500,6 +500,7 @@ def quote(bot,update):
     num=random.randint(0,len(quote)-1)
     text='<pre>'+quote[num][0]+'</pre>\n'+'-----<b>'+quote[num][1]+'</b> より'
     bot.send_message(chat_id=update.message.chat_id,text=text,parse_mode='HTML')
+
 @run_async
 def dice(bot,update,args):
     """Send a message when the command /dice is issued."""
