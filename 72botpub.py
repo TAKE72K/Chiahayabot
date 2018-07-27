@@ -38,6 +38,8 @@ grave-擔當太尊而猝死的P用
 quote-千早歌詞集
 bomb-自爆吧P
 count-test function count members
+dice-N粒公正的骰子(N<1000)
+water-即時水量
 '''
 
 #tool func
@@ -129,7 +131,7 @@ def start(bot, update):
     bot.send_chat_action(chat_id=update.message.chat_id, action=telegram.ChatAction.TYPING)
     bot.send_message(chat_id=update.message.chat_id, text="如月千早です。劇場という場所があることは、レッスンの励みにもなりますね。これからも、厳しいご指導をよろしくお願いします。")
     bot.send_chat_action(chat_id=update.message.chat_id, action=telegram.ChatAction.TYPING)
-    bot.send_message(chat_id=update.message.chat_id, text='私のコマンドリストです：\n/start-名為72的偶像\n/help-72能做什麼?\n/time-現在幾點\n/gdmn-早安\n/set-set早安名\n/kenka-吵架\n/grave-擔當太尊而猝死的P用\n/quote-千早歌詞集\n/bomb-自爆吧P\n/count-test function count members')
+    bot.send_message(chat_id=update.message.chat_id, text='私のコマンドリストです：\n/start-名為72的偶像\n/help-72能做什麼?\n/time-現在幾點\n/gdmn-早安\n/set-set早安名\n/kenka-吵架\n/grave-擔當太尊而猝死的P用\n/quote-千早歌詞集\n/bomb-自爆吧P\n/count-test function count members\n/dice-N粒公正的骰子(N<1000)\n/water-即時水量')
     
     button_list=[
         InlineKeyboardButton(text='start',switch_inline_query='/start',switch_inline_current_chat='/start'),
@@ -142,7 +144,7 @@ def start(bot, update):
 
 def help(bot,update):
     bot.send_chat_action(chat_id=update.message.chat_id, action=telegram.ChatAction.TYPING)
-    bot.send_message(chat_id=update.message.chat_id, text='私のコマンドリストです：\n/start-名為72的偶像\n/help-72能做什麼?\n/time-現在幾點\n/gdmn-早安\n/set-set早安名\n/kenka-吵架\n/grave-擔當太尊而猝死的P用\n/quote-千早歌詞集\n/bomb-自爆吧P\n/count-test function count members')
+    bot.send_message(chat_id=update.message.chat_id, text='私のコマンドリストです：\n/start-名為72的偶像\n/help-72能做什麼?\n/time-現在幾點\n/gdmn-早安\n/set-set早安名\n/kenka-吵架\n/grave-擔當太尊而猝死的P用\n/quote-千早歌詞集\n/bomb-自爆吧P\n/count-test function count members\n/dice-N粒公正的骰子(N<1000)\n/water-即時水量')
     
 def invite(bot,update):
 #generate unvite link
@@ -426,6 +428,47 @@ def history(bot,job):
     if water>20 or human!=0:
         bot.send_message(chat_id=-1001232423456,text=rate)
 
+def realtime_history(bot,update):
+    chat_id=-1001232423456
+    
+    time = datetime.now().strftime("%y/%m/%d %H:%M:%S")
+    
+    scope = ['https://spreadsheets.google.com/feeds']
+    creds = ServiceAccountCredentials.from_json_keyfile_name('auth.json', scope)
+    client = gspread.authorize(creds)
+    sheet = client.open_by_key(spreadsheet_key)
+    worksheet=sheet.worksheet('last_message')
+    
+    c=get_cell(str(chat_id),worksheet)
+    message_id=worksheet.cell(c.row,c.col+1).value
+    count=bot.get_chat_members_count(chat_id)
+    list=[str(chat_id),time,message_id,str(count)]
+    
+    worksheet=sheet.worksheet('gr')
+    w=get_cell(str(chat_id),worksheet)
+    water=int(message_id)-int(worksheet.cell(w.row,w.col+2).value)
+    human=count-int(worksheet.cell(w.row,w.col+3).value)
+    rate='在過去的幾個小時內，水量上漲了$water個千早的高度，出現了$human個野生的P，看來今天是$weather'
+    rate=rate.replace('$water',str(water))
+    rate=rate.replace('$human',str(human))
+    if water<200:
+        weather='風和日麗的好天氣'
+    elif water>=200 and water<250:
+        weather='下著雨的衝浪天'
+    elif water>=250 and water<400:
+        weather='人狼泛舟的颱風天'
+    elif water>=400 and water<650:
+        weather='美咲不能釣魚的一天'
+    elif water>=650 and water<1000:
+        weather='志保阿克亞雨宮天'
+    elif water>=1000 and water<1500:
+        weather='南南東方向颱風來襲，已發佈陸警'
+    else:
+        weather='765劇場愚人節'
+    rate=rate.replace('$weather',weather)
+    bot.send_message(chat_id=update.message.chat_id,text=rate,reply_to_message_id=update.message.from_user.id)
+
+
 def tis(bot,update):
     time = datetime.now().strftime("%H:%M:%S")
     time='現在時間:'+time
@@ -475,7 +518,7 @@ def dice(bot,update,args):
             #value error
             return
         else:
-            if num>100:
+            if num>1000:
                 return
             else:
                 for i in range(0,num):
@@ -488,7 +531,7 @@ def dice(bot,update,args):
                     text=text+dice[i]+str(count[i])+'個\n'
                 if num>20:
                     msg1=bot.send_message(chat_id=update.message.chat_id, text=text)
-                    time.sleep(5)
+                    time.sleep(7)
                     bot.delete_message(chat_id=update.message.chat_id, message_id=msg.message_id)
                     bot.delete_message(chat_id=update.message.chat_id, message_id=msg1.message_id)
     
@@ -604,6 +647,7 @@ def main():
     dispatcher.add_handler(CommandHandler('set',set_name,pass_args=True))
     dispatcher.add_handler(CommandHandler('dice',dice,pass_args=True))#dic
     dispatcher.add_handler(CommandHandler('count',count))
+    dispatcher.add_handler(CommandHandler('water',realtime_history))
     dispatcher.add_handler(CommandHandler('grave',grave))
     dispatcher.add_handler(CommandHandler('time',tis))
     dispatcher.add_handler(CommandHandler('kenka',kenka))
