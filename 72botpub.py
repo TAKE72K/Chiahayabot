@@ -451,8 +451,6 @@ def quote(bot,update):
     scope = ['https://spreadsheets.google.com/feeds']
     creds = ServiceAccountCredentials.from_json_keyfile_name('auth.json', scope)
     client = gspread.authorize(creds)
-    with open('spreadsheet_key') as f:
-        spreadsheet_key = f.read().strip()
     sheet = client.open_by_key(spreadsheet_key)
     qsheet=sheet.worksheet('quote')
     quote=qsheet.get_all_values()
