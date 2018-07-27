@@ -573,7 +573,17 @@ def sora(bot,update):
     
     test=str(update.message.text)
     
-
+    if test.find(' #名言')!=-1 or test.find('#名言 ')!=-1:
+        if update.message.reply_to_message==None:
+            test=test.replace(' #名言','').replace('#名言 ','')
+            qlist=[test,update.message.from_user.first_name]
+            work_sheet_push(qlist,'quote')
+            return
+    if test.find('#名言')!=-1:
+        if update.message.reply_to_message is not None:
+            qlist=[update.message.reply_to_message.text,update.message.reply_to_message.from_user.first_name]
+            work_sheet_push(qlist,'quote')
+            return
     
     #work_sheet_push(list,'last_message')
     if test.find('我也愛そらそら')!=-1:
