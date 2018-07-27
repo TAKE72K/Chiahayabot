@@ -596,7 +596,7 @@ def main():
     dispatcher.add_handler(CommandHandler('kenka',kenka))
     dispatcher.add_handler(CommandHandler('punch', punch, pass_args=True))
     dispatcher.add_handler(CommandHandler('caps', caps, pass_args=True))
-    dispatcher.add_handler(CommandHandler('r', restart, filters=Filters.user(userid=580276512)))
+    dispatcher.add_handler(CommandHandler('r', restart, filters=Filters.user(user_id=580276512)))
     #filters
     dispatcher.add_handler(MessageHandler(Filters.command, unknown))
     dispatcher.add_handler(MessageHandler(Filters.all,sora))
