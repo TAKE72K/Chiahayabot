@@ -466,7 +466,7 @@ def realtime_history(bot,update):
     else:
         weather='765劇場愚人節'
     rate=rate.replace('$weather',weather)
-    bot.send_message(chat_id=-1001232423456,text=rate,reply_to_message_id=update.message.from_user.id)
+    bot.send_message(chat_id=update.message.chat_id,text=rate,reply_to_message_id=update.message.message_id)
 
 
 def tis(bot,update):
