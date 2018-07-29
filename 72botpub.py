@@ -659,7 +659,7 @@ def main():
     # set connection pool size for bot 
     request = Request(con_pool_size=8)
     chihabot = MQBot(token, request=request, mqueue=q)
-    updater = Updater(token,workers=10,bot=chihabot)
+    updater = Updater(workers=10,bot=chihabot)
     dispatcher = updater.dispatcher
     #global function
     global stop_and_restart
