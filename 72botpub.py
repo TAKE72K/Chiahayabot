@@ -657,7 +657,7 @@ class MQBot(telegram.bot.Bot):
 def main():
     q = mq.MessageQueue(all_burst_limit=3, all_time_limit_ms=3000)
     # set connection pool size for bot 
-    request = Request(con_pool_size=8)
+    request = Request(con_pool_size=14)
     chihabot = MQBot(token, request=request, mqueue=q)
     updater = Updater(workers=10,bot=chihabot)
     dispatcher = updater.dispatcher
