@@ -4,6 +4,9 @@ import random
 from random import randrange
 import os
 import sys
+from telegram.utils.request import Request
+import telegram.bot
+from telegram.ext import messagequeue as mq
 from threading import Thread
 import logging
 import time
@@ -198,7 +201,7 @@ def set_name(bot,update,args):
             cell=nsheet.find(str(update.message.from_user.id))
         except:#not found
             nsheet.insert_row([update.message.from_user.id,name], 2)
-            bot.send_message(chat_id=update.message.chat_id,text='Bot:Not enough rights to change chat title')
+            #bot.send_message(chat_id=update.message.chat_id,text='Bot:Not enough rights to change chat title')
         else:
             nsheet.update_cell(cell.row,cell.col+1,name)
 
@@ -630,9 +633,33 @@ def wake(bot,update):
 #prevent bot from going to sleep
     bot.send_message(chat_id=580276512, text="すみません、よく分かりません。")
 
+class MQBot(telegram.bot.Bot):
+    '''A subclass of Bot which delegates send method handling to MQ'''
+    def __init__(self, *args, is_queued_def=True, mqueue=None, **kwargs):
+        super(MQBot, self).__init__(*args, **kwargs)
+        # below 2 attributes should be provided for decorator usage
+        self._is_messages_queued_default = is_queued_def
+        self._msg_queue = mqueue or mq.MessageQueue()
+
+    def __del__(self):
+        try:
+            self._msg_queue.stop()
+        except:
+            pass
+        super(MQBot, self).__del__()
+
+    @mq.queuedmessage
+    def send_message(self, *args, **kwargs):
+        '''Wrapped method would accept new `queued` and `isgroup`
+        OPTIONAL arguments'''
+        return super(MQBot, self).send_message(*args, **kwargs)
 
 def main():
-    updater = Updater(token,workers=10)
+    q = mq.MessageQueue(all_burst_limit=3, all_time_limit_ms=3000)
+    # set connection pool size for bot 
+    request = Request(con_pool_size=8)
+    chihabot = MQBot(token, request=request, mqueue=q)
+    updater = Updater(token,workers=10,bot=chihabot)
     dispatcher = updater.dispatcher
     #global function
     global stop_and_restart
