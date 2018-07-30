@@ -43,6 +43,7 @@ bomb-自爆吧P
 count-test function count members
 dice-N粒公正的骰子(N<1000)
 water-即時水量
+about-關於此bot
 '''
 
 #tool func
@@ -134,7 +135,7 @@ def start(bot, update):
     bot.send_chat_action(chat_id=update.message.chat_id, action=telegram.ChatAction.TYPING)
     bot.send_message(chat_id=update.message.chat_id, text="如月千早です。劇場という場所があることは、レッスンの励みにもなりますね。これからも、厳しいご指導をよろしくお願いします。")
     bot.send_chat_action(chat_id=update.message.chat_id, action=telegram.ChatAction.TYPING)
-    bot.send_message(chat_id=update.message.chat_id, text='私のコマンドリストです：\n/start-名為72的偶像\n/help-72能做什麼?\n/time-現在幾點\n/gdmn-早安\n/set-set早安名\n/kenka-吵架\n/grave-擔當太尊而猝死的P用\n/quote-千早歌詞集\n/bomb-自爆吧P\n/count-test function count members\n/dice-N粒公正的骰子(N<1000)\n/water-即時水量')
+    bot.send_message(chat_id=update.message.chat_id, text='私のコマンドリストです：\n/start-名為72的偶像\n/help-72能做什麼?\n/time-現在幾點\n/gdmn-早安\n/set-set早安名\n/kenka-吵架\n/grave-擔當太尊而猝死的P用\n/quote-千早歌詞集\n/bomb-自爆吧P\n/count-test function count members\n/dice-N粒公正的骰子(N<1000)\n/water-即時水量\n/about-關於此bot')
     
     button_list=[
         InlineKeyboardButton(text='start',switch_inline_query='/start',switch_inline_current_chat='/start'),
@@ -147,8 +148,24 @@ def start(bot, update):
 
 def help(bot,update):
     bot.send_chat_action(chat_id=update.message.chat_id, action=telegram.ChatAction.TYPING)
-    bot.send_message(chat_id=update.message.chat_id, text='私のコマンドリストです：\n/start-名為72的偶像\n/help-72能做什麼?\n/time-現在幾點\n/gdmn-早安\n/set-set早安名\n/kenka-吵架\n/grave-擔當太尊而猝死的P用\n/quote-千早歌詞集\n/bomb-自爆吧P\n/count-test function count members\n/dice-N粒公正的骰子(N<1000)\n/water-即時水量')
-    
+    bot.send_message(chat_id=update.message.chat_id, text='私のコマンドリストです：\n/start-名為72的偶像\n/help-72能做什麼?\n/time-現在幾點\n/gdmn-早安\n/set-set早安名\n/kenka-吵架\n/grave-擔當太尊而猝死的P用\n/quote-千早歌詞集\n/bomb-自爆吧P\n/count-test function count members\n/dice-N粒公正的骰子(N<1000)\n/water-即時水量\n/about-關於此bot')
+
+def about(bot,update):
+    text_a='''
+本機器人由一個支離滅裂的千早P製作 code也很支離滅裂
+BUG什麼的還請多多回報 多多包涵
+
+至於BOT的名字 相信大家都注意到了
+是Chiahayabot喲(Chiayi+Chihaya=Chiahaya)
+坐車經過嘉義時想到的
+
+        【Chiahayabot】
+    releases v.87
+    有事請找<a href="https://t.me/joinchat/IFtWTxKu7x6vuSK8HsFgsQ">〔765技術部〕</a>
+    '''
+    bot.send_message(chat_id=update.message.chat_id,text=text_a,parse_mode='HTML')
+
+
 def invite(bot,update):
 #generate unvite link
     bot.send_message(chat_id=update.message.chat_id, text='加入阿克西斯教，just now')
@@ -389,6 +406,7 @@ def restart(bot, update):
     update.message.reply_text('Bot is restarting...')
     Thread(target=stop_and_restart).start()
 
+@run_async
 def history(bot,job):
     chat_id=-1001232423456
     
@@ -430,6 +448,7 @@ def history(bot,job):
     rate=rate.replace('$weather',weather)
     if water>20 or human!=0:
         bot.send_message(chat_id=-1001232423456,text=rate)
+
 
 def realtime_history(bot,update):
     chat_id=-1001232423456
@@ -493,6 +512,7 @@ def caps(bot, update, args):
     text_caps = ' '.join(args).upper()
     bot.send_message(chat_id=update.message.chat_id, text=text_caps)
 
+@run_async
 def quote(bot,update):
     scope = ['https://spreadsheets.google.com/feeds']
     creds = ServiceAccountCredentials.from_json_keyfile_name('auth.json', scope)
@@ -689,6 +709,7 @@ def main():
     dispatcher.add_handler(CommandHandler('grave',grave))
     dispatcher.add_handler(CommandHandler('time',tis))
     dispatcher.add_handler(CommandHandler('kenka',kenka))
+    dispatcher.add_handler(CommandHandler('about',about))
     dispatcher.add_handler(CommandHandler('quote',quote))
     dispatcher.add_handler(CommandHandler('punch', punch, pass_args=True))
     dispatcher.add_handler(CommandHandler('caps', caps, pass_args=True))
