@@ -10,6 +10,7 @@ from telegram.ext import messagequeue as mq
 from threading import Thread
 import logging
 import time
+import datetime as dt
 from datetime import datetime, tzinfo, timedelta
 from datetime import time as stime
 from telegram import InlineQueryResultArticle, InputTextMessageContent,InlineKeyboardMarkup,InlineKeyboardButton
@@ -70,6 +71,12 @@ def build_menu(buttons,
     if footer_buttons:
         menu.append(footer_buttons)
     return menu
+
+def strfdelta(tdelta, fmt):
+    d = {"days": tdelta.days}
+    d["hours"], rem = divmod(tdelta.seconds, 3600)
+    d["minutes"], d["seconds"] = divmod(rem, 60)
+    return fmt.format(**d)
 
 HALF2FULL = dict((i, i + 0xFEE0) for i in range(0x21, 0x7F))
 HALF2FULL[0x20] = 0x3000
@@ -164,6 +171,14 @@ BUG什麼的還請多多回報 多多包涵
     有事請找<a href="https://t.me/joinchat/IFtWTxKu7x6vuSK8HsFgsQ">〔765技術部〕</a>
     '''
     bot.send_message(chat_id=update.message.chat_id,text=text_a,parse_mode='HTML')
+
+def state(bot,update):
+    #Date:   Thu Jul 19 09:07:15 2018 +0800
+    start_oper=datetime(year=2018,month=7,day=19,hour=1,minute=7,second=15)
+    oper_time=datetime.now()-start_oper
+    text=strfdelta(oper_time, "本BOT已運行{days}天{hours}小時又{minutes}分")
+    bot.send_message(chat_id=update.message.chat_id,text=text)
+    
 
 
 def invite(bot,update):
@@ -710,6 +725,7 @@ def main():
     dispatcher.add_handler(CommandHandler('time',tis))
     dispatcher.add_handler(CommandHandler('kenka',kenka))
     dispatcher.add_handler(CommandHandler('about',about))
+    dispatcher.add_handler(CommandHandler('state',state))
     dispatcher.add_handler(CommandHandler('quote',quote))
     dispatcher.add_handler(CommandHandler('punch', punch, pass_args=True))
     dispatcher.add_handler(CommandHandler('caps', caps, pass_args=True))
