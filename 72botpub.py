@@ -177,6 +177,13 @@ def state(bot,update):
     start_oper=datetime(year=2018,month=7,day=19,hour=1,minute=7,second=15)
     oper_time=datetime.now()-start_oper
     text=strfdelta(oper_time, "本BOT已運行{days}天{hours}小時又{minutes}分")
+    scope = ['https://spreadsheets.google.com/feeds']
+    creds = ServiceAccountCredentials.from_json_keyfile_name('auth.json', scope)
+    client = gspread.authorize(creds)
+    sheet = client.open_by_key(spreadsheet_key)
+    qsheet=sheet.worksheet('quote')
+    num=qsheet.row_count
+    text=text+'\n名言共有'+num+'句'
     bot.send_message(chat_id=update.message.chat_id,text=text)
     
 
