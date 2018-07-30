@@ -183,7 +183,7 @@ def state(bot,update):
     sheet = client.open_by_key(spreadsheet_key)
     qsheet=sheet.worksheet('quote')
     num=qsheet.row_count
-    text=text+'\n名言共有'+num+'句'
+    text=text+'\n名言共有'+str(num)+'句'
     bot.send_message(chat_id=update.message.chat_id,text=text)
     
 
