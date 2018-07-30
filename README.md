@@ -4,5 +4,5 @@ A bot operates on telegram. **@Chiahayabot**
 
 - **About:**
 **千早かわいい**
-**このBOTはCHIAHAYAです**
+**このBOTはCHIAHAYAで,**
 **嘉義＋ちはやです**
