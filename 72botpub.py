@@ -599,8 +599,8 @@ def quote(bot,update):
     time.sleep(par)
     msg=bot.send_message(chat_id=update.message.chat_id,text=text,parse_mode='HTML')
     if update.message.chat_id==-313454366:
-        work_sheet_push([str(update.message.chat_id),str(msg.message_id)],'del')
-        work_sheet_push([(update.message.chat_id),str(update.message.message_id)],'del')
+        work_sheet_push([update.message.chat_id,sg.message_id],'del')
+        work_sheet_push([update.message.chat_id,strupdate.message.message_id],'del')
 
 def del_quote(bot,job):
     scope = ['https://spreadsheets.google.com/feeds']
@@ -616,7 +616,8 @@ def del_quote(bot,job):
     for i in del_list:
         chat_id=i[0]
         message_id=i[1]
-        bot.delete_message(chat_id=int(chat_id), message_id=message_id)
+        if chat_id!='':
+            bot.delete_message(chat_id=chat_id, message_id=message_id)
             
     
 @run_async
