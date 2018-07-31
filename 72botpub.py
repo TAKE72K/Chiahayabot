@@ -115,7 +115,7 @@ def work_sheet_push(values,worksheet_name):
 #usage (values[list of string],worksheet_name[string])
 #put a list of value and push to worksheet
 
-def work_sheet_pop(key,woksheet_name):
+def work_sheet_fpop(key,woksheet_name):
     scope = ['https://spreadsheets.google.com/feeds']
     creds = ServiceAccountCredentials.from_json_keyfile_name('auth.json', scope)
     #got from google api
@@ -130,6 +130,28 @@ def work_sheet_pop(key,woksheet_name):
         worksheet.delete_row(cell.row)
     else:
         return None     
+
+def work_sheet_pop(worksheet_name):
+    scope = ['https://spreadsheets.google.com/feeds']
+    creds = ServiceAccountCredentials.from_json_keyfile_name('auth.json', scope)
+    #got from google api
+    #attach mine for example
+    #try to set in environ values but got fail
+    client = gspread.authorize(creds)
+    spreadsheet = client.open_by_key(spreadsheet_key)
+    worksheet=spreadsheet.worksheet(worksheet_name)
+    try:
+        cell=worksheet(1,1)
+    except:
+        return None
+    else:
+        row=[]
+        for k in range(1,worksheet.col_count+1):
+            row.append(worksheet(1,k))
+        worksheet.delete_row(1)
+        return row
+        
+        
 #tool func
 '''
 daily_remind=updater.job_queue
@@ -573,8 +595,28 @@ def quote(bot,update):
     quote=qsheet.get_all_values()
     num=random.randint(0,len(quote)-1)
     text='<pre>'+quote[num][0]+'</pre>\n'+'-----<b>'+quote[num][1]+'</b> より'
-    bot.send_message(chat_id=update.message.chat_id,text=text,parse_mode='HTML')
+    msg=bot.send_message(chat_id=update.message.chat_id,text=text,parse_mode='HTML')
+    if update.message.chat_id==-313454366:
+        work_sheet_push([update.message.chat_id,msg.message_id],'del')
+        work_sheet_push([update.message.chat_id,update.message.message_id],'del')
 
+def del_quote(bot,job):
+    scope = ['https://spreadsheets.google.com/feeds']
+    creds = ServiceAccountCredentials.from_json_keyfile_name('auth.json', scope)
+    #got from google api
+    #attach mine for example
+    #try to set in environ values but got fail
+    client = gspread.authorize(creds)
+    spreadsheet = client.open_by_key(spreadsheet_key)
+    worksheet=spreadsheet.worksheet('del')
+    del_list=worksheet.get_all_values()
+    spreadsheet.del_worksheet(worksheet)
+    for i in del_list:
+        chat_id=i[0]
+        message_id=i[1]
+        bot.delete_message(chat_id=chat_id, message_id=message_id)
+            
+    
 @run_async
 def dice(bot,update,args):
     """Send a message when the command /dice is issued."""
