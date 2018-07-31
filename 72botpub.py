@@ -597,8 +597,8 @@ def quote(bot,update):
     text='<pre>'+quote[num][0]+'</pre>\n'+'-----<b>'+quote[num][1]+'</b> より'
     msg=bot.send_message(chat_id=update.message.chat_id,text=text,parse_mode='HTML')
     if update.message.chat_id==-313454366:
-        work_sheet_push([update.message.chat_id,msg.message_id],'del')
-        work_sheet_push([update.message.chat_id,update.message.message_id],'del')
+        work_sheet_push([str(update.message.chat_id),str(msg.message_id)],'del')
+        work_sheet_push([str(update.message.chat_id),str(update.message.message_id)],'del')
 
 def del_quote(bot,job):
     scope = ['https://spreadsheets.google.com/feeds']
