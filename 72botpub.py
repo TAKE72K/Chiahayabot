@@ -85,7 +85,7 @@ def fullen(s):
     Convert all ASCII characters to the full-width counterpart.
     '''
     
-    text=s.replace(' ','　').replace('@','＠').repalce('_','＿').replace('.','‧')
+    text=s.replace(' ','　').replace('@','＠').replace('_','＿').replace('.','‧')
     text=str(text).translate(HALF2FULL)
     return text
     
