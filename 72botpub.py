@@ -790,7 +790,7 @@ def main():
 
 
     #job
-    updater.job_queue.run_repeating(del_quote, interval=180, first=1)
+    updater.job_queue.run_repeating(del_quote, interval=60, first=1)
     jd=False
     history_t=[stime(3,0,0),stime(9,0,0),stime(15,0,0),stime(21,0,0)]
     job_minute = updater.job_queue.run_repeating(wake, interval=600, first=0)
