@@ -85,7 +85,7 @@ def fullen(s):
     Convert all ASCII characters to the full-width counterpart.
     '''
     
-    text=s.replace(' ','　').replace('@','＠').replace('_','＿').replace('.','‧')
+
     text=str(text).translate(HALF2FULL)
     return text
     
@@ -324,6 +324,8 @@ def bomb(bot,update,args):
     bot.send_chat_action(chat_id=update.message.chat_id, action=telegram.ChatAction.TYPING)
     bot.send_message(chat_id=update.message.chat_id,text=text)
 
+def splen(seq, length):
+    return [seq[i:i+length] for i in range(0, len(seq), length)]
 def grave(bot,update):
     par=random.randint(0,1)
     if par==0:
@@ -353,7 +355,7 @@ def grave(bot,update):
             text=text.replace('$s2','　　　　　　　')
             text=text.replace('$s3','　　　　　　　')
         if len(pname)>7:
-            plist=re.findall(r'\w{1,7}',pname)
+            plist=splen(pname,7)
             if l>7 and l<15:
                 l2=len(plist[1])
                 for l2 in range(l2,7):
@@ -381,10 +383,10 @@ def grave(bot,update):
         pname=update.message.from_user.first_name
         pname=fullen(pname)
         l=len(pname)
-        plist=re.findall(r'\w{1,1}',pname)
+        
         for a in range(0,l):
             
-            t=nak.replace('$name',plist[a])
+            t=nak.replace('$name',pname[a])
             op+=t
         op+=bas
         bot.send_message(chat_id=update.message.chat_id,text=op)
