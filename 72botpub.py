@@ -107,11 +107,11 @@ def work_sheet_push(values,worksheet_name):
     try:
         worksheet=spreadsheet.worksheet(worksheet_name)
     except:#there is no this worksheet
-        spreadsheet.add_worksheet(worksheet_name,len(values),2)
+        spreadsheet.add_worksheet(worksheet_name,len(values),1)
         worksheet=spreadsheet.worksheet(worksheet_name)
-        worksheet.insert_row(values,2)
+        worksheet.insert_row(values,1)
     else:
-        worksheet.insert_row(values,2)
+        worksheet.insert_row(values,1)
 #usage (values[list of string],worksheet_name[string])
 #put a list of value and push to worksheet
 
