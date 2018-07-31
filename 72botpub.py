@@ -617,7 +617,11 @@ def del_quote(bot,job):
         chat_id=i[0]
         message_id=i[1]
         if chat_id!='':
-            bot.delete_message(chat_id=chat_id, message_id=message_id)
+            try:
+                bot.delete_message(chat_id=chat_id, message_id=message_id)
+            except:
+                pass
+            
             
     
 @run_async
