@@ -84,7 +84,7 @@ def fullen(s):
     '''
     Convert all ASCII characters to the full-width counterpart.
     '''
-    
+    text=s
 
     text=str(text).translate(HALF2FULL)
     return text
