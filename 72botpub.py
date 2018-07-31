@@ -599,7 +599,7 @@ def quote(bot,update):
     time.sleep(par)
     msg=bot.send_message(chat_id=update.message.chat_id,text=text,parse_mode='HTML')
     if update.message.chat_id==-313454366:
-        work_sheet_push([update.message.chat_id,sg.message_id],'del')
+        work_sheet_push([update.message.chat_id,msg.message_id],'del')
         work_sheet_push([update.message.chat_id,strupdate.message.message_id],'del')
 
 def del_quote(bot,job):
