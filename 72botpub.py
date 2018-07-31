@@ -597,8 +597,8 @@ def quote(bot,update):
     text='<pre>'+quote[num][0]+'</pre>\n'+'-----<b>'+quote[num][1]+'</b> より'
     msg=bot.send_message(chat_id=update.message.chat_id,text=text,parse_mode='HTML')
     if update.message.chat_id==-313454366:
-        work_sheet_push([str(update.message.chat_id),str(msg.message.message_id)],'del')
-        work_sheet_push([str(update.message.chat_id),str(update.message.message_id)],'del')
+        work_sheet_push([str(update.message.chat_id),str(msg.message_id)],'del')
+        work_sheet_push([(update.message.chat_id),str(update.message_id)],'del')
 
 def del_quote(bot,job):
     scope = ['https://spreadsheets.google.com/feeds']
@@ -649,8 +649,8 @@ def dice(bot,update,args):
                 if num>20:
                     msg1=bot.send_message(chat_id=update.message.chat_id, text=text)
                     time.sleep(7)
-                    bot.delete_message(chat_id=update.message.chat_id, message_id=msg.message.message_id)
-                    bot.delete_message(chat_id=update.message.chat_id, message_id=msg1.message.message_id)
+                    bot.delete_message(chat_id=update.message.chat_id, message_id=msg.message_id)
+                    bot.delete_message(chat_id=update.message.chat_id, message_id=msg1.message_id)
     
 def inline_ku(bot,update):
     query=update.inline_query.query+"?\nくっ......"
@@ -772,7 +772,7 @@ def main():
     # set connection pool size for bot 
     request = Request(con_pool_size=14)
     chihabot = MQBot(token, request=request, mqueue=q)
-    updater = Updater(workers=10,bot=chihabot)
+    updater = Updater(token,workers=10)
     dispatcher = updater.dispatcher
     #global function
     global stop_and_restart
