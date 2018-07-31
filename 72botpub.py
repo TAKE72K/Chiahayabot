@@ -84,7 +84,10 @@ def fullen(s):
     '''
     Convert all ASCII characters to the full-width counterpart.
     '''
-    return str(s).translate(HALF2FULL)  
+    
+    text=s.replace(' ','　').replace('@','＠').repalce('_','＿').replace('.','‧')
+    text=str(text).translate(HALF2FULL)
+    return text
     
 class GMT8(tzinfo):
     def utcoffset(self, dt):
