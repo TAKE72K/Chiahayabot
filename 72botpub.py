@@ -598,9 +598,9 @@ def quote(bot,update):
     par=random.randint(0,3)
     time.sleep(par)
     msg=bot.send_message(chat_id=update.message.chat_id,text=text,parse_mode='HTML')
-    if update.message.chat_id==-313454366:
-        work_sheet_push([update.message.chat_id,msg.message_id],'del')
-        work_sheet_push([update.message.chat_id,update.message.message_id],'del')
+    
+    work_sheet_push([update.message.chat_id,msg.message_id],'del')
+    work_sheet_push([update.message.chat_id,update.message.message_id],'del')
 
 def del_quote(bot,job):
     scope = ['https://spreadsheets.google.com/feeds']
@@ -790,7 +790,7 @@ def main():
 
 
     #job
-    updater.job_queue.run_repeating(del_quote, interval=60, first=1)
+    updater.job_queue.run_repeating(del_quote, interval=72, first=0)
     jd=False
     history_t=[stime(3,0,0),stime(9,0,0),stime(15,0,0),stime(21,0,0)]
     job_minute = updater.job_queue.run_repeating(wake, interval=600, first=0)
