@@ -413,68 +413,6 @@ def grave(bot,update):
         op+=bas
         bot.send_message(chat_id=update.message.chat_id,text=op)
 
-'''
-　　　／￣￣〈￣￣＼ :.＼ 
-　　 |　　　　　　　　|: ::| 
-　 　|　他給Ｐ　　　　|: ::| 
-　 　|　　　　　　　　|: ::| 
-　 　|　takep~~ 　　　|: ::| 
-　 　|　　　　　　　　|: ::| 
-　 　|　　　　　　　　|: ::| 
-　 　|　　　　　　　　|: ::| 
-￣"￣"￣'￣￣""￣""￣.￣'￣￣ 
-
-
-
-'''
-
-
-'''
-　　 ＿ 
-　　|ク| 
-　　|ナ| 
-　　|ウ| 
-　　|ド| 
-　　|＠| 
-　　|蝉| 
-　|￣￣￣| 
-　| |三三| | 
-￣￣￣￣￣￣ 
-
-
-
-'''
-
-'''
-
-        \          SORRY            /
-         \                         /
-          \    This page does     /
-           ]   not exist yet.    [    ,'|
-           ]                     [   /  |
-           ]___               ___[ ,'   |
-           ]  ]\             /[  [ |:   |
-           ]  ] \           / [  [ |:   |
-           ]  ]  ]         [  [  [ |:   |
-           ]  ]  ]__     __[  [  [ |:   |
-           ]  ]  ] ]\ _ /[ [  [  [ |:   |
-           ]  ]  ] ] (#) [ [  [  [ :===='
-           ]  ]  ]_].nHn.[_[  [  [
-           ]  ]  ]  HHHHH. [  [  [
-           ]  ] /   `HH("N  \ [  [
-           ]__]/     HHH  "  \[__[
-           ]         NNN         [
-           ]         N/"         [
-           ]         N H         [
-          /          N            \
-         /           q,            \
-        /                           \
-'''
-
-
-
-
-
 def restart(bot, update):
     update.message.reply_text('Bot is restarting...')
     Thread(target=stop_and_restart).start()
