@@ -534,7 +534,10 @@ def quote(bot,update):
         renda_id=update.message.from_user.id
         combo=1
     if combo>4:
-        bot.send_message(chat_id=update.message.chat_id,text='又ㄅ是7az，連打ㄍㄆ')
+        msg=bot.send_message(chat_id=update.message.chat_id,text='又ㄅ是7az，連打ㄍㄆ')
+        work_sheet_push([update.message.chat_id,msg.message_id],'del')
+        work_sheet_push([update.message.chat_id,update.message.message_id],'del')
+        
         return
     scope = ['https://spreadsheets.google.com/feeds']
     creds = ServiceAccountCredentials.from_json_keyfile_name('auth.json', scope)
