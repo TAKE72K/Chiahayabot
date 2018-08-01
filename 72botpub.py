@@ -559,7 +559,8 @@ def del_quote(bot,job):
                 bot.delete_message(chat_id=chat_id, message_id=message_id)
             except:
                 pass
-            
+    bot.send_sticker(chat_id=-1001232423456,file_id='CAADBQAD_gQAAsZRxhWSuVC6Vxj01gI')
+    bot.send_message(chat_id=-1001232423456,text='好ㄘ')
             
     
 @run_async
