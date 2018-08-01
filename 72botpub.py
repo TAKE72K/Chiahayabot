@@ -735,7 +735,7 @@ def main():
     for t in history_t:
         job_his = updater.job_queue.run_daily(history,t)
     #command
-    dispatcher.add_handler(CommandHandler('title',title,pass_args=True))
+    dispatcher.add_handler(CommandHandler('taitoru',title,pass_args=True))
     dispatcher.add_handler(CommandHandler('start', start))
     dispatcher.add_handler(CommandHandler('help', help))
     dispatcher.add_handler(CommandHandler('linkstart',invite))
