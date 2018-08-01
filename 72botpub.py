@@ -563,8 +563,11 @@ def del_quote(bot,job):
             except:
                 pass
     if game_del==True:
-        bot.send_sticker(chat_id=-1001232423456,sticker='CAADBQAD_gQAAsZRxhWSuVC6Vxj01gI')
-        bot.send_message(chat_id=-1001232423456,text='好ㄘ')
+        msg=bot.send_sticker(chat_id=-1001232423456,sticker='CAADBQAD_gQAAsZRxhWSuVC6Vxj01gI')
+        msg1=bot.send_message(chat_id=-1001232423456,text='好ㄘ')
+        time.sleep(5)
+        bot.delete_message(chat_id=-1001232423456, message_id=msg.message_id)
+        bot.delete_message(chat_id=-1001232423456, message_id=msg1.message_id)
             
     
 @run_async
