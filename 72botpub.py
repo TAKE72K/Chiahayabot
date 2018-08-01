@@ -551,16 +551,20 @@ def del_quote(bot,job):
     worksheet=spreadsheet.worksheet('del')
     del_list=worksheet.get_all_values()
     spreadsheet.del_worksheet(worksheet)
+    game_del=False
     for i in del_list:
         chat_id=i[0]
+        if chat_id=='-1001232423456':
+            game_del=True
         message_id=i[1]
         if chat_id!='':
             try:
                 bot.delete_message(chat_id=chat_id, message_id=message_id)
             except:
                 pass
-    bot.send_sticker(chat_id=-1001232423456,file_id='CAADBQAD_gQAAsZRxhWSuVC6Vxj01gI')
-    bot.send_message(chat_id=-1001232423456,text='好ㄘ')
+    if game_del==True:
+        bot.send_sticker(chat_id=-1001232423456,sticker='CAADBQAD_gQAAsZRxhWSuVC6Vxj01gI')
+        bot.send_message(chat_id=-1001232423456,text='好ㄘ')
             
     
 @run_async
