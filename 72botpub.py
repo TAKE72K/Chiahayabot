@@ -670,7 +670,17 @@ def sora(bot,update):
             qlist=[update.message.reply_to_message.text,update.message.reply_to_message.from_user.first_name]
             work_sheet_push(qlist,'quote')
             return
-    
+    if test.find('fid')!=-1:
+        rmsg=update.message.reply_to_message
+        if rmsg.photo!=None:
+            for i in rmsg.photo:
+                bot.send_message(chat_id=update.message.chat_id, text=i.file_id)
+        if rmsg.video!=None:
+            bot.send_message(chat_id=update.message.chat_id, text=rmsg.video.file_id)
+        if rmsg.sticker!=None:
+            bot.send_message(chat_id=update.message.chat_id, text=rmsg.sticker.file_id)
+        if rmsg.document!=None:
+            bot.send_message(chat_id=update.message.chat_id, text=rmsg.document.file_id)
     #work_sheet_push(list,'last_message')
     if test.find('我也愛そらそら')!=-1:
         bot.send_message(chat_id=update.message.chat_id, text="我愛そらそら一生一世")
@@ -686,7 +696,6 @@ def sora(bot,update):
         #bot.send_message(chat_id=update.message.chat_id, text="939393939393939393!!!!!!!!!!")
         
     elif test.find("飯店")!=-1:
-        return
         bot.send_message(chat_id=update.message.chat_id, text="TRIVAGO!!!!!!!!!!")
     elif test=='下班':
         return
@@ -705,8 +714,8 @@ def sora(bot,update):
         if update.message.left_chat_member!=None:
             text=update.message.left_chat_member.first_name+'，6666666666！'
             bot.send_message(chat_id=update.message.chat_id,text=text)
-        if update.message.sticker!=None and update.message.chat.id==-313454366:
-            bot.send_message(chat_id=-313454366,text=update.message.sticker.file_id)
+        '''if update.message.sticker!=None and update.message.chat.id==-313454366:
+            bot.send_message(chat_id=-313454366,text=update.message.sticker.file_id)'''
 
 def unknown(bot, update):
     if update.message.entities[4].id==bot.get_me().id:
