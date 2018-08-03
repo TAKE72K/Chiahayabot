@@ -675,6 +675,8 @@ def sora(bot,update):
         if rmsg.photo!=None:
             for i in rmsg.photo:
                 bot.send_message(chat_id=update.message.chat_id, text=i.file_id)
+                text=str(i.width)+'x'+str(i.height)
+                bot.send_message(chat_id=update.message.chat_id, text=text)
         if rmsg.video!=None:
             bot.send_message(chat_id=update.message.chat_id, text=rmsg.video.file_id)
         if rmsg.sticker!=None:
