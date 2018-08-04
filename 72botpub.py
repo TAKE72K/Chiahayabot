@@ -96,7 +96,7 @@ def set_config(id,command):
         worksheet.insert_row([user_id,command], 1)
     else:
         #replace record
-        setting=worksheet(cell.row,cell.col+1).value
+        setting=worksheet.cell(cell.row,cell.col+1).value
         if setting.find(command)!=-1:
             setting=setting.replace(command,'')
         else:
