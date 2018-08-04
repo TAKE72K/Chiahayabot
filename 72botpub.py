@@ -863,7 +863,7 @@ def main():
 
 
     #job
-    updater.job_queue.run_daily(daily_reset,stime(18,22,0))
+    #updater.job_queue.run_daily(daily_reset,stime(18,22,0))
     updater.job_queue.run_repeating(del_quote, interval=72, first=0)
     jd=False
     history_t=[stime(3,0,0),stime(9,0,0),stime(15,0,0),stime(21,0,0)]
