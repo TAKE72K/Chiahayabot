@@ -138,7 +138,16 @@ def get_config(id,setting):
             return True
         else:
             return False
-    
+def daily_reset(bot,job):
+    scope = ['https://spreadsheets.google.com/feeds']
+    creds = ServiceAccountCredentials.from_json_keyfile_name('auth.json', scope)
+    client = gspread.authorize(creds)
+    sheet = client.open_by_key(spreadsheet_key)
+    user_config=sheet.worksheet('config').get_all_values()
+    for i in user_config:
+        if i[1].find('q') != -1:
+            set_config(i[0],'q')
+            
 HALF2FULL = dict((i, i + 0xFEE0) for i in range(0x21, 0x7F))
 HALF2FULL[0x20] = 0x3000
 def fullen(s):
@@ -854,6 +863,7 @@ def main():
 
 
     #job
+    updater.job_queue.run_daily(daily_reset,stime(18,22,0))
     updater.job_queue.run_repeating(del_quote, interval=72, first=0)
     jd=False
     history_t=[stime(3,0,0),stime(9,0,0),stime(15,0,0),stime(21,0,0)]
