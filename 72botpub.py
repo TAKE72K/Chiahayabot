@@ -763,6 +763,9 @@ def sora(bot,update):
             bot.send_message(chat_id=update.message.chat_id, text=rmsg.sticker.file_id)
         if rmsg.document!=None:
             bot.send_message(chat_id=update.message.chat_id, text=rmsg.document.file_id)
+    
+    t=key_work_reaction(update.message.text)
+    bot.send_message(chat_id=update.message.chat_id, text=t)
     #work_sheet_push(list,'last_message')
     if test.find('我也愛そらそら')!=-1:
         bot.send_message(chat_id=update.message.chat_id, text="我愛そらそら一生一世")
@@ -830,6 +833,15 @@ class MQBot(telegram.bot.Bot):
 
 def key_work_reaction(word):
     a=get_sheet('key_word')
+    try:
+        kw=a.get_all_values()
+    except:
+        return None
+    else:
+        for i in kw:
+            if i[0].find(word)!=-1:
+                return i[1]
+        return None
 def quote_d(bot,update):
     #daily quote
     if get_config(update.message.from_user.id,'q')==True:
