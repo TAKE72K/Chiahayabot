@@ -840,7 +840,7 @@ def key_work_reaction(word):
         return None
     else:
         for i in kw:
-            if i[0].find(word)!=-1:
+            if word.find(i[0])!=-1:
                 return i[1]
         return None
 def quote_d(bot,update):
