@@ -133,7 +133,7 @@ def get_config(id,setting):
     except:
         return False
     else:
-        config=cell.value
+        config=worksheet.cell(cell.row,cell.col+1).value
         if config.find(setting)!=-1:
             return True
         else:
