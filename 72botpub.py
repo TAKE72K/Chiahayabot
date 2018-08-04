@@ -78,6 +78,50 @@ def strfdelta(tdelta, fmt):
     d["minutes"], d["seconds"] = divmod(rem, 60)
     return fmt.format(**d)
 
+    
+    
+def set_config(id,command):
+    scope = ['https://spreadsheets.google.com/feeds']
+    creds = ServiceAccountCredentials.from_json_keyfile_name('auth.json', scope)
+    client = gspread.authorize(creds)
+    sheet = client.open_by_key(spreadsheet_key)
+    worksheet=sheet.worksheet('config')
+    user_id=id
+    try:
+        #find chat_id
+        cell=worksheet.find(str(user_id))
+    except:
+        #ERROR:not found
+        #creat new record
+        worksheet.insert_row([user_id,command], 1)
+    else:
+        #replace record
+        setting=worksheet(cell.row,cell.col+1).value
+        if setting.find(command)!=-1:
+            setting=setting.replace(command,'')
+        else:
+            setting=setting+command
+        worksheet.update_cell(cell.row,cell.col+1,setting)
+
+def get_config(id,setting):
+    scope = ['https://spreadsheets.google.com/feeds']
+    creds = ServiceAccountCredentials.from_json_keyfile_name('auth.json', scope)
+    client = gspread.authorize(creds)
+    sheet = client.open_by_key(spreadsheet_key)
+    worksheet=sheet.worksheet('config')
+    user_id=id
+    try:
+        #find chat_id
+        cell=worksheet.find(str(user_id))
+    except:
+        return False
+    else:
+        config=cell.value
+        if config.find(setting)!=-1:
+            return True
+        else:
+            return False
+    
 HALF2FULL = dict((i, i + 0xFEE0) for i in range(0x21, 0x7F))
 HALF2FULL[0x20] = 0x3000
 def fullen(s):
