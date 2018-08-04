@@ -765,7 +765,8 @@ def sora(bot,update):
             bot.send_message(chat_id=update.message.chat_id, text=rmsg.document.file_id)
     
     t=key_work_reaction(update.message.text)
-    bot.send_message(chat_id=update.message.chat_id, text=t)
+    if t!=None:
+        bot.send_message(chat_id=update.message.chat_id, text=t)
     #work_sheet_push(list,'last_message')
     if test.find('我也愛そらそら')!=-1:
         bot.send_message(chat_id=update.message.chat_id, text="我愛そらそら一生一世")
