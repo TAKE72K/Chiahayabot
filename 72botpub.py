@@ -77,7 +77,13 @@ def strfdelta(tdelta, fmt):
     d["hours"], rem = divmod(tdelta.seconds, 3600)
     d["minutes"], d["seconds"] = divmod(rem, 60)
     return fmt.format(**d)
-
+def del_cmd(bot,update):
+    """Dectect bot if admin, if True, del cmd"""
+    if bot_is_admin(bot,update):
+        try:
+            bot.delete_message(chat_id=update.message.chat_id, message_id=update.message.message_id)
+        except:
+            pass
     
     
 def set_config(id,command):
