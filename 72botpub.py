@@ -151,7 +151,17 @@ def work_sheet_pop(worksheet_name):
         worksheet.delete_row(1)
         return row
         
-        
+def get_sheet(name):
+    scope = ['https://spreadsheets.google.com/feeds']
+    creds = ServiceAccountCredentials.from_json_keyfile_name('auth.json', scope)
+    client = gspread.authorize(creds)
+    sheet = client.open_by_key(spreadsheet_key)
+    try:
+        worksheet=sheet.worksheet(name)
+    except:
+        return None
+    else:
+        return worksheet
 #tool func
 '''
 daily_remind=updater.job_queue
@@ -748,6 +758,25 @@ class MQBot(telegram.bot.Bot):
         OPTIONAL arguments'''
         return super(MQBot, self).send_message(*args, **kwargs)
 
+def key_work_reaction(word):
+    a=get_sheet('key_word')
+def quote_d(bot,update):
+    #daily quote
+    if get_config(update.message.from_user.id,'q')==True:
+        del_cmd(bot,update)
+        return
+    else:
+        set_config(update.message.from_user.id,'q')
+        del_cmd(bot,update)
+    scope = ['https://spreadsheets.google.com/feeds']
+    creds = ServiceAccountCredentials.from_json_keyfile_name('auth.json', scope)
+    client = gspread.authorize(creds)
+    sheet = client.open_by_key(spreadsheet_key)
+    quote=sheet.worksheet('quote_main').get_all_values()
+    num=random.randint(0,len(quote)-1)
+    text='<pre>'+quote[num][0]+'</pre>\n'+'-----<b>'+quote[num][1]+'</b> より'
+    msg=bot.send_message(chat_id=update.message.chat_id,text=text,parse_mode='HTML')
+
 def main():
     q = mq.MessageQueue(all_burst_limit=3, all_time_limit_ms=3000)
     # set connection pool size for bot 
@@ -787,6 +816,7 @@ def main():
     dispatcher.add_handler(CommandHandler('about',about))
     dispatcher.add_handler(CommandHandler('state',state))
     dispatcher.add_handler(CommandHandler('quote',quote))
+    dispatcher.add_handler(CommandHandler('qt',quote_d))
     dispatcher.add_handler(CommandHandler('punch', punch, pass_args=True))
     dispatcher.add_handler(CommandHandler('caps', caps, pass_args=True))
     dispatcher.add_handler(CommandHandler('r', restart, filters=Filters.user(user_id=580276512)))
