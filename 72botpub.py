@@ -84,7 +84,18 @@ def del_cmd(bot,update):
             bot.delete_message(chat_id=update.message.chat_id, message_id=update.message.message_id)
         except:
             pass
-    
+def bot_is_admin(bot,update):
+    """Dectect bot if admin, return boolen value"""
+    bot_auth=False
+    if update.message.chat.type=='private':
+        return bot_auth
+    else:
+        adminlist=update.message.chat.get_administrators()
+        me=bot.get_me()
+        for b in adminlist:
+                if me.id==b.user.id:
+                    bot_auth=True
+        return bot_auth   
     
 def set_config(id,command):
     scope = ['https://spreadsheets.google.com/feeds']
