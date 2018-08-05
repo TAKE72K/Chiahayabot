@@ -1,6 +1,6 @@
 #coding=utf-8
 class key_word:
-    def __init__(self,words,echo=None,prob=100,els=None,photo=None,video=None,allco=False)
+    def __init__(self,words,echo=None,prob=100,els=None,photo=None,video=None,allco=False):
         self.words=words
         self.echo=echo
         self.prob=prob
