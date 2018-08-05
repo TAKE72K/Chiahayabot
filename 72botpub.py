@@ -281,7 +281,7 @@ BUG什麼的還請多多回報 多多包涵
 def set_kw(bot,update,args):
     text=' '.join(args)
     text=text.split(';')
-    j=kws(text[0],[text[1]])
+    kws={'word':text[0],'echo':text[1]}
     s=json.dumps(kws)
     work_sheet_push([s],'key_word')
     
