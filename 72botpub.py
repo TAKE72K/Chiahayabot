@@ -285,9 +285,6 @@ def set_kw(bot,update,args):
     s=json.dumps(kws)
     work_sheet_push([s],'key_word')
 
-#def 
-
-    
 def state(bot,update):
     #Date:   Thu Jul 19 09:07:15 2018 +0800
     start_oper=datetime(year=2018,month=7,day=19,hour=1,minute=7,second=15)
@@ -843,6 +840,58 @@ class MQBot(telegram.bot.Bot):
         OPTIONAL arguments'''
         return super(MQBot, self).send_message(*args, **kwargs)
 
+def key_word_reaction_json(word):
+    a=get_sheet('key_word_j')
+    list_k=[]
+    try:
+        kw=a.get_all_values()
+    except:
+        return None
+    else:
+        for i in kw:
+            temp=json.loads(i)
+            list_k.append(temp)
+    num = randrange(100)
+
+def find_word(words, echo=None, prob=100, els=None,photo =None, video=None, allco=False):
+        # words: words need to reaction
+        # echo: msg send after reaction
+        # prob: probability, if not, send els msg
+        # els: if not in prob
+        key_words=update.message.text
+        cid=update.message.chat_id
+        # a random number from 0 to 99
+        num = randrange(100)
+        key_words_value=False
+        for check in words:
+            if allco == False:
+                "one word correct will go"
+                if key_words.find(check)!=-1:
+                    key_words_value=True
+            if allco == True:
+                "all word correct will go"
+                if key_words.find(check)!=-1:
+                    key_words_value=True
+                else:
+                    key_words_value=False
+                    break
+        if echo != None:
+            if key_words_value==True and num<prob:
+                bot.send_message(chat_id=cid,text=echo)
+                yuunou(bot,update)
+            if key_words_value==True and num>=prob and els!=None:
+                bot.send_message(chat_id=cid,text=els)
+                yuunou(bot,update)
+        elif video != None:
+            if key_words_value==True and num<prob:
+                bot.send_video(chat_id=cid, video=video)
+                yuunou(bot,update)
+        elif photo != None:
+            if key_words_value==True and num<prob:
+                bot.send_photo(chat_id=cid, photo=photo)
+                yuunou(bot,update)
+        return key_words_value
+    
 def key_work_reaction(word):
     a=get_sheet('key_word')
     try:
