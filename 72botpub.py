@@ -27,7 +27,7 @@ debug_mode=False
 
 if debug_mode is False:
     token = os.environ['TELEGRAM_TOKEN']
-    json=os.environ['JSON']
+    js=os.environ['JSON']
     spreadsheet_key=os.environ['SPREAD']
     # token will taken by heroku
 '''not sure if need to import'''
