@@ -285,7 +285,7 @@ def set_kw(bot,update,args):
     s=json.dumps(kws)
     work_sheet_push([s],'key_word')
 
-def 
+#def 
 
     
 def state(bot,update):
