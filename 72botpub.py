@@ -17,7 +17,7 @@ from telegram import InlineQueryResultArticle, InputTextMessageContent,InlineKey
 from telegram.ext import Updater,CommandHandler,MessageHandler,Filters,InlineQueryHandler,JobQueue
 from telegram.ext.dispatcher import run_async
 import python3pickledb as pickledb
-import key_word as kws
+from key_word import key_word
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 debug_mode=False
