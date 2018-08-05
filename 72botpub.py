@@ -17,6 +17,7 @@ from telegram import InlineQueryResultArticle, InputTextMessageContent,InlineKey
 from telegram.ext import Updater,CommandHandler,MessageHandler,Filters,InlineQueryHandler,JobQueue
 from telegram.ext.dispatcher import run_async
 import python3pickledb as pickledb
+import key_word as kws
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 debug_mode=False
@@ -276,7 +277,13 @@ BUG什麼的還請多多回報 多多包涵
     有事請找<a href="https://t.me/joinchat/IFtWTxKu7x6vuSK8HsFgsQ">〔765技術部〕</a>
     '''
     bot.send_message(chat_id=update.message.chat_id,text=text_a,parse_mode='HTML')
-
+def set_kw(bot,update,args):
+    text=' '.join(args)
+    text=text.split(';')
+    j=kws(text[0],[text[1]])
+    s=json.dumps(kws)
+    work_sheet_push([s],'key_word')
+    
 def state(bot,update):
     #Date:   Thu Jul 19 09:07:15 2018 +0800
     start_oper=datetime(year=2018,month=7,day=19,hour=1,minute=7,second=15)
@@ -901,6 +908,7 @@ def main():
     dispatcher.add_handler(CommandHandler('state',state))
     dispatcher.add_handler(CommandHandler('quote',quote))
     dispatcher.add_handler(CommandHandler('qt',quote_d))
+    dispatcher.add_handler(CommandHandler('sk',set_kw,pass_args=True))
     dispatcher.add_handler(CommandHandler('punch', punch, pass_args=True))
     dispatcher.add_handler(CommandHandler('caps', caps, pass_args=True))
     dispatcher.add_handler(CommandHandler('r', restart, filters=Filters.user(user_id=580276512)))
