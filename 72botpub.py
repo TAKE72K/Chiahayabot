@@ -778,11 +778,11 @@ def sora(bot,update):
     y=key_word_reaction_json(update.message.text)
     if y!=None:
         for i in y:
-            if i[0]='t':
+            if i[0]=='t':
                 bot.send_message(chat_id=update.message.chat_id, text=i[1])
-            elif i[0]='p':
+            elif i[0]=='p':
                 bot.send_photo(chat_id=update.message.chat_id, photo=i[1])
-            elif i[0]='s':
+            elif i[0]=='s':
                 bot.send_sticker(chat_id=update.message.chat_id, sticker=i[1])
 
     #work_sheet_push(list,'last_message')

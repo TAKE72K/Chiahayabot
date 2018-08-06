@@ -20,7 +20,15 @@ while i==True:
         dic['prob']=int(input('prob'))
     except:
         dic['prob']=100
-    
+    dic['sticker']=input('sticker')
+    if dic['sticker']=='':
+        dic['sticker']=None
+    dic['photo']=input('photo')
+    if dic['photo']=='':
+        dic['photo']=None
+    dic['video']=input('video')
+    if dic['video']=='':
+        dic['video']=None
     dic['allco']=bool(input('allco(type anything for True,empty for False'))
     print(json.dumps(dic))
     
