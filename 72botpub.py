@@ -851,7 +851,7 @@ def key_word_reaction_json(word):
     else:
         for i in kw:
             temp=json.loads(i)
-            temp_t=find_word(word,temp['key_words'],echo=temp['echo'],prob=temp['prob'],els=temp['els'],allco=temp[['allco'])
+            temp_t=find_word(word,temp['key_words'],echo=temp['echo'],prob=temp['prob'],els=temp['els'],allco=temp['allco'])
             if temp_t != None:
                 list_k.append(temp_t)
          return list_k
