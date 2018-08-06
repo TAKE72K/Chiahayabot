@@ -772,8 +772,9 @@ def sora(bot,update):
         if rmsg.document!=None:
             bot.send_message(chat_id=update.message.chat_id, text=rmsg.document.file_id)
     
-    t=key_work_reaction(update.message.text)
-    bot.send_message(chat_id=update.message.chat_id, text=t)
+    t=key_word_reaction(update.message.text)
+    if t!=None:
+        bot.send_message(chat_id=update.message.chat_id, text=t)
     y=key_word_reaction_json(update.message.text)
     if y!=None:
         for i in y:
@@ -844,10 +845,10 @@ class MQBot(telegram.bot.Bot):
         return super(MQBot, self).send_message(*args, **kwargs)
 
 def key_word_reaction_json(word):
-    a=get_sheet('key_word_j')
+    key_word_j=get_sheet('key_word_j')
     list_k=[]
     try:
-        kw=a.get_all_values()
+        kw=key_word_j.get_all_values()
     except:
         return None
     else:
@@ -886,7 +887,7 @@ def find_word(sentence,key_words, echo=None, prob=100, els=None,photo =None, vid
             return els
     return None
 
-def key_work_reaction(word):
+def key_word_reaction(word):
     a=get_sheet('key_word')
     try:
         kw=a.get_all_values()
