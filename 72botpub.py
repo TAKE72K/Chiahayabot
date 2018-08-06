@@ -905,7 +905,7 @@ def find_word(sentence,key_words, echo=None, prob=100, els=None,photo =None, vid
             list_r[0]='v'
             list_r[1]=video
             return list_r
-     elif sticker != None:
+    elif sticker != None:
         if key_words_value==True and num<prob:
             list_r[0]='s'
             list_r[1]=sticker
