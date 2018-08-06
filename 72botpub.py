@@ -857,8 +857,8 @@ def key_word_reaction_json(word):
         return list_k
     
 
-def find_word(phrase,key_words, echo=None, prob=100, els=None,photo =None, video=None, allco=False):
-    #phrase:sentence user send
+def find_word(sentence,key_words, echo=None, prob=100, els=None,photo =None, video=None, allco=False):
+    #sentence:sentence user send
     # words: words need to reaction
     # echo: msg send after reaction
     # prob: probability, if not, send els msg
@@ -867,12 +867,12 @@ def find_word(phrase,key_words, echo=None, prob=100, els=None,photo =None, video
     # a random number from 0 to 99
     num = randrange(100)
     key_words_value=False
-    for check in words:
+    for check in key_words:
         if allco == False:
-             if key_words.find(check)!=-1:
+             if sentence.find(check)!=-1:
                 key_words_value=True
         if allco == True:
-            if key_words.find(check)!=-1:
+            if sentence.find(check)!=-1:
                 key_words_value=True
             else:
                 key_words_value=False
