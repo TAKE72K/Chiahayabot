@@ -778,7 +778,13 @@ def sora(bot,update):
     y=key_word_reaction_json(update.message.text)
     if y!=None:
         for i in y:
-            bot.send_message(chat_id=update.message.chat_id, text=i)
+            if i[0]='t':
+                bot.send_message(chat_id=update.message.chat_id, text=i[1])
+            elif i[0]='p':
+                bot.send_photo(chat_id=update.message.chat_id, photo=i[1])
+            elif i[0]='s':
+                bot.send_sticker(chat_id=update.message.chat_id, sticker=i[1])
+
     #work_sheet_push(list,'last_message')
     if test.find('我也愛そらそら')!=-1:
         bot.send_message(chat_id=update.message.chat_id, text="我愛そらそら一生一世")
@@ -854,19 +860,19 @@ def key_word_reaction_json(word):
     else:
         for i in kw:
             temp=json.loads(i[0])
-            temp_t=find_word(word,temp['key_words'],echo=temp['echo'],prob=temp['prob'],els=temp['els'],allco=temp['allco'])
+            temp_t=find_word(word,temp['key_words'],echo=temp['echo'],prob=temp['prob'],els=temp['els'],allco=temp['allco'],photo =temp['photo'], video=temp['video'],sticker=temp['sticker'])
             if temp_t != None:
                 list_k.append(temp_t)
         return list_k
     
 
-def find_word(sentence,key_words, echo=None, prob=100, els=None,photo =None, video=None, allco=False):
+def find_word(sentence,key_words, echo=None, prob=100, els=None,photo =None, video=None,sticker=None, allco=False):
     #sentence:sentence user send
     # words: words need to reaction
     # echo: msg send after reaction
     # prob: probability, if not, send els msg
     # els: if not in prob
-    
+    list_r=['','']
     # a random number from 0 to 99
     num = randrange(100)
     key_words_value=False
@@ -882,9 +888,28 @@ def find_word(sentence,key_words, echo=None, prob=100, els=None,photo =None, vid
                 break
     if echo != None:
         if key_words_value==True and num<prob:
-            return echo
+            list_r[0]='t'
+            list_r[1]=echo
+            return list_r
         if key_words_value==True and num>=prob and els!=None:
-            return els
+            list_r[0]='t'
+            list_r[1]=els
+            return list_r
+    elif photo!=None:
+        if key_words_value==True and num<prob:
+            list_r[0]='p'
+            list_r[1]=photo
+            return list_r
+    elif video != None:
+        if key_words_value==True and num<prob:
+            list_r[0]='v'
+            list_r[1]=video
+            return list_r
+     elif sticker != None:
+        if key_words_value==True and num<prob:
+            list_r[0]='s'
+            list_r[1]=sticker
+            return list_r
     return None
 
 def key_word_reaction(word):
