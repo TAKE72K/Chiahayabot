@@ -13,6 +13,8 @@ while i==True:
             key_words.append(a)
     dic['key_words']=key_words
     dic['echo']=input('echo')
+    if dic['echo']=='':
+        dic['echo']==None
     dic['els']=input('els')
     if dic['els']=='':
         dic['els']=None
