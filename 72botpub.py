@@ -861,15 +861,16 @@ class MQBot(telegram.bot.Bot):
 kw_j_buffer=[]
 def key_word_j_buffer(bot,job):
     global kw_j_buffer
+    k=[]
     key_word_j=get_sheet('key_word_j')
     try:
-        kw_j_buffer=key_word_j.get_all_values()
+        k=key_word_j.get_all_values()
     except:
         return
     else:
-        for i in kw_j_buffer:
+        for i in k:
             temp=json.loads(i[0])
-            i=temp
+            kw_j_buffer.append(temp)
         
 
 def key_word_reaction_json(word):
