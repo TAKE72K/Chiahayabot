@@ -861,6 +861,7 @@ class MQBot(telegram.bot.Bot):
 kw_j_buffer=[]
 def key_word_j_buffer(bot,job):
     global kw_j_buffer
+    kw_j_buffer=[]
     k=[]
     key_word_j=get_sheet('key_word_j')
     try:
