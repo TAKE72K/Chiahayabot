@@ -1,7 +1,11 @@
 #coding=utf-8
 import json
 i=True
+
+
+
 while i==True:
+    text_file = open("Output.txt", "a")
     dic={}
     key_words=[]
     kwi=False
@@ -9,19 +13,21 @@ while i==True:
         a=input('key_word')
         if a=='exit':
             kwi=True
+        elif a=='':
+            pass
         else:
             key_words.append(a)
     dic['key_words']=key_words
     dic['echo']=input('echo')
     if dic['echo']=='':
-        dic['echo']==None
+        dic['echo']=None
     dic['els']=input('els')
     if dic['els']=='':
         dic['els']=None
     try:
         dic['prob']=int(input('prob'))
     except:
-        dic['prob']=100
+        dic['prob']=1000
     dic['sticker']=input('sticker')
     if dic['sticker']=='':
         dic['sticker']=None
@@ -33,4 +39,7 @@ while i==True:
         dic['video']=None
     dic['allco']=bool(input('allco(type anything for True,empty for False'))
     print(json.dumps(dic))
+    s= json.dumps(dic)+'\n'
+    text_file.write(s)
+    text_file.close()
     

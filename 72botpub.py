@@ -866,15 +866,17 @@ def key_word_j_buffer(bot,job):
         kw_j_buffer=key_word_j.get_all_values()
     except:
         return
-        
+    else:
+        for i in kw_j_buffer:
+            temp=json.loads(i[0])
+            i=temp
         
 
 def key_word_reaction_json(word):
     global kw_j_buffer
     list_k=[]
     for i in kw_j_buffer:
-        temp=json.loads(i[0])
-        temp_t=find_word(word,temp['key_words'],echo=temp['echo'],prob=temp['prob'],els=temp['els'],allco=temp['allco'],photo =temp['photo'], video=temp['video'],sticker=temp['sticker'])
+        temp_t=find_word(word,i['key_words'],echo=i['echo'],prob=i['prob'],els=i['els'],allco=i['allco'],photo =i['photo'], video=i['video'],sticker=i['sticker'])
         if temp_t != None:
             list_k.append(temp_t)
     return list_k
