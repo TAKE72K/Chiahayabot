@@ -735,6 +735,15 @@ def inline_ku(bot,update):
 #dispatcher.add_handler(inline_ku_handler)
 
 def sora(bot,update):
+    y=key_word_reaction_json(update.message.text)
+    if y!=None:
+        for i in y:
+            if i[0]=='t':
+                bot.send_message(chat_id=update.message.chat_id, text=i[1])
+            elif i[0]=='p':
+                bot.send_photo(chat_id=update.message.chat_id, photo=i[1])
+            elif i[0]=='s':
+                bot.send_sticker(chat_id=update.message.chat_id, sticker=i[1])
     #an filter handler
     #predict to be unable if privacy mode is on(st bot can't heard text filter real time)
     scope = ['https://spreadsheets.google.com/feeds']
@@ -783,15 +792,7 @@ def sora(bot,update):
     t=key_word_reaction(update.message.text)
     if t!=None:
         bot.send_message(chat_id=update.message.chat_id, text=t)
-    y=key_word_reaction_json(update.message.text)
-    if y!=None:
-        for i in y:
-            if i[0]=='t':
-                bot.send_message(chat_id=update.message.chat_id, text=i[1])
-            elif i[0]=='p':
-                bot.send_photo(chat_id=update.message.chat_id, photo=i[1])
-            elif i[0]=='s':
-                bot.send_sticker(chat_id=update.message.chat_id, sticker=i[1])
+
 
     #work_sheet_push(list,'last_message')
     if test.find('我也愛そらそら')!=-1:
