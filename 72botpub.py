@@ -21,6 +21,14 @@ import python3pickledb as pickledb
 from key_word import key_word as kws
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
+
+#db
+import psycopg2
+
+DATABASE_URL = os.environ['DATABASE_URL']
+
+conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+#db
 debug_mode=False
 
 
@@ -850,7 +858,27 @@ class MQBot(telegram.bot.Bot):
         OPTIONAL arguments'''
         return super(MQBot, self).send_message(*args, **kwargs)
 
+kw_j_buffer=[]
+def key_word_j_buffer(bot,job):
+    global kw_j_buffer
+    key_word_j=get_sheet('key_word_j')
+    try:
+        kw_j_buffer=key_word_j.get_all_values()
+    except:
+        return
+        
+        
+
 def key_word_reaction_json(word):
+    global kw_j_buffer
+    list_k=[]
+    for i in kw_j_buffer:
+        temp=json.loads(i[0])
+        temp_t=find_word(word,temp['key_words'],echo=temp['echo'],prob=temp['prob'],els=temp['els'],allco=temp['allco'],photo =temp['photo'], video=temp['video'],sticker=temp['sticker'])
+        if temp_t != None:
+            list_k.append(temp_t)
+    return list_k
+    '''
     key_word_j=get_sheet('key_word_j')
     list_k=[]
     try:
@@ -864,7 +892,7 @@ def key_word_reaction_json(word):
             if temp_t != None:
                 list_k.append(temp_t)
         return list_k
-    
+    '''
 
 def find_word(sentence,key_words, echo=None, prob=100, els=None,photo =None, video=None,sticker=None, allco=False):
     #sentence:sentence user send
@@ -958,6 +986,7 @@ def main():
     #job
     #updater.job_queue.run_daily(daily_reset,stime(18,22,0))
     updater.job_queue.run_repeating(del_quote, interval=72, first=0)
+    updater.job_queue.run_repeating(key_word_j_buffer, interval=60, first=0)
     jd=False
     history_t=[stime(3,0,0),stime(9,0,0),stime(15,0,0),stime(21,0,0)]
     job_minute = updater.job_queue.run_repeating(wake, interval=600, first=0)
