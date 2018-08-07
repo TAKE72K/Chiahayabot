@@ -941,7 +941,7 @@ def find_word(sentence,key_words, echo=None, prob=100, els=None,photo =None, vid
     elif sticker != None:
         if key_words_value==True and num<prob:
             list_r[0]='s'
-            list_r[1]=sticker
+            list_r[1]=sticker[randrange(len(sticker))]
             return list_r
     return None
 
