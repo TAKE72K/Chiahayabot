@@ -622,7 +622,7 @@ renda_id=0
 combo=0
 @run_async
 def quote(bot,update):
-    del_cmd(bot,update)
+    
     global renda_id
     global combo
     if renda_id==update.message.from_user.id:
@@ -633,11 +633,11 @@ def quote(bot,update):
     if combo>4 and combo<7:
         msg=bot.send_message(chat_id=update.message.chat_id,text='又ㄅ是7az，連打ㄍㄆ')
         work_sheet_push([update.message.chat_id,msg.message_id],'del')
-        work_sheet_push([update.message.chat_id,update.message.message_id],'del')
         
+        del_cmd(bot,update)
         return
     if combo>6:
-        work_sheet_push([update.message.chat_id,update.message.message_id],'del')
+        del_cmd(bot,update)
         return
     scope = ['https://spreadsheets.google.com/feeds']
     creds = ServiceAccountCredentials.from_json_keyfile_name('auth.json', scope)
@@ -649,10 +649,11 @@ def quote(bot,update):
     text='<pre>'+quote[num][0]+'</pre>\n'+'-----<b>'+quote[num][1]+'</b> より'
     par=random.randint(0,3)
 
-
+    
     msg=bot.send_message(chat_id=update.message.chat_id,text=text,parse_mode='HTML')
     
     work_sheet_push([update.message.chat_id,msg.message_id],'del')
+    del_cmd(bot,update)
 
 
 def del_quote(bot,job):
