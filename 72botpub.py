@@ -747,6 +747,8 @@ def sora(bot,update):
                 bot.send_photo(chat_id=update.message.chat_id, photo=i[1])
             elif i[0]=='s':
                 bot.send_sticker(chat_id=update.message.chat_id, sticker=i[1])
+            elif i[0]=='v':
+                bot.send_video(chat_id=update.message.chat_id, video=i[1])
     #an filter handler
     #predict to be unable if privacy mode is on(st bot can't heard text filter real time)
     scope = ['https://spreadsheets.google.com/feeds']
