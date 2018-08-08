@@ -28,8 +28,19 @@ while i==True:
         dic['prob']=int(input('prob'))
     except:
         dic['prob']=1000
-    dic['sticker']=input('sticker')
-    if dic['sticker']=='':
+
+
+    sti=False
+    stic=[]
+    while sti!=True:
+        s=input('sticker')
+        if s=='':
+            sti=True
+        else:
+            stic.append(s)
+    if bool(stic):
+        dic['sticker']=stic
+    else:
         dic['sticker']=None
     dic['photo']=input('photo')
     if dic['photo']=='':

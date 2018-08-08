@@ -2,3 +2,5 @@
 {"key_words": ["\u4f9d\u7530", "\u82b3\u4e43"], "echo": "\u3076\u304a\u304a\u30fc", "els": null, "prob": 1000, "sticker": null, "photo": null, "video": null, "allco": false}
 {"key_words": ["", "", "", "", "", "", ""], "echo": "", "els": null, "prob": 1000, "sticker": null, "photo": null, "video": null, "allco": false}
 {"key_words": ["\u3042\u3084\u3081", "\u6d5c\u53e3", "\u5fcd"], "echo": "", "els": null, "prob": 100, "sticker": "CAADAQADsAgAAmJehwcQYsOf8S_81QI", "photo": null, "video": null, "allco": false}
+{"key_words": ["gf"], "echo": "d", "els": null, "prob": 1000, "sticker": ["dd", "ddd"], "photo": null, "video": null, "allco": false}
+{"key_words": ["d"], "echo": "szf", "els": null, "prob": 1000, "sticker": ["dd", "dd", "d", "d"], "photo": null, "video": null, "allco": false}

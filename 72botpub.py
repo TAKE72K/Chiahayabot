@@ -647,11 +647,12 @@ def quote(bot,update):
     num=random.randint(0,len(quote)-1)
     text='<pre>'+quote[num][0]+'</pre>\n'+'-----<b>'+quote[num][1]+'</b> より'
     par=random.randint(0,3)
-    time.sleep(par)
+    del_cmd(bot,update)
+
     msg=bot.send_message(chat_id=update.message.chat_id,text=text,parse_mode='HTML')
     
     work_sheet_push([update.message.chat_id,msg.message_id],'del')
-    work_sheet_push([update.message.chat_id,update.message.message_id],'del')
+
 
 def del_quote(bot,job):
     scope = ['https://spreadsheets.google.com/feeds']
@@ -967,7 +968,7 @@ def quote_d(bot,update):
     scope = ['https://spreadsheets.google.com/feeds']
     creds = ServiceAccountCredentials.from_json_keyfile_name('auth.json', scope)
     client = gspread.authorize(creds)
-    sheet = client.open_by_key(spreadsheet_key)
+    sheet = client.open_by_key(spreadspreadsheet_key)
     quote=sheet.worksheet('quote_main').get_all_values()
     num=random.randint(0,len(quote)-1)
     text='<pre>'+quote[num][0]+'</pre>\n'+'-----<b>'+quote[num][1]+'</b> より'
