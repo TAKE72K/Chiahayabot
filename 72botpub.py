@@ -736,6 +736,22 @@ def inline_ku(bot,update):
 
 #inline_ku_handler = InlineQueryHandler(inline_ku)
 #dispatcher.add_handler(inline_ku_handler)
+last_message_list=[]
+def update_lastm(bot,job):
+    global last_message_list
+    scope = ['https://spreadsheets.google.com/feeds']
+    creds = ServiceAccountCredentials.from_json_keyfile_name('auth.json', scope)
+    client = gspread.authorize(creds)
+    sheet = client.open_by_key(spreadsheet_key)
+    worksheet=sheet.worksheet('last_message')
+    
+    for i in last_message_list:
+        try:
+            cell=worksheet.find(i[0])
+        except:#not found
+            worksheet.insert_row(i, 1)
+        else:
+            worksheet.update_cell(cell.row,cell.col+1,i[1])
 
 def sora(bot,update):
     y=key_word_reaction_json(update.message.text)
@@ -751,20 +767,18 @@ def sora(bot,update):
                 bot.send_video(chat_id=update.message.chat_id, video=i[1])
     #an filter handler
     #predict to be unable if privacy mode is on(st bot can't heard text filter real time)
-    scope = ['https://spreadsheets.google.com/feeds']
-    creds = ServiceAccountCredentials.from_json_keyfile_name('auth.json', scope)
-    client = gspread.authorize(creds)
-    sheet = client.open_by_key(spreadsheet_key)
-    worksheet=sheet.worksheet('last_message')
     chat_id=update.message.chat_id
     lmessage_id=update.message.message_id
     list=[str(chat_id),lmessage_id]
-    try:
-        cell=worksheet.find(str(chat_id))
-    except:#not found
-        worksheet.insert_row(list, 2)
-    else:
-        worksheet.update_cell(cell.row,cell.col+1,lmessage_id)
+    global last_message_list
+    fvalue=False
+    for i in last_message_list:
+        if i[0].find(list[0])!=-1:
+            fvalue=True
+            i[1]=list[1]
+            break
+    if fvalue==False:
+        last_message_list.append(list)
     
     
     test=str(update.message.text)
