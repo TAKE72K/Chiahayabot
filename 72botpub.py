@@ -24,13 +24,13 @@ from key_word import key_word as kws
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import requests
-#db
+'''
 import psycopg2
 
 DATABASE_URL = os.environ['DATABASE_URL']
 
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
-#db
+'''
 debug_mode=False
 
 
