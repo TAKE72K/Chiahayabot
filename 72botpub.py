@@ -625,6 +625,7 @@ def quote(bot,update):
     
     global renda_id
     global combo
+    global del_list
     if renda_id==update.message.from_user.id:
         combo=combo+1
     else:
@@ -652,21 +653,12 @@ def quote(bot,update):
     
     msg=bot.send_message(chat_id=update.message.chat_id,text=text,parse_mode='HTML')
     
-    work_sheet_push([update.message.chat_id,msg.message_id],'del')
+    del_list.append([update.message.chat_id,msg.message_id])
     del_cmd(bot,update)
 
-
+del_list=[]
 def del_quote(bot,job):
-    scope = ['https://spreadsheets.google.com/feeds']
-    creds = ServiceAccountCredentials.from_json_keyfile_name('auth.json', scope)
-    #got from google api
-    #attach mine for example
-    #try to set in environ values but got fail
-    client = gspread.authorize(creds)
-    spreadsheet = client.open_by_key(spreadsheet_key)
-    worksheet=spreadsheet.worksheet('del')
-    del_list=worksheet.get_all_values()
-    spreadsheet.del_worksheet(worksheet)
+    global del_list
     game_del=False
     for i in del_list:
         chat_id=i[0]
