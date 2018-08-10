@@ -21,7 +21,7 @@ import python3pickledb as pickledb
 from key_word import key_word as kws
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
-
+import requests
 #db
 import psycopg2
 
@@ -800,7 +800,19 @@ def sora(bot,update):
             bot.send_message(chat_id=update.message.chat_id, text=rmsg.sticker.file_id)
         if rmsg.document!=None:
             bot.send_message(chat_id=update.message.chat_id, text=rmsg.document.file_id)
-    
+    if test.find(' #とは')!=-1 or test.find('#とは ')!=-1:
+        if update.message.reply_to_message==None:
+            test=test.replace(' #とは','').replace('#とは ','')
+            exist='http://api.nicodic.jp/page.exist/n/a/'+test
+            r=requests.get(exist).text
+            if r=='n(1);':
+                summary='http://api.nicodic.jp/page.summary/n/a/'+test
+                r=requests.get(summary).text
+                r=r.replace('n(','').replace(');','')
+                dicc=json.loads(r)
+                bot.send_message(chat_id=update.message.chat_id, text=dicc['summary'])
+            
+            return
 
 
     #work_sheet_push(list,'last_message')
