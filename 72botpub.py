@@ -814,7 +814,7 @@ def sora(bot,update):
                 #dicc=json.loads(r)
                 #bot.send_message(chat_id=update.message.chat_id, text=dicc['summary'])
                 T=summa(test)
-                bot.send_message(chat_id=update.message.chat_id, text=T)
+                bot.send_message(chat_id=update.message.chat_id, text=T,timeout=10)
             
             return
 
