@@ -808,11 +808,11 @@ def sora(bot,update):
             exist='http://api.nicodic.jp/page.exist/n/a/'+test
             r=requests.get(exist).text
             if r=='n(1);':
-                summary='http://api.nicodic.jp/page.summary/n/a/'+test
-                r=requests.get(summary).text
-                r=r.replace('n(','').replace(');','')
-                dicc=json.loads(r)
-                bot.send_message(chat_id=update.message.chat_id, text=dicc['summary'])
+                #summary='http://api.nicodic.jp/page.summary/n/a/'+test
+                #r=requests.get(summary).text
+                #r=r.replace('n(','').replace(');','')
+                #dicc=json.loads(r)
+                #bot.send_message(chat_id=update.message.chat_id, text=dicc['summary'])
                 T=summa(test)
                 bot.send_message(chat_id=update.message.chat_id, text=T)
             
