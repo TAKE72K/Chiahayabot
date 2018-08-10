@@ -25,6 +25,10 @@ def cleanhtml(raw_html):
   return cleantext
 exist_url='http://api.nicodic.jp/page.exist/json/a/'
 nicoDic='http://dic.nicovideo.jp/a/'
+CHROMEDRIVER_PATH = "/app/.chromedriver/bin/chromedriver"
+
+chrome_bin = os.environ.get('GOOGLE_CHROME_BIN', "chromedriver")
+
 def summary(words):
 #words=input()
 #first check if the page exist with API
@@ -33,8 +37,13 @@ def summary(words):
     if exist: 
     #get html code by selenium
         options = webdriver.ChromeOptions()
+        options.binary_location = chrome_bin
+        options.add_argument("--disable-gpu")
+        options.add_argument("--no-sandbox")
         options.add_argument('headless')
-        driver = webdriver.Chrome(executable_path='/app/.apt/usr/bin/google-chrome',chrome_options=options)
+        options.add_argument('window-size=1200x600')
+        driver = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH, chrome_options=options)
+        
         driver.get(nicoDic+words)
         html = driver.page_source # get html
         driver.close()  # close driver
