@@ -21,7 +21,7 @@ import python3pickledb as pickledb
 from key_word import key_word as kws
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
-
+import requests
 #db
 import psycopg2
 
@@ -620,11 +620,22 @@ def caps(bot, update, args):
     bot.send_message(chat_id=update.message.chat_id, text=text_caps)
 renda_id=0
 combo=0
+buffer_quote=[]
+buffer_config=[]
+def buffer_refresh(bot,job):
+    global buffer_quote
+
+    qsheet=get_sheet('quote')
+    buffer_quote=qsheet.get_all_values()
+    
+    
 @run_async
 def quote(bot,update):
     
     global renda_id
     global combo
+    global buffer_quote
+    global del_list
     if renda_id==update.message.from_user.id:
         combo=combo+1
     else:
@@ -632,41 +643,23 @@ def quote(bot,update):
         combo=1
     if combo>4 and combo<7:
         msg=bot.send_message(chat_id=update.message.chat_id,text='又ㄅ是7az，連打ㄍㄆ')
-        work_sheet_push([update.message.chat_id,msg.message_id],'del')
+        del_list.append([update.message.chat_id,msg.message_id])
         
         del_cmd(bot,update)
         return
     if combo>6:
         del_cmd(bot,update)
         return
-    scope = ['https://spreadsheets.google.com/feeds']
-    creds = ServiceAccountCredentials.from_json_keyfile_name('auth.json', scope)
-    client = gspread.authorize(creds)
-    sheet = client.open_by_key(spreadsheet_key)
-    qsheet=sheet.worksheet('quote')
-    quote=qsheet.get_all_values()
-    num=random.randint(0,len(quote)-1)
-    text='<pre>'+quote[num][0]+'</pre>\n'+'-----<b>'+quote[num][1]+'</b> より'
-    par=random.randint(0,3)
-
-    
+    num=random.randint(0,len(buffer_quote)-1)
+    text='<pre>'+buffer_quote[num][0]+'</pre>\n'+'-----<b>'+buffer_quote[num][1]+'</b> より'
     msg=bot.send_message(chat_id=update.message.chat_id,text=text,parse_mode='HTML')
     
-    work_sheet_push([update.message.chat_id,msg.message_id],'del')
+    del_list.append([update.message.chat_id,msg.message_id])
     del_cmd(bot,update)
 
-
+del_list=[]
 def del_quote(bot,job):
-    scope = ['https://spreadsheets.google.com/feeds']
-    creds = ServiceAccountCredentials.from_json_keyfile_name('auth.json', scope)
-    #got from google api
-    #attach mine for example
-    #try to set in environ values but got fail
-    client = gspread.authorize(creds)
-    spreadsheet = client.open_by_key(spreadsheet_key)
-    worksheet=spreadsheet.worksheet('del')
-    del_list=worksheet.get_all_values()
-    spreadsheet.del_worksheet(worksheet)
+    global del_list
     game_del=False
     for i in del_list:
         chat_id=i[0]
@@ -736,6 +729,22 @@ def inline_ku(bot,update):
 
 #inline_ku_handler = InlineQueryHandler(inline_ku)
 #dispatcher.add_handler(inline_ku_handler)
+last_message_list=[]
+def update_lastm(bot,job):
+    global last_message_list
+    scope = ['https://spreadsheets.google.com/feeds']
+    creds = ServiceAccountCredentials.from_json_keyfile_name('auth.json', scope)
+    client = gspread.authorize(creds)
+    sheet = client.open_by_key(spreadsheet_key)
+    worksheet=sheet.worksheet('last_message')
+    
+    for i in last_message_list:
+        try:
+            cell=worksheet.find(i[0])
+        except:#not found
+            worksheet.insert_row(i, 1)
+        else:
+            worksheet.update_cell(cell.row,cell.col+1,i[1])
 
 def sora(bot,update):
     y=key_word_reaction_json(update.message.text)
@@ -751,20 +760,18 @@ def sora(bot,update):
                 bot.send_video(chat_id=update.message.chat_id, video=i[1])
     #an filter handler
     #predict to be unable if privacy mode is on(st bot can't heard text filter real time)
-    scope = ['https://spreadsheets.google.com/feeds']
-    creds = ServiceAccountCredentials.from_json_keyfile_name('auth.json', scope)
-    client = gspread.authorize(creds)
-    sheet = client.open_by_key(spreadsheet_key)
-    worksheet=sheet.worksheet('last_message')
     chat_id=update.message.chat_id
     lmessage_id=update.message.message_id
     list=[str(chat_id),lmessage_id]
-    try:
-        cell=worksheet.find(str(chat_id))
-    except:#not found
-        worksheet.insert_row(list, 2)
-    else:
-        worksheet.update_cell(cell.row,cell.col+1,lmessage_id)
+    global last_message_list
+    fvalue=False
+    for i in last_message_list:
+        if i[0].find(list[0])!=-1:
+            fvalue=True
+            i[1]=list[1]
+            break
+    if fvalue==False:
+        last_message_list.append(list)
     
     
     test=str(update.message.text)
@@ -793,10 +800,19 @@ def sora(bot,update):
             bot.send_message(chat_id=update.message.chat_id, text=rmsg.sticker.file_id)
         if rmsg.document!=None:
             bot.send_message(chat_id=update.message.chat_id, text=rmsg.document.file_id)
-    
-    t=key_word_reaction(update.message.text)
-    if t!=None:
-        bot.send_message(chat_id=update.message.chat_id, text=t)
+    if test.find(' #とは')!=-1 or test.find('#とは ')!=-1:
+        if update.message.reply_to_message==None:
+            test=test.replace(' #とは','').replace('#とは ','')
+            exist='http://api.nicodic.jp/page.exist/n/a/'+test
+            r=requests.get(exist).text
+            if r=='n(1);':
+                summary='http://api.nicodic.jp/page.summary/n/a/'+test
+                r=requests.get(summary).text
+                r=r.replace('n(','').replace(');','')
+                dicc=json.loads(r)
+                bot.send_message(chat_id=update.message.chat_id, text=dicc['summary'])
+            
+            return
 
 
     #work_sheet_push(list,'last_message')
@@ -867,7 +883,7 @@ class MQBot(telegram.bot.Bot):
 kw_j_buffer=[]
 def key_word_j_buffer(bot,job):
     global kw_j_buffer
-    kw_j_buffer=[]
+    kw_j_buffer_temp=[]
     k=[]
     key_word_j=get_sheet('key_word_j')
     try:
@@ -876,9 +892,13 @@ def key_word_j_buffer(bot,job):
         return
     else:
         for i in k:
-            temp=json.loads(i[0])
-            kw_j_buffer.append(temp)
-        
+            try:
+                temp=json.loads(i[0])
+            except:
+                pass
+            else:
+                kw_j_buffer_temp.append(temp)
+    kw_j_buffer=kw_j_buffer_temp
 
 def key_word_reaction_json(word):
     global kw_j_buffer
@@ -997,6 +1017,8 @@ def main():
     #updater.job_queue.run_daily(daily_reset,stime(18,22,0))
     updater.job_queue.run_repeating(del_quote, interval=72, first=0)
     updater.job_queue.run_repeating(key_word_j_buffer, interval=60, first=0)
+    updater.job_queue.run_repeating(update_lastm, interval=60, first=0)
+    updater.job_queue.run_repeating(buffer_refresh, interval=60, first=0)
     jd=False
     history_t=[stime(3,0,0),stime(9,0,0),stime(15,0,0),stime(21,0,0)]
     job_minute = updater.job_queue.run_repeating(wake, interval=600, first=0)

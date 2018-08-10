@@ -11,10 +11,9 @@ while i==True:
     kwi=False
     while kwi!=True:
         a=input('key_word')
-        if a=='exit':
+        if a=='':
             kwi=True
-        elif a=='':
-            pass
+        
         else:
             key_words.append(a)
     dic['key_words']=key_words
@@ -42,15 +41,51 @@ while i==True:
         dic['sticker']=stic
     else:
         dic['sticker']=None
-    dic['photo']=input('photo')
-    if dic['photo']=='':
+        
+    sti=False
+    stic=[]
+    while sti!=True:
+        s=input('photo')
+        if s=='':
+            sti=True
+        else:
+            stic.append(s)
+    if bool(stic):
+        dic['photo']=stic
+    else:
         dic['photo']=None
-    dic['video']=input('video')
-    if dic['video']=='':
+    
+    
+    sti=False
+    stic=[]
+    while sti!=True:
+        s=input('video')
+        if s=='':
+            sti=True
+        else:
+            stic.append(s)
+    if bool(stic):
+        dic['video']=stic
+    else:
         dic['video']=None
+
+    sti=False 
+    stic=[]
+    while sti!=True:
+        s=input('passArg')
+        if s=='':
+            sti=True
+        else:
+            stic.append(s)
+    if bool(stic):
+        dic['passArg']=stic
+    else:
+        dic['passArg']=None
     dic['allco']=bool(input('allco(type anything for True,empty for False'))
+    
+    
     print(json.dumps(dic))
-    s= json.dumps(dic)+'\n'
+    s= json.dumps(dic, ensure_ascii=False)
     text_file.write(s)
     text_file.close()
     
