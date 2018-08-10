@@ -621,6 +621,7 @@ def caps(bot, update, args):
 renda_id=0
 combo=0
 buffer_quote=[]
+buffer_config=[]
 def buffer_refresh(bot,job):
     global buffer_quote
 
@@ -800,9 +801,6 @@ def sora(bot,update):
         if rmsg.document!=None:
             bot.send_message(chat_id=update.message.chat_id, text=rmsg.document.file_id)
     
-    t=key_word_reaction(update.message.text)
-    if t!=None:
-        bot.send_message(chat_id=update.message.chat_id, text=t)
 
 
     #work_sheet_push(list,'last_message')
