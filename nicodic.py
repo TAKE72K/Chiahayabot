@@ -49,6 +49,6 @@ def summary(words):
         if content.find('\n\n')!=-1:
             content=content[:content.find('\n\n')]
         return cleanhtml(content
-    else:
-        return None
+    
+    return None
 
