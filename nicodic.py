@@ -3,7 +3,8 @@ import re
 import os
 from bs4 import BeautifulSoup
 from selenium import webdriver
-chrome_exec_shim = os.environ.get("GOOGLE_CHROME_BIN", "chromedriver")
+'''
+chrome_exec_shim = os.environ.get("GOOGLE_CHROME_BIN", "chromedriver")'''
 #self.selenium = webdriver.Chrome(executable_path=chrome_exec_shim)
 def tohanear(con,pos):
     ntohaPos=con.find('とは')
@@ -33,7 +34,7 @@ def summary(words):
     #get html code by selenium
         options = webdriver.ChromeOptions()
         options.add_argument('headless')
-        driver = webdriver.Chrome(executable_path=chrome_exec_shim,chrome_options=options)
+        driver = webdriver.Chrome(executable_path='/app/.apt/usr/bin/google-chrome',chrome_options=options)
         driver.get(nicoDic+words)
         html = driver.page_source # get html
         driver.close()  # close driver
