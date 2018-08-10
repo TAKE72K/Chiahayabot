@@ -642,14 +642,14 @@ def quote(bot,update):
         combo=1
     if combo>4 and combo<7:
         msg=bot.send_message(chat_id=update.message.chat_id,text='又ㄅ是7az，連打ㄍㄆ')
-        work_sheet_push([update.message.chat_id,msg.message_id],'del')
+        del_list.append([update.message.chat_id,msg.message_id])
         
         del_cmd(bot,update)
         return
     if combo>6:
         del_cmd(bot,update)
         return
-    num=random.randint(0,len(quote)-1)
+    num=random.randint(0,len(buffer_quote)-1)
     text='<pre>'+buffer_quote[num][0]+'</pre>\n'+'-----<b>'+buffer_quote[num][1]+'</b> より'
     msg=bot.send_message(chat_id=update.message.chat_id,text=text,parse_mode='HTML')
     
