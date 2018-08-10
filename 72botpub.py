@@ -862,7 +862,7 @@ def unknown(bot, update):
 def wake(bot,update):
 #prevent bot from going to sleep
     bot.send_message(chat_id=580276512, text="すみません、よく分かりません。")
-
+'''
 class MQBot(telegram.bot.Bot):
     '''A subclass of Bot which delegates send method handling to MQ'''
     def __init__(self, *args, is_queued_def=True, mqueue=None, **kwargs):
@@ -883,7 +883,7 @@ class MQBot(telegram.bot.Bot):
         '''Wrapped method would accept new `queued` and `isgroup`
         OPTIONAL arguments'''
         return super(MQBot, self).send_message(*args, **kwargs)
-
+'''
 kw_j_buffer=[]
 def key_word_j_buffer(bot,job):
     global kw_j_buffer
