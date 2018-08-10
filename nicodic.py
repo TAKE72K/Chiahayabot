@@ -50,5 +50,5 @@ def summary(words):
             content=content[:content.find('\n\n')]
         return cleanhtml(content
     
-    return None
+    return ''
 
