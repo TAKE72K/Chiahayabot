@@ -30,7 +30,7 @@ def summary(words):
     #get html code by selenium
         options = webdriver.ChromeOptions()
         options.add_argument('headless')
-        driver = webdriver.Chrome('./chromedriver',chrome_options=options)
+        driver = webdriver.Chrome(executable_path='./chromedriver',chrome_options=options)
         driver.get(nicoDic+words)
         html = driver.page_source # get html
         driver.close()  # close driver
