@@ -2,8 +2,7 @@
 import re
 import random
 from nicodic import summary
-from bs4 import BeautifulSoup
-from selenium import webdriver
+
 from random import randrange
 import os
 import sys
