@@ -1,7 +1,7 @@
 ﻿import telegram
 import re
 import random
-from nicodic import summary
+from nicodic import summary as summa
 
 from random import randrange
 import os
@@ -813,7 +813,8 @@ def sora(bot,update):
                 r=r.replace('n(','').replace(');','')
                 dicc=json.loads(r)
                 bot.send_message(chat_id=update.message.chat_id, text=dicc['summary'])
-                bot.send_message(chat_id=update.message.chat_id, text=summary(test))
+                T=summa(test)
+                bot.send_message(chat_id=update.message.chat_id, text=T)
             
             return
 
