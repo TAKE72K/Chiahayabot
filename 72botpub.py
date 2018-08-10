@@ -864,7 +864,7 @@ def wake(bot,update):
     bot.send_message(chat_id=580276512, text="すみません、よく分かりません。")
 '''
 class MQBot(telegram.bot.Bot):
-    '''A subclass of Bot which delegates send method handling to MQ'''
+    A subclass of Bot which delegates send method handling to MQ
     def __init__(self, *args, is_queued_def=True, mqueue=None, **kwargs):
         super(MQBot, self).__init__(*args, **kwargs)
         # below 2 attributes should be provided for decorator usage
@@ -880,8 +880,8 @@ class MQBot(telegram.bot.Bot):
 
     @mq.queuedmessage
     def send_message(self, *args, **kwargs):
-        '''Wrapped method would accept new `queued` and `isgroup`
-        OPTIONAL arguments'''
+        Wrapped method would accept new `queued` and `isgroup`
+        OPTIONAL arguments
         return super(MQBot, self).send_message(*args, **kwargs)
 '''
 kw_j_buffer=[]
