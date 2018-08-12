@@ -34,7 +34,7 @@ conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 #db
 debug_mode=False
 
-
+curs=conn.cursor()
 
 if debug_mode is False:
     token = os.environ['TELEGRAM_TOKEN']
@@ -132,7 +132,25 @@ def set_config(id,command):
         else:
             setting=setting+command
         worksheet.update_cell(cell.row,cell.col+1,setting)
-
+def dbsave(table,data):
+    try:
+        curs.execute("INSERT INTO randchihaya(name,url) VALUES(%s,%s)",(data[0],data[1]))
+    except:
+        curs.rollback()
+    else:
+        conn.commit()
+def dbrandGet():
+    str=None
+    try:
+        curs.execute("""SELECT url FROM randchihaya
+                        ORDER BY RANDOM()
+                        LIMIT 1""")
+    except:
+        curs.rollback()
+    else:
+        str=curs.fetchone()[0]
+    return str
+    
 def get_config(id,setting):
     scope = ['https://spreadsheets.google.com/feeds']
     creds = ServiceAccountCredentials.from_json_keyfile_name('auth.json', scope)
@@ -367,7 +385,9 @@ def set_name(bot,update,args):
             #bot.send_message(chat_id=update.message.chat_id,text='Bot:Not enough rights to change chat title')
         else:
             nsheet.update_cell(cell.row,cell.col+1,name)
-
+def randchihaya(bot,update):
+    url=dbrandget()
+    bot.send_photo(chat_id=update.message.chat_id,photo=url)
 def gdmn(bot,update):
     #a good morning func
     scope = ['https://spreadsheets.google.com/feeds']
@@ -1046,6 +1066,7 @@ def main():
     dispatcher.add_handler(CommandHandler('state',state))
     dispatcher.add_handler(CommandHandler('quote',quote))
     dispatcher.add_handler(CommandHandler('qt',quote_d))
+    dispatcher.add_handler(CommandHandler('randChihaya',randchihaya))
     dispatcher.add_handler(CommandHandler('sk',set_kw,pass_args=True))
     dispatcher.add_handler(CommandHandler('punch', punch, pass_args=True))
     dispatcher.add_handler(CommandHandler('caps', caps, pass_args=True))
