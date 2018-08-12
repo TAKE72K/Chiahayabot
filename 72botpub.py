@@ -807,6 +807,10 @@ def sora(bot,update):
             qlist=[update.message.reply_to_message.text,update.message.reply_to_message.from_user.first_name]
             work_sheet_push(qlist,'quote')
             return
+    if test.find('adp')!=-1:
+        rmsg=update.message.reply_to_message
+        data=['adp',rmsg.text]
+        dbsave('vv',data)
     if test.find('fid')!=-1:
         rmsg=update.message.reply_to_message
         if rmsg.photo!=None:
