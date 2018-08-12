@@ -383,7 +383,7 @@ def set_name(bot,update,args):
         else:
             nsheet.update_cell(cell.row,cell.col+1,name)
 def randchihaya(bot,update):
-    url=dbrandget()
+    url=dbrandGet()
     bot.send_photo(chat_id=update.message.chat_id,photo=url)
 def gdmn(bot,update):
     #a good morning func
