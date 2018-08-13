@@ -64,11 +64,16 @@ def summary(words):
             h2_1Pos=html.find('<h2 id="h2-1">')
             h2_2Pos=html.find('<h2 id="h2-2">')
             contentDodge=html[h2_1Pos:h2_2Pos]
+            contentDodge=contentDodge.replace('曖昧さ回避','')
+            
+            contentDodge=cleanhtml(contentDodge)
             while contentDodge.find('\n\n')!=-1:
                 contentDodge=contentDodge.replace('\n\n','\n')
-            if contentDodge[len(contentDodge)-1]=='\n':
+            while contentDodge[len(contentDodge)-1]=='\n':
                 contentDodge=contentDodge[:len(contentDodge)-1]
-            return cleanhtml(contentDodge)
+            while contentDodge[0]=='\n':
+                contentDodge=contentDodge[1:len(contentDodge)]
+            return contentDodge
         
         
         
