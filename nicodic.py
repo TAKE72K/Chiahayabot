@@ -16,8 +16,14 @@ def tohanear(con,pos):
         if abs(i-ntohaPos)<compare:
             compare=abs(i-ntohaPos)
             nearT=i
-    
+    incPos=con.find('「')
+    if incPos!=-1:
+        if (ntohaPos-incPos)>0:
+            nearT=incPos
     return nearT
+
+
+
 def cleanhtml(raw_html):
     cleanr = re.compile('<.*?>')
     cleantext = re.sub(cleanr, '', raw_html)
@@ -59,9 +65,15 @@ def summary(words):
         summaryPos=[h.start() for h in re.finditer(title, content)]
         content=content[tohanear(content,summaryPos):]
         content=cleanhtml(content)
-        if content.find('\n\n')!=-1:
-            content=content[:content.find('\n\n')]
-        return cleanhtml(content)
+        #if content.find('\n\n')!=-1:
+        #    content=content[:content.find('\n\n')]
+        if content.find('である。')!=-1:
+            content=content[:content.find('である。')+4]
+        while content.find('\n\n')!=-1:
+            content=content.replace('\n\n','\n')
+        if content[len(content)-1]=='\n':
+            content=content[:len(content)-1]
+        return content
     
     return None
 
