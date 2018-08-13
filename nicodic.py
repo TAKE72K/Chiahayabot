@@ -8,10 +8,11 @@ chrome_exec_shim = os.environ.get("GOOGLE_CHROME_BIN", "chromedriver")'''
 #self.selenium = webdriver.Chrome(executable_path=chrome_exec_shim)
 def tohanear(con,pos):
     ntohaPos=con.find('とは')
+    nearT=None
     if ntohaPos==-1:
         ntohaPos=con.find('は')
     compare=1000
-    nearT=None
+    
     for i in pos:
         if abs(i-ntohaPos)<compare:
             compare=abs(i-ntohaPos)
@@ -84,11 +85,16 @@ def summary(words):
         h2Pos=html.find('<h2')
         content=html[divPos:h2Pos]
         purecontent=content
-        #print (content)
+        
+        print(title)
         content=cleanhtml(content)
+        if title.find('(')!=-1:
+            p1=title.find('(')
+            title=title[:p1]
+        
         summaryPos=[h.start() for h in re.finditer(title, content)]
         content=content[tohanear(content,summaryPos):]
-        
+
 
         if content.find('である。')!=-1:
             content=content[:content.find('である。')+4]
@@ -98,7 +104,7 @@ def summary(words):
             content=content[:len(content)-1]
         if content.find('掲示板')==-1:
             return content
-        print(content)
+        #print(content)
         #not stander
         h2_1Pos=html.find('<h2 id="h2-1">')
         h2_2Pos=html.find('<h2 id="h2-2">')
