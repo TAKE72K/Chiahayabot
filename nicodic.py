@@ -74,7 +74,8 @@ def summary(words):
             while contentDodge[0]=='\n':
                 contentDodge=contentDodge[1:len(contentDodge)]
             return contentDodge
-        
+        if html.find('イェッタイガー')!=-1:
+            return 'イェッタイガーとは、地下アイドル系ライブを発端とするコール（オタ芸）の一種である。「家虎」などとも略される。'
         
         
         
@@ -84,12 +85,11 @@ def summary(words):
         content=html[divPos:h2Pos]
         purecontent=content
         #print (content)
-
+        content=cleanhtml(content)
         summaryPos=[h.start() for h in re.finditer(title, content)]
         content=content[tohanear(content,summaryPos):]
-        content=cleanhtml(content)
-        #if content.find('\n\n')!=-1:
-        #    content=content[:content.find('\n\n')]
+        
+
         if content.find('である。')!=-1:
             content=content[:content.find('である。')+4]
         while content.find('\n\n')!=-1:
@@ -98,7 +98,7 @@ def summary(words):
             content=content[:len(content)-1]
         if content.find('掲示板')==-1:
             return content
-    
+        print(content)
         #not stander
         h2_1Pos=html.find('<h2 id="h2-1">')
         h2_2Pos=html.find('<h2 id="h2-2">')
