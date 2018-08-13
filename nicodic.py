@@ -44,7 +44,7 @@ def summary(words):
                 realurl=realurl+ht.text[urlPos]
                 urlPos=urlPos+1
             realurl=realurl.replace('URL=http://dic.nicovideo.jp/a/','')
-            html=requests.get(nicoDic+realurl)
+            html=requests.get(nicoDic+realurl).text
         
         soup=BeautifulSoup(html,features="html.parser")
         title=soup.title.string
