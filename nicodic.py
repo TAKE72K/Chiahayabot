@@ -16,18 +16,17 @@ def tohanear(con,pos):
         if abs(i-ntohaPos)<compare:
             compare=abs(i-ntohaPos)
             nearT=i
-    if con.find('「'):
-        nearT=con.find('「')
+    
     return nearT
 def cleanhtml(raw_html):
-  cleanr = re.compile('<.*?>')
-  cleantext = re.sub(cleanr, '', raw_html)
-  return cleantext
+    cleanr = re.compile('<.*?>')
+    cleantext = re.sub(cleanr, '', raw_html)
+    return cleantext
 exist_url='http://api.nicodic.jp/page.exist/json/a/'
 nicoDic='http://dic.nicovideo.jp/a/'
 CHROMEDRIVER_PATH = "/app/.chromedriver/bin/chromedriver"
 
-chrome_bin = os.environ.get('GOOGLE_CHROME_BIN', "chromedriver")
+#chrome_bin = os.environ.get('GOOGLE_CHROME_BIN', "chromedriver")
 
 def summary(words):
 #words=input()
@@ -35,18 +34,18 @@ def summary(words):
     exist=requests.get(exist_url+words)
     exist=exist.json()
     if exist: 
-    #get html code by selenium
-        options = webdriver.ChromeOptions()
-        options.binary_location = chrome_bin
-        options.add_argument("--disable-gpu")
-        options.add_argument("--no-sandbox")
-        options.add_argument('headless')
-        options.add_argument('window-size=1200x600')
-        driver = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH, chrome_options=options)
+        redirect=False
+        ht=requests.get(nicoDic+words)
+        html=ht.text
+        if ht.text.find('meta http-equiv="refresh"')!=-1:
+            urlPos=ht.text.find('URL=http://dic.nicovideo.jp/a/')
+            realurl=''
+            while ht.text[urlPos]!='"':
+                realurl=realurl+ht.text[urlPos]
+                urlPos=urlPos+1
+            realurl=realurl.replace('URL=http://dic.nicovideo.jp/a/','')
+            html=requests.get(nicoDic+realurl)
         
-        driver.get(nicoDic+words)
-        html = driver.page_source # get html
-        driver.close()  # close driver
         soup=BeautifulSoup(html,features="html.parser")
         title=soup.title.string
         tohaPos=title.find('とは')
@@ -56,6 +55,7 @@ def summary(words):
         h2Pos=html.find('<h2')
         content=html[divPos:h2Pos]
         #print (content)
+
         summaryPos=[h.start() for h in re.finditer(title, content)]
         content=content[tohanear(content,summaryPos):]
         content=cleanhtml(content)
