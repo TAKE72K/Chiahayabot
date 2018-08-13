@@ -57,9 +57,12 @@ def summary(words):
         tohaPos=title.find('とは')
         title=title[:tohaPos]
         print(title)
+        #now we have title
+        #normal page with a organize summary
         divPos=html.find('<div class="article" id="article">')
         h2Pos=html.find('<h2')
         content=html[divPos:h2Pos]
+        purecontent=content
         #print (content)
 
         summaryPos=[h.start() for h in re.finditer(title, content)]
@@ -73,7 +76,21 @@ def summary(words):
             content=content.replace('\n\n','\n')
         if content[len(content)-1]=='\n':
             content=content[:len(content)-1]
-        return content
+        if content.find('掲示板')==-1:
+            return content
+    
+        #not stander
+        h2_1Pos=html.find('<h2 id="h2-1">')
+        h2_2Pos=html.find('<h2 id="h2-2">')
+        contentUnst=html[h2_1Pos:h2_2Pos]
+        if contentUnst.find('<table')!=-1:
+            tableStart=contentUnst.find('<table')
+            tableEnd=contentUnst.find('</table>')+8
+            contentUnst=contentUnst.replace(contentUnst[tableStart:tableEnd],'')
+        pStart=contentUnst.find('<p>')
+        pEnd=contentUnst.find('</p>')+4
+        contentUnst=contentUnst[pStart:pEnd]
+        return cleanhtml(contentUnst)
     
     return None
 
