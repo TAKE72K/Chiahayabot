@@ -58,6 +58,21 @@ def summary(words):
         title=title[:tohaPos]
         print(title)
         #now we have title
+        
+        #消歧異
+        if html.find('曖昧さ回避')!=-1:
+            h2_1Pos=html.find('<h2 id="h2-1">')
+            h2_2Pos=html.find('<h2 id="h2-2">')
+            contentDodge=html[h2_1Pos:h2_2Pos]
+            while contentDodge.find('\n\n')!=-1:
+                contentDodge=contentDodge.replace('\n\n','\n')
+            if contentDodge[len(contentDodge)-1]=='\n':
+                contentDodge=contentDodge[:len(contentDodge)-1]
+            return cleanhtml(contentDodge)
+        
+        
+        
+        
         #normal page with a organize summary
         divPos=html.find('<div class="article" id="article">')
         h2Pos=html.find('<h2')
@@ -91,6 +106,7 @@ def summary(words):
         pEnd=contentUnst.find('</p>')+4
         contentUnst=contentUnst[pStart:pEnd]
         return cleanhtml(contentUnst)
+        #n
     
     return None
 
