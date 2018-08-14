@@ -829,7 +829,7 @@ def sora(bot,update):
             N=rmsg.sticker.set_name
             
             col=['setname']
-            dbsave('sticker',N,col)
+            dbsave('sticker',[N],col)
     
     if test.find('fid')!=-1:
         rmsg=update.message.reply_to_message
