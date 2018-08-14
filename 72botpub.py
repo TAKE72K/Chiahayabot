@@ -914,7 +914,7 @@ def sticker_matome(bot,update):
     link=dbget('sticker','setname')
     stitle=dbget('sticker','about')
     slink=''
-    for i in link:
+    for i in range(len(link)):
         slink=slink+'<a href="https://telegram.me/addstickers/'+link[i][0]+'">'+stitle[i][0]+'</a>\n'
     try:
         bot.send_message(chat_id=update.message.from_user.id,text=slink,parse_mode='HTML')
