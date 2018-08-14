@@ -279,12 +279,12 @@ def start(bot, update):
     #bot.send_message(chat_id=update.message.chat_id, text='私のコマンドリストです：\n/start-名為72的偶像\n/help-72能做什麼?\n/time-現在幾點\n/gdmn-早安\n/set-set早安名\n/kenka-吵架\n/grave-擔當太尊而猝死的P用\n/quote-千早歌詞集\n/bomb-自爆吧P\n/count-test function count members\n/dice-N粒公正的骰子(N<1000)\n/water-即時水量\n/about-關於此bot')
     bot.send_message(chat_id=update.message.chat_id, text="気軽にお声をおかけください～～　/help")
     button_list=[
-        InlineKeyboardButton(text='start me in PM',url='https://telegram.me/Chiahayabot?start=sticker'),
+        InlineKeyboardButton(text='start me in PM',url='https://telegram.me/Chiahayabot?start=hello'),
         InlineKeyboardButton(text='about Chihaya.K',url='https://imasml-theater-wiki.gamerch.com/%E5%A6%82%E6%9C%88%E5%8D%83%E6%97%A9#content_2_13')
         ]
     
     reply_markup = InlineKeyboardMarkup(build_menu(button_list, n_cols=1))
-    bot.send_message(chat_id=update.message.chat_id, text="A menu test", reply_markup=reply_markup)
+    bot.send_message(chat_id=update.message.chat_id, text="", reply_markup=reply_markup)
     '''test of inline button'''
 
 def help(bot,update):
