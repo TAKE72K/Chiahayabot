@@ -912,9 +912,15 @@ def unknown(bot, update):
 
 def sticker_matome(bot,update):
     link=dbget('sticker','setname')
+    stitle=dbget('sticker','about')
     str=''
     for i in link:
-        str=str+'<a href="https://telegram.me/addstickers/'+link[i][0]+'">'+'\n'
+        slink=slink+'<a href="https://telegram.me/addstickers/'+link[i][0]+'">'+stitle[i][0]+'</a>\n'
+    try:
+        bot.send_message(chat_id=update.message.from_user.id,text=slink,parse_mode='HTML')
+    except:
+        startme='<a href="https://telegram.me/Chiahayabot?start=sticker">請先在私訊START</a>'
+        bot.send_message(chat_id=update.message.chat_id,text=startme,parse_mode='HTML')
 
 def wake(bot,update):
 #prevent bot from going to sleep
@@ -1103,6 +1109,7 @@ def main():
     dispatcher.add_handler(CommandHandler('state',state))
     dispatcher.add_handler(CommandHandler('quote',quote))
     dispatcher.add_handler(CommandHandler('qt',quote_d))
+    dispatcher.add_handler(CommandHandler('sticker',sticker_matome))
     dispatcher.add_handler(CommandHandler('randChihaya',randchihaya))
     dispatcher.add_handler(CommandHandler('sk',set_kw,pass_args=True))
     dispatcher.add_handler(CommandHandler('punch', punch, pass_args=True))
