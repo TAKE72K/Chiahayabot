@@ -143,7 +143,7 @@ def dbrandGet():
                         ORDER BY RANDOM()
                         LIMIT 1""")
     except:
-        curs.rollback()
+        conn.rollback()
     else:
         str=curs.fetchone()[0]
     return str
