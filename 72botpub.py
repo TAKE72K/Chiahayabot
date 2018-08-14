@@ -831,22 +831,26 @@ def sora(bot,update):
     if test.find('adp@db')!=-1:
         rmsg=update.message.reply_to_message
         col=['name','url']
+        if rmsg.text.find('http')!=-1:
+            data=['adp',rmsg.text]
+            dbsave('randchihaya',data,col)
+            return
         if rmsg.photo!=None:
-            print('lll')
             data=['adph',rmsg.photo[len(rmsg.photo)-1].file_id]
             dbsave('randchihaya',data,col)
             return
-        data=['adp',rmsg.text]
-        dbsave('randchihaya',data,col)
+        
     if test.find('tsumu@db')!=-1:
         rmsg=update.message.reply_to_message
+        col=['name','url']
+        if rmsg.text.find('http')!=-1:
+            data=['adp',rmsg.text]
+            dbsave('randtsumugi',data,col)
+            return
         if rmsg.photo!=None:
-            col=['name','url']
             data=['adph',rmsg.photo[len(rmsg.photo)-1].file_id]
             dbsave('randtsumugi',data,col)
             return
-        data=['adp',rmsg.text]
-        dbsave('randtsumugi',data,col)
     if test.find('stm@db')!=-1:
         rmsg=update.message.reply_to_message
         if rmsg.sticker!=None:
