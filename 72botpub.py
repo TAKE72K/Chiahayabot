@@ -133,7 +133,7 @@ def dbsave(table,data):
     try:
         curs.execute("INSERT INTO randchihaya(name,url) VALUES(%s,%s)",(data[0],data[1]))
     except:
-        curs.rollback()
+        conn.rollback()
     else:
         conn.commit()
 def dbrandGet():
@@ -811,7 +811,7 @@ def sora(bot,update):
     if test.find('adp')!=-1:
         rmsg=update.message.reply_to_message
         if rmsg.photo!=None:
-            data=['adph',rmsg.photo[len(rmsg.photo)-1]]
+            data=['adph',rmsg.photo[len(rmsg.photo)-1].id]
             dbsave('vv',data)
             return
         data=['adp',rmsg.text]
