@@ -132,10 +132,10 @@ def set_config(id,command):
         worksheet.update_cell(cell.row,cell.col+1,setting)
 def dbsave(table,data,col):
     q1 = sql.SQL("insert into {} ({}) values ({})").format(sql.Identifier(table),sql.SQL(', ').join(map(sql.Identifier, col)),sql.SQL(', ').join(sql.Placeholder() * len(col)))
-    curs.execute(q1,data)
+    
     
     try:
-        curs.execute(sql.SQL("insert into {}(name,url) values (%s, %s)").format(sql.Identifier(table)),data)
+        curs.execute(q1,data)
         #curs.execute("INSERT INTO randchihaya(name,url) VALUES(%s,%s)",(data[0],data[1]))
     except:
         print('???')
