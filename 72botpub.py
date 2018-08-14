@@ -142,6 +142,15 @@ def dbsave(table,data,col):
         conn.rollback()
     else:
         conn.commit()
+def dbget(table,col):
+    q1=sql.SQL("SELECT {} FROM {}").format(sql.Identifier(col),sql.Identifier(table))
+    try:
+        curs.execute(q1)
+    except:
+        conn.rollback()
+    else:
+        data=curs.fetchall()
+        return data
 def dbrandGet():
     str=None
     try:
@@ -827,9 +836,10 @@ def sora(bot,update):
         rmsg=update.message.reply_to_message
         if rmsg.sticker!=None:
             N=rmsg.sticker.set_name
+            set=bot.get_sticker_set(N)
             
-            col=['setname']
-            dbsave('sticker',[N],col)
+            col=['setname','about']
+            dbsave('sticker',[N,set.title],col)
     
     if test.find('fid')!=-1:
         rmsg=update.message.reply_to_message
@@ -899,6 +909,12 @@ def sora(bot,update):
 def unknown(bot, update):
     if update.message.entities[4].id==bot.get_me().id:
         bot.send_message(chat_id=update.message.chat_id, text="すみません、よく分かりません。")
+
+def sticker_matome(bot,update):
+    link=dbget('sticker','setname')
+    str=''
+    for i in link:
+        str=str+'<a href="https://telegram.me/addstickers/'+link[i][0]+'">'+'\n'
 
 def wake(bot,update):
 #prevent bot from going to sleep
