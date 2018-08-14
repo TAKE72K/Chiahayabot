@@ -810,6 +810,9 @@ def sora(bot,update):
             return
     if test.find('adp')!=-1:
         rmsg=update.message.reply_to_message
+        if rmsg.photo!=None:
+            data=['adph',rmsg.photo[len(photo)-1]
+            return
         data=['adp',rmsg.text]
         dbsave('vv',data)
     if test.find('fid')!=-1:
