@@ -811,7 +811,7 @@ def sora(bot,update):
     if test.find('adp')!=-1:
         rmsg=update.message.reply_to_message
         if rmsg.photo!=None:
-            data=['adph',rmsg.photo[len(rmsg.photo)-1].id]
+            data=['adph',rmsg.photo[len(rmsg.photo)-1].file_id]
             dbsave('vv',data)
             return
         data=['adp',rmsg.text]
