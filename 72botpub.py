@@ -808,7 +808,7 @@ def sora(bot,update):
             qlist=[update.message.reply_to_message.text,update.message.reply_to_message.from_user.first_name]
             work_sheet_push(qlist,'quote')
             return
-    if test.find('adp')!=-1:
+    if test.find('adp@db')!=-1:
         rmsg=update.message.reply_to_message
         if rmsg.photo!=None:
             data=['adph',rmsg.photo[len(rmsg.photo)-1].file_id]
@@ -816,6 +816,18 @@ def sora(bot,update):
             return
         data=['adp',rmsg.text]
         dbsave('vv',data)
+    if test.find('stm@db')!=-1:
+        rmsg=update.message.reply_to_message
+        if rmsg.sticker!=None:
+            N=rmsg.sticker.set_name
+            
+            try:
+                curs.execute("INSERT INTO sticker(setname) VALUES(%s)",(N))
+            except:
+                conn.rollback()
+            else:
+                conn.commit()
+    
     if test.find('fid')!=-1:
         rmsg=update.message.reply_to_message
         if rmsg.photo!=None:
