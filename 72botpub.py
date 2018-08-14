@@ -131,7 +131,8 @@ def set_config(id,command):
         worksheet.update_cell(cell.row,cell.col+1,setting)
 def dbsave(table,data):
     try:
-        curs.execute("INSERT INTO randchihaya(name,url) VALUES(%s,%s)",(data[0],data[1]))
+        curs.execute(SQL("INSERT INTO {} VALUES (%s)").format(Identifier(table)),(data[0],data[1]))
+        #curs.execute("INSERT INTO randchihaya(name,url) VALUES(%s,%s)",(data[0],data[1]))
     except:
         conn.rollback()
     else:
@@ -812,10 +813,10 @@ def sora(bot,update):
         rmsg=update.message.reply_to_message
         if rmsg.photo!=None:
             data=['adph',rmsg.photo[len(rmsg.photo)-1].file_id]
-            dbsave('vv',data)
+            dbsave('randchihaya',data)
             return
         data=['adp',rmsg.text]
-        dbsave('vv',data)
+        dbsave('randchihaya',data)
     if test.find('stm@db')!=-1:
         rmsg=update.message.reply_to_message
         if rmsg.sticker!=None:
