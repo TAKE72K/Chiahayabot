@@ -913,7 +913,7 @@ def unknown(bot, update):
 def sticker_matome(bot,update):
     link=dbget('sticker','setname')
     stitle=dbget('sticker','about')
-    str=''
+    slink=''
     for i in link:
         slink=slink+'<a href="https://telegram.me/addstickers/'+link[i][0]+'">'+stitle[i][0]+'</a>\n'
     try:
