@@ -830,8 +830,9 @@ def sora(bot,update):
             return
     if test.find('adp@db')!=-1:
         rmsg=update.message.reply_to_message
+        col=['name','url']
         if rmsg.photo!=None:
-            col=['name','url']
+            
             data=['adph',rmsg.photo[len(rmsg.photo)-1].file_id]
             dbsave('randchihaya',data,col)
             return
