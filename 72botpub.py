@@ -1125,6 +1125,7 @@ def main():
     dispatcher.add_handler(CommandHandler('qt',quote_d))
     dispatcher.add_handler(CommandHandler('sticker',sticker_matome))
     dispatcher.add_handler(CommandHandler('randChihaya',randchihaya))
+    dispatcher.add_handler(CommandHandler('randTsumugi',randtsumugi))
     dispatcher.add_handler(CommandHandler('sk',set_kw,pass_args=True))
     dispatcher.add_handler(CommandHandler('punch', punch, pass_args=True))
     dispatcher.add_handler(CommandHandler('caps', caps, pass_args=True))
