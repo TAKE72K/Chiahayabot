@@ -24,6 +24,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 import requests
 #db
 import psycopg2
+from psycopg2 import sql
 
 DATABASE_URL = os.environ['DATABASE_URL']
 
