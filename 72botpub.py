@@ -131,7 +131,7 @@ def set_config(id,command):
             setting=setting+command
         worksheet.update_cell(cell.row,cell.col+1,setting)
 def dbsave(table,data):
-    curs.execute(SQL("INSERT INTO {} VALUES (%s,%s)").format(Identifier(table)),(data[0],data[1]))
+    cur.execute(sql.SQL("insert into {} values (%s, %s)").format(sql.Identifier(table)),data)
     conn.rollback()
     try:
         curs.execute(SQL("INSERT INTO {} VALUES (%s,%s)").format(Identifier(table)),(data[0],data[1]))
