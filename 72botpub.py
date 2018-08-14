@@ -828,12 +828,8 @@ def sora(bot,update):
         if rmsg.sticker!=None:
             N=rmsg.sticker.set_name
             
-            try:
-                curs.execute("INSERT INTO sticker(setname) VALUES(%s)",(N))
-            except:
-                conn.rollback()
-            else:
-                conn.commit()
+            col=['setname']
+            dbsave('sticker',N,col)
     
     if test.find('fid')!=-1:
         rmsg=update.message.reply_to_message
