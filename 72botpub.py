@@ -290,10 +290,13 @@ job_m=daily_remind.run_daily(callback11,t)
 
 
 def start(bot, update,args):
-    if not args:
-        pass
-    else:
-        bot.send_message(chat_id=update.message.chat_id, text=' '.join(args))
+    payload=' '.join(args)
+    if payload=='sticker':
+        sticker_matome(bot,update)
+        return
+        
+    
+        
     bot.send_chat_action(chat_id=update.message.chat_id, action=telegram.ChatAction.TYPING)
     bot.send_message(chat_id=update.message.chat_id, text="如月千早です。劇場という場所があることは、レッスンの励みにもなりますね。これからも、厳しいご指導をよろしくお願いします。")
     bot.send_chat_action(chat_id=update.message.chat_id, action=telegram.ChatAction.TYPING)
@@ -305,7 +308,7 @@ def start(bot, update,args):
         ]
     
     reply_markup = InlineKeyboardMarkup(build_menu(button_list, n_cols=1))
-    bot.send_message(chat_id=update.message.chat_id, text="", reply_markup=reply_markup)
+    bot.send_message(chat_id=update.message.chat_id, text="button da!", reply_markup=reply_markup)
     '''test of inline button'''
 
 def help(bot,update):
