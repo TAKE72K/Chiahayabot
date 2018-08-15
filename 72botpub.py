@@ -287,7 +287,11 @@ job_m=daily_remind.run_daily(callback11,t)
 #unsolve:TypeError: can't compare offset-naive and offset-aware times
 
 
-def start(bot, update):
+def start(bot, update,args):
+    if not args:
+        pass
+    else:
+        bot.send_message(chat_id=update.message.chat_id, text=' '.join(args))
     bot.send_chat_action(chat_id=update.message.chat_id, action=telegram.ChatAction.TYPING)
     bot.send_message(chat_id=update.message.chat_id, text="如月千早です。劇場という場所があることは、レッスンの励みにもなりますね。これからも、厳しいご指導をよろしくお願いします。")
     bot.send_chat_action(chat_id=update.message.chat_id, action=telegram.ChatAction.TYPING)
@@ -1093,7 +1097,7 @@ def main():
         job_his = updater.job_queue.run_daily(history,t)
     #command
     dispatcher.add_handler(CommandHandler('taitoru',title,pass_args=True))
-    dispatcher.add_handler(CommandHandler('start', start))
+    dispatcher.add_handler(CommandHandler('start', start,pass_args=True))
     dispatcher.add_handler(CommandHandler('help', help))
     dispatcher.add_handler(CommandHandler('linkstart',invite))
     dispatcher.add_handler(CommandHandler('bomb',bomb,pass_args=True))
