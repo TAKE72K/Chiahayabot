@@ -151,12 +151,14 @@ def dbget(table,col):
     else:
         data=curs.fetchall()
         return data
-def dbrandGet():
-    str=None
+def dbrandGet(table,col):
+    q1=sql.SQL("SELECT {} FROM {} ORDER BY RANDOM() LIMIT 1").format(sql.Identifier(col),sql.Identifier(table))
+    str=''
     try:
-        curs.execute("""SELECT url FROM randchihaya
-                        ORDER BY RANDOM()
-                        LIMIT 1""")
+        curs.execute(q1)
+        #curs.execute("""SELECT url FROM randchihaya
+        #                ORDER BY RANDOM()
+        #               LIMIT 1""")
     except:
         conn.rollback()
     else:
@@ -403,7 +405,10 @@ def set_name(bot,update,args):
         else:
             nsheet.update_cell(cell.row,cell.col+1,name)
 def randchihaya(bot,update):
-    url=dbrandGet()
+    url=dbrandGet('randchihaya','url')
+    bot.send_photo(chat_id=update.message.chat_id,photo=url)
+def randtsumugi(bot,update):
+    url=dbrandGet('randtsumugi','url')
     bot.send_photo(chat_id=update.message.chat_id,photo=url)
 def gdmn(bot,update):
     #a good morning func
@@ -829,13 +834,27 @@ def sora(bot,update):
             return
     if test.find('adp@db')!=-1:
         rmsg=update.message.reply_to_message
+        col=['name','url']
+        if rmsg.text.find('http')!=-1:
+            data=['adp',rmsg.text]
+            dbsave('randchihaya',data,col)
+            return
         if rmsg.photo!=None:
-            col=['name','url']
             data=['adph',rmsg.photo[len(rmsg.photo)-1].file_id]
             dbsave('randchihaya',data,col)
             return
-        data=['adp',rmsg.text]
-        dbsave('randchihaya',data,col)
+        
+    if test.find('tsumu@db')!=-1:
+        rmsg=update.message.reply_to_message
+        col=['name','url']
+        if rmsg.text.find('http')!=-1:
+            data=['adp',rmsg.text]
+            dbsave('randtsumugi',data,col)
+            return
+        if rmsg.photo!=None:
+            data=['adph',rmsg.photo[len(rmsg.photo)-1].file_id]
+            dbsave('randtsumugi',data,col)
+            return
     if test.find('stm@db')!=-1:
         rmsg=update.message.reply_to_message
         if rmsg.sticker!=None:
@@ -1115,6 +1134,7 @@ def main():
     dispatcher.add_handler(CommandHandler('qt',quote_d))
     dispatcher.add_handler(CommandHandler('sticker',sticker_matome))
     dispatcher.add_handler(CommandHandler('randChihaya',randchihaya))
+    dispatcher.add_handler(CommandHandler('randTsumugi',randtsumugi))
     dispatcher.add_handler(CommandHandler('sk',set_kw,pass_args=True))
     dispatcher.add_handler(CommandHandler('punch', punch, pass_args=True))
     dispatcher.add_handler(CommandHandler('caps', caps, pass_args=True))
