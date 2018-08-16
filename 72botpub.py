@@ -143,7 +143,7 @@ def dbsave(table,data,col):
     else:
         conn.commit()
 def dbget(table,col):
-    q1=sql.SQL("SELECT {} FROM {}").format(sql.Identifier(col),sql.Identifier(table))
+    q1=sql.SQL("SELECT {} FROM {} ORDER BY ID").format(sql.Identifier(col),sql.Identifier(table))
     try:
         curs.execute(q1)
     except:
