@@ -22,6 +22,7 @@ from key_word import key_word as kws
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import requests
+from himeAPI import gasya 
 #db
 import psycopg2
 from psycopg2 import sql
@@ -666,6 +667,21 @@ def caps(bot, update, args):
     bot.send_chat_action(chat_id=update.message.chat_id, action=telegram.ChatAction.TYPING)
     text_caps = ' '.join(args).upper()
     bot.send_message(chat_id=update.message.chat_id, text=text_caps)
+    
+def urope(bot,update):
+    result=gasya()
+    text_1='<pre>'+result['flavorText']+'</pre>'
+    text_2='<pre>'+result['name']+'</pre>'
+    rare=result['rarity']
+    if rare==2:
+        rare='R'
+    elif rare==3:
+        rare='SR'
+    else:
+        rare='SSR'
+    bot.send_message(chat_id=update.message.chat_id,text=text_1,parse_mode='HTML')
+    bot.send_message(chat_id=update.message.chat_id,text=text_2+rare,parse_mode='HTML')
+    
 renda_id=0
 combo=0
 buffer_quote=[]
@@ -1138,6 +1154,7 @@ def main():
     dispatcher.add_handler(CommandHandler('sticker',sticker_matome))
     dispatcher.add_handler(CommandHandler('randChihaya',randchihaya))
     dispatcher.add_handler(CommandHandler('randTsumugi',randtsumugi))
+    dispatcher.add_handler(CommandHandler('gasya',urope))
     dispatcher.add_handler(CommandHandler('sk',set_kw,pass_args=True))
     dispatcher.add_handler(CommandHandler('punch', punch, pass_args=True))
     dispatcher.add_handler(CommandHandler('caps', caps, pass_args=True))
