@@ -34,7 +34,40 @@ def refresh_pool():
     setpool(3,12)
     setpool(2,85)
     card_pool=temp_pool
-     
+
+def update_card():
+    api=requests.get(END_POINT+'cards').json()
+    q1="""
+    select id,detail 
+    from card 
+    order by id desc;
+    """
+    curs.execute(q1)
+    dbdata=curs.fetchall()
+    if len(api)>len(dbdata):
+        insertstart=0
+        match_last=False
+        iter=len(api)-1
+        while match_last!=True:
+            if api[iter]['id']==dbdata[0][1]['id']:
+                insertstart=iter+1
+                match_last=True
+            else:
+                iter=iter-1
+        q2="""
+        insert into card(detail) values(%s)
+        """
+        for i in range(insertstart,len(api)):
+            ins=json.dumps(api[i], ensure_ascii=False)
+            try:
+                curs.execute(q2,[ins])
+            except:
+                print('error')
+            else:
+                conn.commit()
+    else:
+        print('nothing new')
+                
 def gasya():
     global card_pool
     global card_num

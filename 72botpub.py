@@ -22,7 +22,7 @@ from key_word import key_word as kws
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import requests
-from himeAPI import gasya 
+from himeAPI import gasya,update_card
 #db
 import psycopg2
 from psycopg2 import sql
@@ -184,7 +184,8 @@ def get_config(id,setting):
             return True
         else:
             return False
-
+def dbupdate(bot,job):
+    update_card()
 def daily_reset(bot,job):
     scope = ['https://spreadsheets.google.com/feeds']
     creds = ServiceAccountCredentials.from_json_keyfile_name('auth.json', scope)
@@ -1128,6 +1129,7 @@ def main():
     updater.job_queue.run_repeating(key_word_j_buffer, interval=60, first=0)
     updater.job_queue.run_repeating(update_lastm, interval=60, first=0)
     updater.job_queue.run_repeating(buffer_refresh, interval=60, first=0)
+    updater.job_queue.run_repeating(dbupdate, interval=86400, first=0)
     jd=False
     history_t=[stime(3,0,0),stime(9,0,0),stime(15,0,0),stime(21,0,0)]
     job_minute = updater.job_queue.run_repeating(wake, interval=600, first=0)
