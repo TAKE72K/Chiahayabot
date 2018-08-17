@@ -28,6 +28,8 @@ import psycopg2
 from psycopg2 import sql
 
 DATABASE_URL = os.environ['DATABASE_URL']
+eventing=os.environ['EVing']
+
 
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 #db

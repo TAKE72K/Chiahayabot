@@ -7,10 +7,13 @@ import psycopg2
 from psycopg2 import sql
 
 DATABASE_URL = os.environ['DATABASE_URL']
+eventing=os.environ['EVing']
+eventId=os.environ['EVENT_ID']
 
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 curs=conn.cursor()
 END_POINT='https://api.matsurihi.me/mltd/v1/'
+
 card_pool=[]
 card_num={4:0,3:0,2:0}
 def refresh_pool():
@@ -65,6 +68,7 @@ def update_card():
                 print('error')
             else:
                 conn.commit()
+                print('update success'+api[i]['name'])
     else:
         print('nothing new')
                 
@@ -78,3 +82,26 @@ def gasya():
     card_pool.remove(result)
     card_num[result['rarity']]=card_num[result['rarity']]-1
     return result
+
+def event_score():
+    q1="events/{}/rankings/logs/eventPoint/{}"
+    q2="events/{}".format(eventId)
+    event_name=requests.get(END_POINT+q2).json()['name']
+    border_info={'name':event_name}
+    def border(rank):
+        api=requests.get(END_POINT+q1.format(eventId,rank)).json()[0]['data']
+        now=api[len(api)-1]['score']
+        past_2='--'
+        if len(api)>2:
+            past_2=api[len(api)-4]['score']
+        return {'rank':rank,'now':now,'past_2':past_2}
+    border_info[100]=border(100)
+    border_info[2500]=border(2500)
+    border_info[5000]=border(5000)
+    border_info[10000]=border(10000)
+    border_info[25000]=border(25000)
+    return border_info
+
+    
+        
+        
