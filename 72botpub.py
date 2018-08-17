@@ -671,14 +671,15 @@ def caps(bot, update, args):
 def urope(bot,update):
     result=gasya()
     text_1='<pre>'+result['flavorText']+'</pre>'
+    text_1=text_1.replace('{$P$}',update.message.from_user.first_name+'P')
     text_2='<pre>'+result['name']+'</pre>'
     rare=result['rarity']
     if rare==2:
-        rare='R'
+        rare='(R)'
     elif rare==3:
-        rare='SR'
+        rare='(SR)'
     else:
-        rare='SSR'
+        rare='(SSR)'
     bot.send_message(chat_id=update.message.chat_id,text=text_1,parse_mode='HTML')
     bot.send_message(chat_id=update.message.chat_id,text=text_2+rare,parse_mode='HTML')
     
