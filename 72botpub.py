@@ -22,7 +22,7 @@ from key_word import key_word as kws
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import requests
-from himeAPI import gasya,update_card
+from himeAPI import gasya,update_card,event_score
 #db
 import psycopg2
 from psycopg2 import sql
@@ -703,6 +703,20 @@ def urope(bot,update):
     else:
         rare='(SSR)'
     bot.send_message(chat_id=update.message.chat_id,text=text_1+text_2+rare,parse_mode='HTML')
+
+def Ept(bot,update):
+    data=event_score()
+    name=data['name']
+    output='{0:>5}{1:>8}{2:>8} +{3:>6}/120mins\n'
+    border=[]
+    for i in (100,2500,5000,10000,25000):
+        ostr=output.format(data[i]['rank'],data[i]['now'],data[i]['past_2'],data[i]['now']-data[i]['past_2'])
+        border.append(ostr)
+    text='<pre>'+name+'\n'
+    for i in border:
+        text=text+i
+    text=text+'</pre>'
+    bot.send_message(chat_id=update.message.chat_id,text=text,parse_mode='HTML')
     
 renda_id=0
 combo=0
@@ -1174,6 +1188,7 @@ def main():
     dispatcher.add_handler(CommandHandler('state',state))
     dispatcher.add_handler(CommandHandler('quote',quote))
     dispatcher.add_handler(CommandHandler('qt',quote_d))
+    dispatcher.add_handler(CommandHandler('pt',Ept))
     dispatcher.add_handler(CommandHandler('sticker',sticker_matome))
     dispatcher.add_handler(CommandHandler('randChihaya',randchihaya))
     dispatcher.add_handler(CommandHandler('randTsumugi',randtsumugi))

@@ -90,10 +90,10 @@ def event_score():
     border_info={'name':event_name}
     def border(rank):
         api=requests.get(END_POINT+q1.format(eventId,rank)).json()[0]['data']
-        now=api[len(api)-1]['score']
+        now=int(api[len(api)-1]['score'])
         past_2='--'
         if len(api)>2:
-            past_2=api[len(api)-4]['score']
+            past_2=int(api[len(api)-4]['score'])
         return {'rank':rank,'now':now,'past_2':past_2}
     border_info[100]=border(100)
     border_info[2500]=border(2500)
