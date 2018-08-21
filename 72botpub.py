@@ -716,10 +716,11 @@ def Ept(bot,update=None,job=None):
     for i in border:
         text=text+i
     text=text+'</pre>'
-    if update!=None:
-        bot.send_message(chat_id=update.message.chat_id,text=text,parse_mode='HTML')
-    else:
+    if job!=None:
         bot.send_message(chat_id=-313454366,text=text,parse_mode='HTML')
+    else:
+        
+        bot.send_message(chat_id=update.message.chat_id,text=text,parse_mode='HTML')
 renda_id=0
 combo=0
 buffer_quote=[]
