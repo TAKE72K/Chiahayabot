@@ -704,7 +704,7 @@ def urope(bot,update):
         rare='(SSR)'
     bot.send_message(chat_id=update.message.chat_id,text=text_1+text_2+rare,parse_mode='HTML')
 
-def Ept(bot,update=None,job=None):
+def pt():
     data=event_score()
     name=data['name']
     output='{0:>5}{1:>8}{2:>8} +{3:>6}/120mins\n'
@@ -716,10 +716,13 @@ def Ept(bot,update=None,job=None):
     for i in border:
         text=text+i
     text=text+'</pre>'
-    if job!=None:
-        bot.send_message(chat_id=-313454366,text=text,parse_mode='HTML')
-    #else:
-    #    bot.send_message(chat_id=update.message.chat_id,text=text,parse_mode='HTML')
+    
+def Ept(bot,update):
+    bot.send_message(chat_id=update.message.chat_id,text=text,parse_mode='HTML')
+    
+def Ept2h(bot,job):
+    bot.send_message(chat_id=-313454366,text=text,parse_mode='HTML')
+    
 renda_id=0
 combo=0
 buffer_quote=[]
@@ -1163,7 +1166,7 @@ def main():
     #job
     #updater.job_queue.run_daily(daily_reset,stime(18,22,0))
     updater.job_queue.run_repeating(del_quote, interval=72, first=0)
-    updater.job_queue.run_repeating(Ept, interval=7200, first=0)
+    updater.job_queue.run_repeating(Ept2h, interval=7200, first=0)
     updater.job_queue.run_repeating(key_word_j_buffer, interval=60, first=0)
     updater.job_queue.run_repeating(update_lastm, interval=60, first=0)
     updater.job_queue.run_repeating(buffer_refresh, interval=60, first=0)
