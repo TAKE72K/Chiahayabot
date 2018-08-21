@@ -718,9 +718,8 @@ def Ept(bot,update=None,job=None):
     text=text+'</pre>'
     if job!=None:
         bot.send_message(chat_id=-313454366,text=text,parse_mode='HTML')
-    else:
-        
-        bot.send_message(chat_id=update.message.chat_id,text=text,parse_mode='HTML')
+    #else:
+    #    bot.send_message(chat_id=update.message.chat_id,text=text,parse_mode='HTML')
 renda_id=0
 combo=0
 buffer_quote=[]
