@@ -771,26 +771,26 @@ def inline_quote(bot,update):
     if not query:
         return
     if query=='quote':
-    if renda_id==update.inline_query.from_user.id:
-        combo=combo+1
-    else:
-        renda_id=update.inline_query.from_user.id
-        combo=1
-    num=random.randint(0,len(buffer_quote)-1)
-    text='<pre>'+buffer_quote[num][0]+'</pre>\n'+'-----<b>'+buffer_quote[num][1]+'</b> より'
-    if combo>4 and combo<7:
-        text='又ㄅ是7az，連打ㄍㄆ'
-        return
-    if combo>6:
-        return
+        if renda_id==update.inline_query.from_user.id:
+            combo=combo+1
+        else:
+            renda_id=update.inline_query.from_user.id
+            combo=1
+        num=random.randint(0,len(buffer_quote)-1)
+        text='<pre>'+buffer_quote[num][0]+'</pre>\n'+'-----<b>'+buffer_quote[num][1]+'</b> より'
+        if combo>4 and combo<7:
+            text='又ㄅ是7az，連打ㄍㄆ'
+            return
+        if combo>6:
+            return
 
-    
-    iquote=InlineQueryResultArticle(
-            id=str(datetime.now()),
-            title='quote',
-            input_message_content=InputTextMessageContent(message_text=text,parse_mode='HTML')
-            )
-    bot.answer_inline_query(inline_query_id=update.inline_query.id,results=[iquote])
+        
+        iquote=InlineQueryResultArticle(
+                id=str(datetime.now()),
+                title='quote',
+                input_message_content=InputTextMessageContent(message_text=text,parse_mode='HTML')
+                )
+        bot.answer_inline_query(inline_query_id=update.inline_query.id,results=[iquote])
     
         
 del_list=[]
