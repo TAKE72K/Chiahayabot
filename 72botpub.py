@@ -1025,7 +1025,7 @@ def unknown(bot, update):
         bot.send_message(chat_id=update.message.chat_id, text="すみません、よく分かりません。")
 
 def sticker_matome(bot,update):
-'''
+    '''
     query = update.inline_query
     mode=False
     if not query:
@@ -1063,7 +1063,7 @@ def sticker_matome(bot,update):
 
         
     else: 
-'''    
+    '''    
     try:
         bot.send_message(chat_id=update.message.from_user.id,text=slink,parse_mode='HTML')
     except:
