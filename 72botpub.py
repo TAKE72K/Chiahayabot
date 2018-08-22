@@ -773,7 +773,7 @@ def inline_quote(bot,update):
     if query=='quote':
         num=random.randint(0,len(buffer_quote)-1)
         text='<pre>'+buffer_quote[num][0]+'</pre>\n'+'-----<b>'+buffer_quote[num][1]+'</b> より'
-        
+        print(text)
         iquote=InlineQueryResultArticle(
                 id=str(datetime.now()),
                 title='quote',
