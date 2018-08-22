@@ -1016,7 +1016,7 @@ def sticker_matome(bot,update):
             bot.send_message(chat_id=update.message.from_user.id,text=slink,parse_mode='HTML')
     except:
         startme='<a href="https://telegram.me/Chiahayabot?start=sticker">請先在私訊START</a>'
-        if node:
+        if mode:
             bot.answer_inline_query(update.inline_query.id, [startme])
         else:
             bot.send_message(chat_id=update.message.chat_id,text=startme,parse_mode='HTML')
