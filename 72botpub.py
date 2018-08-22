@@ -1010,9 +1010,13 @@ def sticker_matome(bot,update):
         
     try:
         if mode:
+        
             qok=InlineQueryResultArticle(
-            id=str(datetime.now()),title='MATOME',
-            input_message_content=InputTextMessageContent(text='看私訊~~'))
+            
+                id=str(datetime.now()),title='MATOME',
+                input_message_content=InputTextMessageContent(message_text='看私訊~~')
+                )
+            
             bot.answer_inline_query(update.inline_query.id, [qok])
             bot.send_message(chat_id=update.inline_query.from_user.id,text=slink,parse_mode='HTML')
         else:
@@ -1020,9 +1024,14 @@ def sticker_matome(bot,update):
     except:
         startme='<a href="https://telegram.me/Chiahayabot?start=sticker">請先在私訊START</a>'
         if mode:
+        
             qstartme=InlineQueryResultArticle(
-            id=str(datetime.now()),title='MATOME',
-            input_message_content=InputTextMessageContent(text=startme,parse_mode='HTML'))
+                id=str(datetime.now()),
+                title='MATOME',
+                input_message_content=InputTextMessageContent(message_text=startme,parse_mode='HTML')
+                )
+                
+            
             bot.answer_inline_query(update.inline_query.id, [qstartme])
         else:
             bot.send_message(chat_id=update.message.chat_id,text=startme,parse_mode='HTML')
