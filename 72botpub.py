@@ -995,11 +995,11 @@ def unknown(bot, update):
         bot.send_message(chat_id=update.message.chat_id, text="すみません、よく分かりません。")
 
 def sticker_matome(bot,update):
-    query = update.inline_query.query
+    query = update.inline_query
     mode=False
     if not query:
         pass
-    elif query=='sticker':
+    elif query.query=='sticker':
         mode=True
     
     link=dbget('sticker','setname')
@@ -1007,24 +1007,19 @@ def sticker_matome(bot,update):
     slink=''
     for i in range(len(link)):
         slink=slink+'<a href="https://telegram.me/addstickers/'+link[i][0]+'">'+stitle[i][0]+'</a>\n'
-        
-    try:
-        if mode:
-        
-            qok=InlineQueryResultArticle(
+    startme='<a href="https://telegram.me/Chiahayabot?start=sticker">請先在私訊START</a>'
+    
+    ################################################send####################################
+    if mode:
+        qok=InlineQueryResultArticle(
             
-                id=str(datetime.now()),title='MATOME',
-                input_message_content=InputTextMessageContent(message_text='看私訊~~')
-                )
-            
-            bot.answer_inline_query(update.inline_query.id, [qok])
-            bot.send_message(chat_id=update.inline_query.from_user.id,text=slink,parse_mode='HTML')
-        else:
-            bot.send_message(chat_id=update.message.from_user.id,text=slink,parse_mode='HTML')
-    except:
-        startme='<a href="https://telegram.me/Chiahayabot?start=sticker">請先在私訊START</a>'
-        if mode:
-        
+            id=str(datetime.now()),title='MATOME',
+            input_message_content=InputTextMessageContent(message_text='傳送中~~')
+            )
+        bot.answer_inline_query(update.inline_query.id, [qok])
+        try:
+            bot.send_message(chat_id=query.from_user.id,text=slink,parse_mode='HTML')
+        except:
             qstartme=InlineQueryResultArticle(
                 id=str(datetime.now()),
                 title='MATOME',
@@ -1033,7 +1028,11 @@ def sticker_matome(bot,update):
                 
             
             bot.answer_inline_query(update.inline_query.id, [qstartme])
-        else:
+        
+    else:    
+        try:
+            bot.send_message(chat_id=update.message.from_user.id,text=slink,parse_mode='HTML')
+        except:
             bot.send_message(chat_id=update.message.chat_id,text=startme,parse_mode='HTML')
 
 def wake(bot,update):
