@@ -763,6 +763,36 @@ def quote(bot,update):
     del_list.append([update.message.chat_id,msg.message_id])
     del_cmd(bot,update)
 
+def inline_quote(bot,update):
+    global renda_id
+    global combo
+    global buffer_quote
+    query=update.inline_query.query
+    if not query:
+        return
+    if query=='quote':
+    if renda_id==update.inline_query.from_user.id:
+        combo=combo+1
+    else:
+        renda_id=update.inline_query.from_user.id
+        combo=1
+    num=random.randint(0,len(buffer_quote)-1)
+    text='<pre>'+buffer_quote[num][0]+'</pre>\n'+'-----<b>'+buffer_quote[num][1]+'</b> より'
+    if combo>4 and combo<7:
+        text='又ㄅ是7az，連打ㄍㄆ'
+        return
+    if combo>6:
+        return
+
+    
+    iquote=InlineQueryResultArticle(
+            id=str(datetime.now()),
+            title='quote',
+            input_message_content=InputTextMessageContent(message_text=text,parse_mode='HTML')
+            )
+    bot.answer_inline_query(inline_query_id=update.inline_query.id,results=[iquote])
+    
+        
 del_list=[]
 def del_quote(bot,job):
     global del_list
@@ -995,13 +1025,14 @@ def unknown(bot, update):
         bot.send_message(chat_id=update.message.chat_id, text="すみません、よく分かりません。")
 
 def sticker_matome(bot,update):
+'''
     query = update.inline_query
     mode=False
     if not query:
         pass
     elif query.query=='sticker':
         mode=True
-    
+    '''
     link=dbget('sticker','setname')
     stitle=dbget('sticker','about')
     slink=''
@@ -1009,8 +1040,9 @@ def sticker_matome(bot,update):
         slink=slink+'<a href="https://telegram.me/addstickers/'+link[i][0]+'">'+stitle[i][0]+'</a>\n'
     startme='<a href="https://telegram.me/Chiahayabot?start=sticker">請先在私訊START</a>'
     
-    ################################################send####################################
+    '''
     if mode:
+        results=[]
         qok=InlineQueryResultArticle(
             
             id=str(datetime.now()),title='MATOME',
@@ -1020,20 +1052,22 @@ def sticker_matome(bot,update):
         try:
             bot.send_message(chat_id=query.from_user.id,text=slink,parse_mode='HTML')
         except:
+            result.append(qstartme)
             qstartme=InlineQueryResultArticle(
                 id=str(datetime.now()),
                 title='MATOME',
                 input_message_content=InputTextMessageContent(message_text=startme,parse_mode='HTML')
                 )
 
-            bot.answer_inline_query(update.inline_query.id, [qstartme])
+            
 
         
-    else:    
-        try:
-            bot.send_message(chat_id=update.message.from_user.id,text=slink,parse_mode='HTML')
-        except:
-            bot.send_message(chat_id=update.message.chat_id,text=startme,parse_mode='HTML')
+    else: 
+'''    
+    try:
+        bot.send_message(chat_id=update.message.from_user.id,text=slink,parse_mode='HTML')
+    except:
+        bot.send_message(chat_id=update.message.chat_id,text=startme,parse_mode='HTML')
 
 def wake(bot,update):
 #prevent bot from going to sleep
@@ -1239,7 +1273,7 @@ def main():
     dispatcher.add_handler(CommandHandler('r', restart, filters=Filters.user(user_id=580276512)))
     
     
-    dispatcher.add_handler(InlineQueryHandler(sticker_matome))
+    dispatcher.add_handler(InlineQueryHandler(iquote))
     #filters
     dispatcher.add_handler(MessageHandler(Filters.command, unknown))
     dispatcher.add_handler(MessageHandler(Filters.all,sora))
