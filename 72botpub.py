@@ -712,7 +712,7 @@ def pt():
     for i in (100,2500,5000,10000,25000):
         ostr=output.format(data[i]['rank'],data[i]['now'],data[i]['past_2'],data[i]['now']-data[i]['past_2'])
         border.append(ostr)
-    text='<pre>'+name+'\n'
+    text='<pre>'+name+'\n'+output.format('排名','最近集計','2h前集計','增加pt')
     for i in border:
         text=text+i
     text=text+'</pre>'
@@ -995,16 +995,31 @@ def unknown(bot, update):
         bot.send_message(chat_id=update.message.chat_id, text="すみません、よく分かりません。")
 
 def sticker_matome(bot,update):
+    query = update.inline_query.query
+    mode=False
+    if not query:
+        pass
+    elif query=='sticker':
+        mode=True
+    
     link=dbget('sticker','setname')
     stitle=dbget('sticker','about')
     slink=''
     for i in range(len(link)):
         slink=slink+'<a href="https://telegram.me/addstickers/'+link[i][0]+'">'+stitle[i][0]+'</a>\n'
+        
     try:
-        bot.send_message(chat_id=update.message.from_user.id,text=slink,parse_mode='HTML')
+        if mode:
+            bot.answer_inline_query(update.inline_query.id, ['看私訊~~'])
+            bot.send_message(chat_id=update.inline_query.from_user.id,text=slink,parse_mode='HTML')
+        else:
+            bot.send_message(chat_id=update.message.from_user.id,text=slink,parse_mode='HTML')
     except:
         startme='<a href="https://telegram.me/Chiahayabot?start=sticker">請先在私訊START</a>'
-        bot.send_message(chat_id=update.message.chat_id,text=startme,parse_mode='HTML')
+        if node:
+            bot.answer_inline_query(update.inline_query.id, [startme])
+        else:
+            bot.send_message(chat_id=update.message.chat_id,text=startme,parse_mode='HTML')
 
 def wake(bot,update):
 #prevent bot from going to sleep
@@ -1167,14 +1182,18 @@ def main():
     #job
     #updater.job_queue.run_daily(daily_reset,stime(18,22,0))
     updater.job_queue.run_repeating(del_quote, interval=72, first=0)
-    updater.job_queue.run_repeating(Ept2h, interval=7200, first=0)
     updater.job_queue.run_repeating(key_word_j_buffer, interval=60, first=0)
     updater.job_queue.run_repeating(update_lastm, interval=60, first=0)
     updater.job_queue.run_repeating(buffer_refresh, interval=60, first=0)
+    updater.job_queue.run_repeating(wake, interval=600, first=0)
     updater.job_queue.run_repeating(dbupdate, interval=86400, first=0)
     jd=False
+    eventborder=[stime(0,0,40),stime(2,0,40),stime(0,0,40),stime(2,0,40),stime(4,0,40),stime(6,0,40),stime(8,0,40),stime(10,0,40),stime(12,0,40),stime(14,0,40),stime(16,0,40),stime(18,0,40),stime(20,0,40),stime(22,0,40)]
+    for t in eventborder:
+        updater.job_queue.run_daily(Ept2h,t)
+    
     history_t=[stime(3,0,0),stime(9,0,0),stime(15,0,0),stime(21,0,0)]
-    job_minute = updater.job_queue.run_repeating(wake, interval=600, first=0)
+    
     for t in history_t:
         job_his = updater.job_queue.run_daily(history,t)
     #command
@@ -1204,6 +1223,9 @@ def main():
     dispatcher.add_handler(CommandHandler('punch', punch, pass_args=True))
     dispatcher.add_handler(CommandHandler('caps', caps, pass_args=True))
     dispatcher.add_handler(CommandHandler('r', restart, filters=Filters.user(user_id=580276512)))
+    
+    
+    dispatcher.add_handler(InlineQueryHandler(sticker_matome))
     #filters
     dispatcher.add_handler(MessageHandler(Filters.command, unknown))
     dispatcher.add_handler(MessageHandler(Filters.all,sora))
