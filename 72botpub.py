@@ -1273,7 +1273,7 @@ def main():
     dispatcher.add_handler(CommandHandler('r', restart, filters=Filters.user(user_id=580276512)))
     
     
-    dispatcher.add_handler(InlineQueryHandler(iquote))
+    dispatcher.add_handler(InlineQueryHandler(inline_quote))
     #filters
     dispatcher.add_handler(MessageHandler(Filters.command, unknown))
     dispatcher.add_handler(MessageHandler(Filters.all,sora))
