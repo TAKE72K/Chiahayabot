@@ -768,10 +768,8 @@ def inline_quote(bot,update):
     global combo
     global buffer_quote
     query=update.inline_query.query
-    if not query:
-        return
+    num=random.randint(0,len(buffer_quote)-1)
     if query=='quote':
-        num=random.randint(0,len(buffer_quote)-1)
         text='<pre>'+buffer_quote[num][0]+'</pre>\n'+'-----<b>'+buffer_quote[num][1]+'</b> より'
         print(text)
         iquote=InlineQueryResultArticle(
