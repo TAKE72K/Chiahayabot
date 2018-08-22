@@ -1016,7 +1016,7 @@ def sticker_matome(bot,update):
             id=str(datetime.now()),title='MATOME',
             input_message_content=InputTextMessageContent(message_text='傳送中~~')
             )
-        bot.answer_inline_query(update.inline_query.id,switch_pm_text='sticker',switch_pm_parameter='sticker')
+        bot.answer_inline_query(update.inline_query.id,[qok],switch_pm_text='sticker',switch_pm_parameter='sticker')
         try:
             bot.send_message(chat_id=query.from_user.id,text=slink,parse_mode='HTML')
         except:
