@@ -1010,8 +1010,10 @@ def sticker_matome(bot,update):
         
     try:
         if mode:
-            
-            #bot.answer_inline_query(update.inline_query.id, ['看私訊~~'])
+            qok=InlineQueryResultArticle(
+            id=str(datetime.now()),title='MATOME',
+            input_message_content=InputTextMessageContent(text='看私訊~~'))
+            bot.answer_inline_query(update.inline_query.id, [qok])
             bot.send_message(chat_id=update.inline_query.from_user.id,text=slink,parse_mode='HTML')
         else:
             bot.send_message(chat_id=update.message.from_user.id,text=slink,parse_mode='HTML')
