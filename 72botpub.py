@@ -777,7 +777,7 @@ def inline_quote(bot,update):
                 title='quote',
                 input_message_content=InputTextMessageContent(message_text=text,parse_mode='HTML')
                 )
-        bot.answer_inline_query(inline_query_id=update.inline_query.id,results=[iquote])
+        bot.answer_inline_query(inline_query_id=update.inline_query.id,results=[iquote],cache_time=2,is_personal=True)
 
         
 del_list=[]
