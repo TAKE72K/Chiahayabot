@@ -26,6 +26,7 @@ from himeAPI import gasya,update_card,event_score
 #db
 import psycopg2
 from psycopg2 import sql
+from postgre import dbDump,dbrandGet,dbGet
 
 DATABASE_URL = os.environ['DATABASE_URL']
 eventing=os.environ['EVing']
@@ -135,40 +136,6 @@ def set_config(id,command):
         else:
             setting=setting+command
         worksheet.update_cell(cell.row,cell.col+1,setting)
-def dbsave(table,data,col):
-    q1 = sql.SQL("insert into {} ({}) values ({})").format(sql.Identifier(table),sql.SQL(', ').join(map(sql.Identifier, col)),sql.SQL(', ').join(sql.Placeholder() * len(col)))
-    
-    
-    try:
-        curs.execute(q1,data)
-        #curs.execute("INSERT INTO randchihaya(name,url) VALUES(%s,%s)",(data[0],data[1]))
-    except:
-        print('???')
-        conn.rollback()
-    else:
-        conn.commit()
-def dbget(table,col):
-    q1=sql.SQL("SELECT {} FROM {} ORDER BY ID").format(sql.Identifier(col),sql.Identifier(table))
-    try:
-        curs.execute(q1)
-    except:
-        conn.rollback()
-    else:
-        data=curs.fetchall()
-        return data
-def dbrandGet(table,col):
-    q1=sql.SQL("SELECT {} FROM {} ORDER BY RANDOM() LIMIT 1").format(sql.Identifier(col),sql.Identifier(table))
-    str=''
-    try:
-        curs.execute(q1)
-        #curs.execute("""SELECT url FROM randchihaya
-        #                ORDER BY RANDOM()
-        #               LIMIT 1""")
-    except:
-        conn.rollback()
-    else:
-        str=curs.fetchone()[0]
-    return str
     
 def get_config(id,setting):
     scope = ['https://spreadsheets.google.com/feeds']
@@ -190,6 +157,7 @@ def get_config(id,setting):
             return False
 def dbupdate(bot,job):
     update_card()
+
 def daily_reset(bot,job):
     scope = ['https://spreadsheets.google.com/feeds']
     creds = ServiceAccountCredentials.from_json_keyfile_name('auth.json', scope)
@@ -771,7 +739,6 @@ def inline_quote(bot,update):
     num=random.randint(0,len(buffer_quote)-1)
     if query=='quote':
         text='<pre>'+buffer_quote[num][0]+'</pre>\n'+'-----<b>'+buffer_quote[num][1]+'</b> より'
-        print(text)
         iquote=InlineQueryResultArticle(
                 id=str(datetime.now()),
                 title='quote',
@@ -915,11 +882,11 @@ def sora(bot,update):
         col=['name','url']
         if rmsg.text.find('http')!=-1:
             data=['adp',rmsg.text]
-            dbsave('randchihaya',data,col)
+            dbDump('randchihaya',data,col)
             return
         if rmsg.photo!=None:
             data=['adph',rmsg.photo[len(rmsg.photo)-1].file_id]
-            dbsave('randchihaya',data,col)
+            dbDump('randchihaya',data,col)
             return
         
     if test.find('tsumu@db')!=-1:
@@ -927,11 +894,11 @@ def sora(bot,update):
         col=['name','url']
         if rmsg.text.find('http')!=-1:
             data=['adp',rmsg.text]
-            dbsave('randtsumugi',data,col)
+            dbDump('randtsumugi',data,col)
             return
         if rmsg.photo!=None:
             data=['adph',rmsg.photo[len(rmsg.photo)-1].file_id]
-            dbsave('randtsumugi',data,col)
+            dbDump('randtsumugi',data,col)
             return
     if test.find('stm@db')!=-1:
         rmsg=update.message.reply_to_message
@@ -940,7 +907,7 @@ def sora(bot,update):
             set=bot.get_sticker_set(N)
             
             col=['setname','about']
-            dbsave('sticker',[N,set.title],col)
+            dbDump('sticker',[N,set.title],col)
     
     if test.find('fid')!=-1:
         rmsg=update.message.reply_to_message
@@ -1020,11 +987,10 @@ def sticker_matome(bot,update):
     elif query.query=='sticker':
         mode=True
     '''
-    link=dbget('sticker','setname')
-    stitle=dbget('sticker','about')
+    link=dbGet('sticker',['setname','about'])
     slink=''
-    for i in range(len(link)):
-        slink=slink+'<a href="https://telegram.me/addstickers/'+link[i][0]+'">'+stitle[i][0]+'</a>\n'
+    for i in link:
+        slink=slink+'<a href="https://telegram.me/addstickers/'+i[0]+'">'+i[1]+'</a>\n'
     startme='<a href="https://telegram.me/Chiahayabot?start=sticker">請先在私訊START</a>'
     
     '''
