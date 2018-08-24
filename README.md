@@ -17,8 +17,8 @@ Just reply hashtag**名言** and it'll be recorded.
 > For example `re:"蝶芙:飛天義麵神教" #名言`
 
 # Quote trend
-![Main group](https://drive.google.com/uc?export=view&id=1DIwxAE12XpiG6f9XWVugxX8IOZDXDLMZ "**Main group**")
-<img src="https://drive.google.com/uc?export=view&id=1DIwxAE12XpiG6f9XWVugxX8IOZDXDLMZ" alt="Main group" height="960" width="540">
+
+<img src="https://drive.google.com/uc?export=view&id=1DIwxAE12XpiG6f9XWVugxX8IOZDXDLMZ" alt="Main group" height="540" width="960">
 # Contributing
 Just make PR , it's [Welcome!!](https://www.project-imas.com/wiki/Welcome!!)
 
