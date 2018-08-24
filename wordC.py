@@ -11,7 +11,7 @@ def cloud(which,background_color='MidnightBlue',colormap='Wistia'):
     sheet = client.open_by_key(spreadsheet_key)
     worksheet=sheet.worksheet(which)
     content=worksheet.get_all_values()
-    text=''.join(i for i in content)
+    text=''.join(k for i in content for k in i)
     wcloud=wc(font_path='NotoSerifCJKtc-Regular.otf',
         width=1920,height=1080,
         relative_scaling=0.7,
