@@ -1,4 +1,5 @@
 # coding=utf-8
+import os
 from wordcloud import WordCloud as wc
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
