@@ -21,4 +21,3 @@ virtualenv==16.0.0
 virtualenv-clone==0.3.0
 matplotlib==2.2.3
 numpy==1.15.1
-nscipy==0.15.1
