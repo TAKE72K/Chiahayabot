@@ -23,6 +23,7 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import requests
 from himeAPI import gasya,update_card,event_score
+from wordC import cloud
 #db
 import psycopg2
 from psycopg2 import sql
