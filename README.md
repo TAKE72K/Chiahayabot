@@ -1,4 +1,5 @@
-# Telegrambot
+# Chiahayabot
+
 ## Platform:
 A bot operates on telegram. **@Chiahayabot**
 
