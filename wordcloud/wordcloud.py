@@ -22,8 +22,8 @@ from PIL import ImageDraw
 from PIL import ImageFilter
 from PIL import ImageFont
 
-from .query_integral_image import query_integral_image
-from .tokenization import unigrams_and_bigrams, process_tokens
+from query_integral_image import query_integral_image
+from tokenization import unigrams_and_bigrams, process_tokens
 
 FILE = os.path.dirname(__file__)
 FONT_PATH = os.environ.get('FONT_PATH', os.path.join(FILE, 'DroidSansMono.ttf'))
