@@ -23,7 +23,7 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import requests
 from himeAPI import gasya,update_card,event_score
-from wordC import cloud
+#from wordC import cloud
 #db
 import psycopg2
 from psycopg2 import sql
@@ -1166,11 +1166,11 @@ def quote_d(bot,update):
     num=random.randint(0,len(quote)-1)
     text='<pre>'+quote[num][0]+'</pre>\n'+'-----<b>'+quote[num][1]+'</b> より'
     msg=bot.send_message(chat_id=update.message.chat_id,text=text,parse_mode='HTML')
-
+'''
 def wordcloud(bot,update):
     a=cloud('quote_main')
     bot.send_photo(chat_id=update.message.chat_id,photo=a)
-    
+  '''  
 def main():
     q = mq.MessageQueue(all_burst_limit=3, all_time_limit_ms=3000)
     # set connection pool size for bot 
@@ -1229,7 +1229,7 @@ def main():
     dispatcher.add_handler(CommandHandler('sk',set_kw,pass_args=True))
     dispatcher.add_handler(CommandHandler('punch', punch, pass_args=True))
     dispatcher.add_handler(CommandHandler('caps', caps, pass_args=True))
-    dispatcher.add_handler(CommandHandler('wc', wordcloud))
+   # dispatcher.add_handler(CommandHandler('wc', wordcloud))
     dispatcher.add_handler(CommandHandler('r', restart, filters=Filters.user(user_id=580276512)))
     
     
