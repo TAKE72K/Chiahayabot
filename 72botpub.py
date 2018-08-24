@@ -17,7 +17,7 @@ from datetime import time as stime
 from telegram import InlineQueryResultArticle, InputTextMessageContent,InlineKeyboardMarkup,InlineKeyboardButton
 from telegram.ext import Updater,CommandHandler,MessageHandler,Filters,InlineQueryHandler,JobQueue
 from telegram.ext.dispatcher import run_async
-import python3pickledb as pickledb
+
 from key_word import key_word as kws
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
