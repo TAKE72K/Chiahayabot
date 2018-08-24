@@ -18,7 +18,8 @@ Just reply hashtag**名言** and it'll be recorded.
 
 # Quote trend
 
-<img src="https://drive.google.com/uc?export=view&id=1DIwxAE12XpiG6f9XWVugxX8IOZDXDLMZ" alt="Main group" height="540" width="960">
+<img src="https://drive.google.com/uc?export=view&id=1DIwxAE12XpiG6f9XWVugxX8IOZDXDLMZ" alt="Main group" width="768" height="432" >
+
 # Contributing
 Just make PR , it's [Welcome!!](https://www.project-imas.com/wiki/Welcome!!)
 
