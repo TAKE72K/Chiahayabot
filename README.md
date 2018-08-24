@@ -15,3 +15,9 @@ Hosting on Heroku, and using Python-telegram-bot lib.
 This bot allow group members to quote meaningful or (most) **funky** messages.  
 Just reply hashtag**名言** and it'll be recorded.  
 > For example `re:"蝶芙:飛天義麵神教" #名言`
+
+# Contributing
+Just make PR , it's [Welcome!!](https://www.project-imas.com/wiki/Welcome!!)
+
+# Group
+Im@s group of Taiwan on telegram : [telegr@M@ster(TW)](https://t.me/imas_zh)
