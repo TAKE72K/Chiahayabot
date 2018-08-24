@@ -1,5 +1,7 @@
 # coding=utf-8
 import os
+import sys
+sys.path.append('./wordcloud')
 from wordcloud import WordCloud as wc
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
