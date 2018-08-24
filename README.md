@@ -14,4 +14,4 @@ Hosting on Heroku, and using Python-telegram-bot lib.
 ### Quote
 This bot allow group members to quote meaningful or (most) **funky** messages.  
 Just reply hashtag**名言** and it'll be recorded.  
-For example `re:"蝶芙:飛天義麵神教" #名言`
+> For example `re:"蝶芙:飛天義麵神教" #名言`
