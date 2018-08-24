@@ -28,3 +28,4 @@ Just make PR , it's [Welcome!!](https://www.project-imas.com/wiki/Welcome!!)
 
 # Group
 Im@s group of Taiwan on telegram : [telegr@M@ster(TW)](https://t.me/imas_zh)
+<link rel="icon" type="image/x-icon" class="js-site-favicon" href="https://assets-cdn.github.com/favicon.ico">
