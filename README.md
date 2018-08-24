@@ -1,7 +1,7 @@
 # Chiahayabot
 
 ## About
-A bot operates on telegram. **@Chiahayabot**
+A bot operates on telegram. [@Chiahayabot](https://t.me/Chiahayabot)
 Hosting on Heroku, and using Python-telegram-bot lib.
 
 ## Naming
