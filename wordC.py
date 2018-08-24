@@ -19,3 +19,4 @@ def cloud(which,background_color='MidnightBlue',colormap='Wistia'):
     )
     image=wcloud.generate(text).to_image()
     image.save('wc.jpg')
+    return image
