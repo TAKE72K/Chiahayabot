@@ -1,9 +1,10 @@
 # Chiahayabot
 
-## Platform
+## About
 A bot operates on telegram. **@Chiahayabot**
 Hosting on Heroku, and using Python-telegram-bot lib.
-## About
+
+## Naming
 **千早かわいい**  
 このBOTはCHIAHAYAで,  
 
