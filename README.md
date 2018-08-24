@@ -16,6 +16,8 @@ This bot allow group members to quote meaningful or (most) **funky** messages.
 Just reply hashtag**名言** and it'll be recorded.  
 > For example `re:"蝶芙:飛天義麵神教" #名言`
 
+# Quote trend
+![Alt Main group](https://drive.google.com/open?id=1DIwxAE12XpiG6f9XWVugxX8IOZDXDLMZ "Main group")
 # Contributing
 Just make PR , it's [Welcome!!](https://www.project-imas.com/wiki/Welcome!!)
 
