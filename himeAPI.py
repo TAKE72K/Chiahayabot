@@ -84,6 +84,8 @@ def gasya():
     return result
 
 def event_score():
+    if eventing=='no':
+        return None
     q1="events/{}/rankings/logs/eventPoint/{}"
     q2="events/{}".format(eventId)
     event_name=requests.get(END_POINT+q2).json()['name']

@@ -676,17 +676,18 @@ def urope(bot,update):
 
 def pt():
     data=event_score()
-    name=data['name']
-    output='{0:>5}{1:>8}{2:>8} +{3:>6}/120mins\n'
-    border=[]
-    for i in (100,2500,5000,10000,25000):
-        ostr=output.format(data[i]['rank'],data[i]['now'],data[i]['past_2'],data[i]['now']-data[i]['past_2'])
-        border.append(ostr)
-    text='<pre>'+name+'\n'+output.format('排名','最近集計','2h前集計','增加pt')
-    for i in border:
-        text=text+i
-    text=text+'</pre>'
-    return text
+    if data!=None:
+        name=data['name']
+        output='{0:>5}{1:>8}{2:>8} +{3:>6}/120mins\n'
+        border=[]
+        for i in (100,2500,5000,10000,25000):
+                ostr=output.format(data[i]['rank'],data[i]['now'],data[i]['past_2'],data[i]['now']-data[i]['past_2'])
+                border.append(ostr)
+        text='<pre>'+name+'\n'+output.format('排名','最近集計','2h前集計','增加pt')
+        for i in border:
+                text=text+i
+        text=text+'</pre>'
+        return text
     
 def Ept(bot,update):
     bot.send_message(chat_id=update.message.chat_id,text=pt(),parse_mode='HTML')
