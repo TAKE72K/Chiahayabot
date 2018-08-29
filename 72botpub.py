@@ -700,12 +700,16 @@ def Ept2h(bot,job):
 renda_id=0
 combo=0
 buffer_quote=[]
+buffer_quote_main=[]
 buffer_config=[]
 def buffer_refresh(bot,job):
     global buffer_quote
+    global buffer_quote_main
 
     qsheet=get_sheet('quote')
     buffer_quote=qsheet.get_all_values()
+    qsheet=get_sheet('quote_main')
+    buffer_quote_main=qsheet.get_all_values()
     
     
 @run_async
@@ -740,16 +744,23 @@ def inline_quote(bot,update):
     global renda_id
     global combo
     global buffer_quote
+    global buffer_quote_main
     query=update.inline_query.query
     num=random.randint(0,len(buffer_quote)-1)
 
     text='<pre>'+buffer_quote[num][0]+'</pre>\n'+'-----<b>'+buffer_quote[num][1]+'</b> より'
     iquote=InlineQueryResultArticle(
                 id=str(datetime.now()),
-                title='quote',
+                title='qu',
                 input_message_content=InputTextMessageContent(message_text=text,parse_mode='HTML')
             )
-    bot.answer_inline_query(inline_query_id=update.inline_query.id,results=[iquote],cache_time=2,is_personal=True)
+    textm='<pre>'+buffer_quote_main[num][0]+'</pre>\n'+'-----<b>'+buffer_quote_main[num][1]+'</b> より'
+    iquotem=InlineQueryResultArticle(
+                id=str(datetime.now()),
+                title='ote',
+                input_message_content=InputTextMessageContent(message_text=textm,parse_mode='HTML')
+            )
+    bot.answer_inline_query(inline_query_id=update.inline_query.id,results=[iquote,iquotem],cache_time=2,is_personal=True)
 
         
 del_list=[]
