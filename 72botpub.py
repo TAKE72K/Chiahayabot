@@ -693,7 +693,9 @@ def Ept(bot,update):
     bot.send_message(chat_id=update.message.chat_id,text=pt(),parse_mode='HTML')
     
 def Ept2h(bot,job):
-    bot.send_message(chat_id=-313454366,text=pt(),parse_mode='HTML')
+    text=pt()
+    if text is not None:
+        bot.send_message(chat_id=-313454366,text=text,parse_mode='HTML')
     
 renda_id=0
 combo=0
