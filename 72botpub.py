@@ -280,7 +280,7 @@ def start(bot, update,args):
     bot.send_message(chat_id=update.message.chat_id, text="気軽にお声をおかけください～～　/help")
     button_list=[
         InlineKeyboardButton(text='start me in PM',url='https://telegram.me/Chiahayabot?start=hello'),
-        InlineKeyboardButton(text='about Chihaya.K',url='https://imasml-theater-wiki.gamerch.com/%E5%A6%82%E6%9C%88%E5%8D%83%E6%97%A9#content_2_13')
+        InlineKeyboardButton(text='about Chihaya.K',url='https://imasml-theater-wiki.gamerch.com/%E5%A6%82%E6%9C%88%E5%8D%83%E6%97%A9#content_2_13'),
         InlineKeyboardButton(text='sub',callback_data='lo')
         ]
     
