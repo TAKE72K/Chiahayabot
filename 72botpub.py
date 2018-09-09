@@ -281,6 +281,7 @@ def start(bot, update,args):
     button_list=[
         InlineKeyboardButton(text='start me in PM',url='https://telegram.me/Chiahayabot?start=hello'),
         InlineKeyboardButton(text='about Chihaya.K',url='https://imasml-theater-wiki.gamerch.com/%E5%A6%82%E6%9C%88%E5%8D%83%E6%97%A9#content_2_13')
+        InlineKeyboardButton(text='sub',callback_data='lo')
         ]
     
     reply_markup = InlineKeyboardMarkup(build_menu(button_list, n_cols=1))
@@ -739,7 +740,9 @@ def quote(bot,update):
     
     del_list.append([update.message.chat_id,msg.message_id])
     del_cmd(bot,update)
-
+def sub_menu(bot,update):
+    query=update.callback_query.message
+    bot.answer_callback_query(update.callback_query.id,text=query)
 def inline_quote(bot,update):
     global renda_id
     global combo
@@ -1248,6 +1251,7 @@ def main():
     
     
     dispatcher.add_handler(InlineQueryHandler(inline_quote))
+    dispatcher.add_handler(CallbackQueryHandler(sub_menu))
     #filters
     dispatcher.add_handler(MessageHandler(Filters.command, unknown))
     dispatcher.add_handler(MessageHandler(Filters.all,sora))
