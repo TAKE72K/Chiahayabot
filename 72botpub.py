@@ -768,7 +768,21 @@ def inline_quote(bot,update):
             )
     bot.answer_inline_query(inline_query_id=update.inline_query.id,results=[iquote,iquotem],cache_time=2,is_personal=True)
 
-        
+def quote_sort(bot,update):
+    prepare=False
+    quoteA={}
+    quoteB={}
+    while(prepare!=True):
+        quoteA=MisaMongo.randget()[0]
+        quoteB=MisaMongo.randget()[0]
+        if quoteA['_id']!=quoteB['_id']:
+            prepare=True
+    
+    
+    sort_menu=[[InlineKeyboardButton(text='A',callback_data='sort{}'.format(str(quoteA['_id']))),
+    InlineKeyboardButton(text='A',callback_data='sort{}'.format(str(quoteB['_id'])))]]
+    sort_markup=InlineKeyboardMarkup(sort_menu)
+    bot.send_message(chat_id=update.message.chat_id,text=quoteA['quote']+'\n和\n'+quoteB['said']+'\n哪ㄍ?',reply_markup=sort_markup)
 del_list=[]
 def del_quote(bot,job):
     global del_list
