@@ -748,7 +748,7 @@ def inline_quote(bot,update):
     global renda_id
     global combo
     global buffer_quote
-    quotemain=MisaMongo.randget()
+    quotemain=MisaMongo.randget()[0]
     
     query=update.inline_query.query
     num=random.randint(0,len(buffer_quote)-1)
