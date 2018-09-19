@@ -1261,6 +1261,8 @@ def main():
     dispatcher.add_handler(CommandHandler('quote',quote))
     dispatcher.add_handler(CommandHandler('qt',quote_d))
     dispatcher.add_handler(CommandHandler('pt',Ept))
+    
+    dispatcher.add_handler(CommandHandler('sort',quote_sort))
     dispatcher.add_handler(CommandHandler('sticker',sticker_matome))
     dispatcher.add_handler(CommandHandler('randChihaya',randchihaya))
     dispatcher.add_handler(CommandHandler('randTsumugi',randtsumugi))
