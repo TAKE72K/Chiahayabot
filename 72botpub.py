@@ -749,7 +749,7 @@ def sub_menu(bot,update):
 def sort_save(bot,update):
     query = update.callback_query
     query_text=query.data
-    if query_text.find('sort'):
+    if query_text.find('sort')!=-1:
         id=query_text.replace('sort','')
         oid=ObjectId(id)
         tag=MisaMongo.display_data('quote_main',{'_id':oid},'tag')
