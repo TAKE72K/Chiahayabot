@@ -14,7 +14,7 @@ import json
 import datetime as dt
 from datetime import datetime, tzinfo, timedelta
 from datetime import time as stime
-from telegram import InlineQueryResultArticle, InputTextMessageContent,InlineKeyboardMarkup,InlineKeyboardButton
+from telegram import InlineQueryResultArticle, InputTextMessageContent,InlineKeyboardMarkup,InlineKeyboardButton,ForceRelpy
 from telegram.ext import Updater,CommandHandler,MessageHandler,Filters,InlineQueryHandler,JobQueue,CallbackQueryHandler
 from telegram.ext.dispatcher import run_async
 
@@ -23,6 +23,7 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import requests
 from himeAPI import gasya,update_card,event_score
+import MisaMongo
 #from wordC import cloud
 #db
 import psycopg2
@@ -747,7 +748,8 @@ def inline_quote(bot,update):
     global renda_id
     global combo
     global buffer_quote
-    global buffer_quote_main
+    quotemain=MisaMongo.randget()
+    
     query=update.inline_query.query
     num=random.randint(0,len(buffer_quote)-1)
 
@@ -757,7 +759,8 @@ def inline_quote(bot,update):
                 title='qu',
                 input_message_content=InputTextMessageContent(message_text=text,parse_mode='HTML')
             )
-    textm='<pre>'+buffer_quote_main[num][0]+'</pre>\n'+'-----<b>'+buffer_quote_main[num][1]+'</b> より'
+            
+    textm='<pre>'+quotemain['quote']+'</pre>\n'+'-----<b>'+quotemain['said']+'</b> より'
     iquotem=InlineQueryResultArticle(
                 id=str(datetime.now()),
                 title='ote',
@@ -1035,11 +1038,16 @@ def sticker_matome(bot,update):
 
         
     else: 
-    '''    
+    '''  
+    button_list=[
+        InlineKeyboardButton(text='start',url='https://telegram.me/Chiahayabot?start=hello'),
+        ]
+    
+    reply_markup = InlineKeyboardMarkup(build_menu(button_list, n_cols=1))
     try:
         bot.send_message(chat_id=update.message.from_user.id,text=slink,parse_mode='HTML')
     except:
-        bot.send_message(chat_id=update.message.chat_id,text=startme,parse_mode='HTML')
+        bot.send_message(chat_id=update.message.chat_id,text='please start first',reply_markup=reply_markup)
 
 def wake(bot,update):
 #prevent bot from going to sleep
