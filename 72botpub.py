@@ -14,7 +14,7 @@ import json
 import datetime as dt
 from datetime import datetime, tzinfo, timedelta
 from datetime import time as stime
-from telegram import InlineQueryResultArticle, InputTextMessageContent,InlineKeyboardMarkup,InlineKeyboardButton,ForceRelpy
+from telegram import InlineQueryResultArticle, InputTextMessageContent,InlineKeyboardMarkup,InlineKeyboardButton,ForceReply
 from telegram.ext import Updater,CommandHandler,MessageHandler,Filters,InlineQueryHandler,JobQueue,CallbackQueryHandler
 from telegram.ext.dispatcher import run_async
 
