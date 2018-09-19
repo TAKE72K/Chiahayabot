@@ -12,6 +12,7 @@ import logging
 import time
 import json
 import datetime as dt
+from bson import ObjectId
 from datetime import datetime, tzinfo, timedelta
 from datetime import time as stime
 from telegram import InlineQueryResultArticle, InputTextMessageContent,InlineKeyboardMarkup,InlineKeyboardButton,ForceReply
@@ -745,6 +746,23 @@ def sub_menu(bot,update):
     query=update.callback_query.message
     bot.answer_callback_query(update.callback_query.id,text=query)
     
+def sort_save(bot,update):
+    query = update.callback_query
+    query_text=query.data
+    if query_text.find('sort'):
+        id=query_text.replace('sort','')
+        oid=ObjectId(id)
+        tag=MisaMongo.display_data('quote_main',{'_id':oid},'tag')
+        if type(tag)=='int':
+            tag=tag+1
+        else:
+            tag=1
+        MisaMongo.modify_data('quote_main',{'_id':oid},'tag',update_value=tag)
+        bot.edit_message_text(text="www",
+                              chat_id=query.message.chat_id,
+                              message_id=query.message.message_id)
+    
+    
 def inline_quote(bot,update):
     global renda_id
     global combo
@@ -1276,7 +1294,7 @@ def main():
     
     
     dispatcher.add_handler(InlineQueryHandler(inline_quote))
-    dispatcher.add_handler(CallbackQueryHandler(sub_menu))
+    dispatcher.add_handler(CallbackQueryHandler(sort_save))
     #filters
     dispatcher.add_handler(MessageHandler(Filters.command, unknown))
     dispatcher.add_handler(MessageHandler(Filters.all,sora))
