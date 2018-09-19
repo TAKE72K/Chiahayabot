@@ -744,6 +744,7 @@ def quote(bot,update):
 def sub_menu(bot,update):
     query=update.callback_query.message
     bot.answer_callback_query(update.callback_query.id,text=query)
+    
 def inline_quote(bot,update):
     global renda_id
     global combo
@@ -780,9 +781,9 @@ def quote_sort(bot,update):
     
     
     sort_menu=[[InlineKeyboardButton(text='A',callback_data='sort{}'.format(str(quoteA['_id']))),
-    InlineKeyboardButton(text='A',callback_data='sort{}'.format(str(quoteB['_id'])))]]
+    InlineKeyboardButton(text='B',callback_data='sort{}'.format(str(quoteB['_id'])))]]
     sort_markup=InlineKeyboardMarkup(sort_menu)
-    bot.send_message(chat_id=update.message.chat_id,text=quoteA['quote']+'\n和\n'+quoteB['said']+'\n哪ㄍ?',reply_markup=sort_markup)
+    bot.send_message(chat_id=update.message.chat_id,text='A:'+quoteA['quote']+'\n和\nB:'+quoteB['quote']+'\n哪ㄍ?',reply_markup=sort_markup)
 del_list=[]
 def del_quote(bot,job):
     global del_list
