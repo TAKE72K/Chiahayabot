@@ -758,7 +758,7 @@ def sort_save(bot,update):
         else:
             tag=1
         MisaMongo.modify_data('quote_main',{'_id':oid},'tag',update_value=tag)
-        bot.edit_message_text(text="www",
+        bot.edit_message_text(text="レヴュー終了、わかります",
                               chat_id=query.message.chat_id,
                               message_id=query.message.message_id)
     
@@ -801,7 +801,7 @@ def quote_sort(bot,update):
     sort_menu=[[InlineKeyboardButton(text='A',callback_data='sort{}'.format(str(quoteA['_id']))),
     InlineKeyboardButton(text='B',callback_data='sort{}'.format(str(quoteB['_id'])))]]
     sort_markup=InlineKeyboardMarkup(sort_menu)
-    bot.send_message(chat_id=update.message.chat_id,text='A:'+quoteA['quote']+'\n和\nB:'+quoteB['quote']+'\n哪ㄍ?',reply_markup=sort_markup)
+    bot.send_message(chat_id=update.message.chat_id,text='名言少女選抜戦、星を掴むのはだれ？\nA:'+quoteA['quote']+'\n和\nB:'+quoteB['quote']+'\n哪ㄍ?',reply_markup=sort_markup)
 del_list=[]
 def del_quote(bot,job):
     global del_list
