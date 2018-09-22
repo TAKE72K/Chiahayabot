@@ -761,7 +761,22 @@ def sort_save(bot,update):
         bot.edit_message_text(text="レヴュー終了、わかります",
                               chat_id=query.message.chat_id,
                               message_id=query.message.message_id)
-    
+def pic_url(name):
+    result=Misamongo.randget_idol(name)
+    if result is None:
+        return Misamongo.randget_idol('all')
+    return result[0]
+def inline_randPic(bot,update):
+    query=update.inline_query.query.text
+    pic=InlineQueryResultPhoto(
+        id=str(datetime.now()),
+        title='RANDPIC',
+        photo_url=pic_url(query)
+    )
+    bot.answer_inline_query(inline_query_id=update.inline_query.id,
+    results=[pic],
+    cache_time=2,
+    is_personal=True)
     
 def inline_quote(bot,update):
     global renda_id
@@ -1294,6 +1309,7 @@ def main():
     
     
     dispatcher.add_handler(InlineQueryHandler(inline_quote))
+    dispatcher.add_handler(InlineQueryHandler(inline_randPic))
     dispatcher.add_handler(CallbackQueryHandler(sort_save))
     #filters
     dispatcher.add_handler(MessageHandler(Filters.command, unknown))

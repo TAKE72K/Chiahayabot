@@ -24,6 +24,18 @@ def randget(Collection='quote_main',size=1):
 
     return result
 
+def randget_idol(idol,Collection='ml_idol_pic_colle',size=1):
+    op_ins=db[Collection]
+    if idol=='all':
+        pipeline=[{'$sample': {'size': size}}]
+    else:
+        pipeline=[{'$match': { 'name':idol }},{'$sample': {'size': size}}]
+    selected=op_ins.aggregate(pipeline)
+    result=[]
+    for i in selected:
+        result.append(i)
+    return result
+    
 def quote_finder(key,Collection='quote_main'):
     op_ins=db[Collection]
     cmd_cursor=op_ins.find({})
