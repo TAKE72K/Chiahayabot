@@ -804,7 +804,7 @@ def inline_quote(bot,update):
     pic=InlineQueryResultPhoto(
         id=str(datetime.now()),
         title='RANDPIC',
-        photo_url=pic_url(query.text)
+        photo_url=pic_url(query)
     )
     bot.answer_inline_query(inline_query_id=update.inline_query.id,results=[iquote,iquotem,pic],cache_time=2,is_personal=True)
 
