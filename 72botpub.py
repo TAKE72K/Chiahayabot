@@ -15,7 +15,7 @@ import datetime as dt
 from bson import ObjectId
 from datetime import datetime, tzinfo, timedelta
 from datetime import time as stime
-from telegram import InlineQueryResultArticle, InputTextMessageContent,InlineKeyboardMarkup,InlineKeyboardButton,ForceReply
+from telegram import InlineQueryResultArticle, InputTextMessageContent,InlineKeyboardMarkup,InlineKeyboardButton,ForceReply,InlineQueryResultPhoto
 from telegram.ext import Updater,CommandHandler,MessageHandler,Filters,InlineQueryHandler,JobQueue,CallbackQueryHandler
 from telegram.ext.dispatcher import run_async
 
