@@ -800,7 +800,13 @@ def inline_quote(bot,update):
                 title='ote',
                 input_message_content=InputTextMessageContent(message_text=textm,parse_mode='HTML')
             )
-    bot.answer_inline_query(inline_query_id=update.inline_query.id,results=[iquote,iquotem],cache_time=2,is_personal=True)
+            
+    pic=InlineQueryResultPhoto(
+        id=str(datetime.now()),
+        title='RANDPIC',
+        photo_url=pic_url(query.text)
+    )
+    bot.answer_inline_query(inline_query_id=update.inline_query.id,results=[iquote,iquotem,pic],cache_time=2,is_personal=True)
 
 def quote_sort(bot,update):
     prepare=False
