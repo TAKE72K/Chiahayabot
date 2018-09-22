@@ -805,7 +805,7 @@ def inline_quote(bot,update):
         id=str(datetime.now()),
         title='RANDPIC',
         photo_url=pic_url(query),
-        thumb_url=None
+        thumb_url='https://i.imgur.com/kdAihxk.jpg'
     )
     bot.answer_inline_query(inline_query_id=update.inline_query.id,results=[iquote,iquotem,pic],cache_time=2,is_personal=True)
 
