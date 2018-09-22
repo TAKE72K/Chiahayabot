@@ -763,9 +763,9 @@ def sort_save(bot,update):
                               message_id=query.message.message_id)
 def pic_url(name):
     result=MisaMongo.randget_idol(name)
-    if result is None:
-        return MisaMongo.randget_idol('all')
-    return result[0]
+    if result:
+        return result[0]['url']
+    return MisaMongo.randget_idol('all')[0]['url']
 def inline_randPic(bot,update):
     query=update.inline_query.query.text
     pic=InlineQueryResultPhoto(
