@@ -488,7 +488,12 @@ def bomb(bot,update,args):
 
 def splen(seq, length):
     return [seq[i:i+length] for i in range(0, len(seq), length)]
-def grave(bot,update):
+def grave(bot,update,pname=None):
+    mode=False
+    if pname is None:
+        pname=update.message.from_user.first_name
+        mode=True
+    pname=fullen(pname)
     par=random.randint(0,1)
     if par==0:
         text=('　　　／￣￣〈￣￣＼ :.＼ \n'
@@ -501,8 +506,7 @@ def grave(bot,update):
             '　 　|　　　　　　　　|: ::| \n'
             '￣\"￣\"￣\'￣￣\"\"￣\"\"￣.￣\'￣￣\n '
             )
-        pname=update.message.from_user.first_name
-        pname=fullen(pname)
+
         op=pname
         l=len(pname)
         if len(pname)<7:
@@ -534,7 +538,10 @@ def grave(bot,update):
                 text=text.replace('$pname',plist[0])
                 text=text.replace('$s2',plist[1])
                 text=text.replace('$s3',plist[2])
-        bot.send_message(chat_id=update.message.chat_id,text=text)
+        if mode:
+            bot.send_message(chat_id=update.message.chat_id,text=text)
+        else:
+            return text
     if par>0:
         top='　　 ＿ \n'
         nak='　　|$name| \n'
@@ -542,8 +549,6 @@ def grave(bot,update):
             '　| |三三| | \n'
             '￣￣￣￣￣￣ \n')
         op=top
-        pname=update.message.from_user.first_name
-        pname=fullen(pname)
         l=len(pname)
         
         for a in range(0,l):
@@ -551,8 +556,10 @@ def grave(bot,update):
             t=nak.replace('$name',pname[a])
             op+=t
         op+=bas
-        bot.send_message(chat_id=update.message.chat_id,text=op)
-
+        if mode:
+            bot.send_message(chat_id=update.message.chat_id,text=op)
+        else:
+            return op
 def restart(bot, update):
     update.message.reply_text('Bot is restarting...')
     Thread(target=stop_and_restart).start()
@@ -786,7 +793,9 @@ def inline_quote(bot,update):
     
     query=update.inline_query.query
     num=random.randint(0,len(buffer_quote)-1)
-
+    
+    result=[]
+    
     text='<pre>'+buffer_quote[num][0]+'</pre>\n'+'-----<b>'+buffer_quote[num][1]+'</b> より'
     iquote=InlineQueryResultArticle(
                 id=str(datetime.now()),
@@ -807,7 +816,19 @@ def inline_quote(bot,update):
         photo_url=pic_url(query),
         thumb_url='https://i.imgur.com/kdAihxk.jpg'
     )
-    bot.answer_inline_query(inline_query_id=update.inline_query.id,results=[iquote,iquotem,pic],cache_time=2,is_personal=True)
+    
+    inline_grave=InlineQueryResultArticle(
+                id=str(datetime.now()),
+                title='自掘墳墓',
+                input_message_content=InputTextMessageContent(message_text=grave(None,None,update.inline_query.from_user.first_name))
+            )
+    if query=='grave':
+        result.append(inline_grave)
+    else:
+        result.append(iquote)
+        result.append(iquotem)
+        result.append(pic)
+    bot.answer_inline_query(inline_query_id=update.inline_query.id,results=result,cache_time=2,is_personal=True)
 
 def quote_sort(bot,update):
     prepare=False
