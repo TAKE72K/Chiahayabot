@@ -938,7 +938,9 @@ def update_lastm(bot,job):
 fl=[]            
             
 def sora(bot,update):
-    y=key_word_reaction_json(update.message.text)
+    y=None
+    if update.message.text is not None:
+        y=key_word_reaction_json(update.message.text)
     if y!=None:
         for i in y:
             if i[0]=='t':
