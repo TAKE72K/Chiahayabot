@@ -936,7 +936,7 @@ def update_lastm(bot,job):
             worksheet.update_cell(cell.row,cell.col+1,i[1])
 
 fl=[]            
-            
+@run_async            
 def sora(bot,update):
     y=None
     if update.message.text is not None:
