@@ -7,7 +7,7 @@ class FloodLimit:
         self.messageSet=[]
         self.userId=msgInit.from_user.id
         self.userName=msgInit.from_user.first_name
-        self.chatId=msgId.chat.id
+        self.chatId=msgInit.chat.id
         self.frequence=banF
         
         date=msgInit.date
