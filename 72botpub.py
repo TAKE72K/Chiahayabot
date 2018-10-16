@@ -4,6 +4,7 @@ import random
 from random import randrange
 import os
 import sys
+from flood import FloodLimit
 from telegram.utils.request import Request
 import telegram.bot
 from telegram.ext import messagequeue as mq
@@ -934,6 +935,8 @@ def update_lastm(bot,job):
         else:
             worksheet.update_cell(cell.row,cell.col+1,i[1])
 
+fl=[]            
+            
 def sora(bot,update):
     y=key_word_reaction_json(update.message.text)
     if y!=None:
@@ -1035,7 +1038,19 @@ def sora(bot,update):
             
             return
 
-
+    global fl
+    #flood prevent
+    if message.chat.id==-1001289458175:
+        ban=False
+        for i in fl:
+            retu=i.detectMsg(update.message,bot)
+            if retu:
+                ban=True
+        if not ban:
+            a=FloodLimit(update.message)
+            fl.append(a)
+            
+            
     #work_sheet_push(list,'last_message')
     if test.find('我也愛そらそら')!=-1:
         bot.send_message(chat_id=update.message.chat_id, text="我愛そらそら一生一世")
