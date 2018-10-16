@@ -3,12 +3,14 @@ from datetime import timedelta as td
 import telegram
 class FloodLimit:
     
-    def __init__(self,msgInit,banF=0.5):
+    def __init__(self,msgInit,banF=0.5,restrictT=32,threshold=3):
         self.messageSet=[]
         self.userId=msgInit.from_user.id
         self.userName=msgInit.from_user.first_name
         self.chatId=msgInit.chat.id
         self.frequence=banF
+        self.restrictT=restrictT
+        self.threshold=threshold
         
         date=msgInit.date
         msgId=msgInit.message_id
@@ -36,11 +38,11 @@ class FloodLimit:
         while not timeL:
             btm=self.messageSet.pop(0)
             deltaT=(msgTop['date']-btm['date']).total_seconds()
-            if deltaT<60 and deltaT>=1:
+            if deltaT<60 and deltaT>=self.threshold:
                 t=deltaT
                 timeL=True
                 self.messageSet.insert(0,btm)
-            if deltaT<3:
+            if deltaT<self.threshold:
                 timeL=True
                 self.messageSet.insert(0,btm)
                 return
@@ -52,10 +54,10 @@ class FloodLimit:
         #ban user
         if floodBan:
             bot.restrict_chat_member(self.chatId,self.userId,
-            until_date=dt.now()+td(0,32,0),
+            until_date=dt.now()+td(0,restrictT,0),
             can_send_messages=False, can_send_media_messages=False,
             can_send_other_messages=False)
-            bot.send_message(chat_id=self.chatId, text=self.userName+'閉嘴')
+            bot.send_message(chat_id=self.chatId, text=self.userName+'閉嘴\n秒速'+str(userF)+'則訊息，很快嘛ㄏㄏ')
 
             self.messageSet=[msgTop]
             return True
