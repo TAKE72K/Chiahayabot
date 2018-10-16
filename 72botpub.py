@@ -1040,7 +1040,7 @@ def sora(bot,update):
 
     global fl
     #flood prevent
-    if message.chat.id==-1001289458175:
+    if update.message.chat.id==-1001289458175:
         ban=False
         for i in fl:
             retu=i.detectMsg(update.message,bot)
