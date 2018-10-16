@@ -1088,9 +1088,21 @@ def sora(bot,update):
             bot.send_message(chat_id=-313454366,text=update.message.sticker.file_id)'''
 
 def unknown(bot, update):
+    global fl
+    #flood prevent
+    if update.message.chat.id==-1001289458175:
+        ban=False
+        for i in fl:
+            retu=i.detectMsg(update.message,bot)
+            if retu:
+                ban=True
+        if not ban:
+            a=FloodLimit(update.message)
+            fl.append(a)
+    '''
     if update.message.entities[4].id==bot.get_me().id:
         bot.send_message(chat_id=update.message.chat_id, text="すみません、よく分かりません。")
-
+    '''
 def sticker_matome(bot,update):
     '''
     query = update.inline_query
