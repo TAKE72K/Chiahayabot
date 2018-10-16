@@ -36,7 +36,7 @@ class FloodLimit:
         while not timeL:
             btm=self.messageSet.pop(0)
             deltaT=(msgTop['date']-btm['date']).total_seconds()
-            if deltaT<60 and deltaT>=3:
+            if deltaT<60 and deltaT>=1:
                 t=deltaT
                 timeL=True
                 self.messageSet.insert(0,btm)
@@ -52,10 +52,10 @@ class FloodLimit:
         #ban user
         if floodBan:
             bot.restrict_chat_member(self.chatId,self.userId,
-            until_date=dt.now()+td(0,60,0),
+            until_date=dt.now()+td(0,32,0),
             can_send_messages=False, can_send_media_messages=False,
             can_send_other_messages=False)
-            bot.send_message(chat_id=self.chatId, text=str(self.userId)+'閉嘴')
+            bot.send_message(chat_id=self.chatId, text=self.userName+'閉嘴')
             self.messageSet=[msgTop]
             return True
         return False
