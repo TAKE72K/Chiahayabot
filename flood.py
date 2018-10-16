@@ -53,6 +53,8 @@ class FloodLimit:
             floodBan=True
         #ban user
         if floodBan:
+            print(self.userName)
+            print(self.messageSet)
             bot.restrict_chat_member(self.chatId,self.userId,
             until_date=dt.now()+td(0,self.restrictT,0),
             can_send_messages=False, can_send_media_messages=False,
