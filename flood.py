@@ -38,18 +38,21 @@ class FloodLimit:
         t=0
         #check time ligal
         while not timeL:
-
+            temp=self.messageSet
             btm=self.messageSet.get()
             deltaT=(msgTop['date']-btm['date']).total_seconds()
             
             if deltaT<60 and deltaT>=self.threshold:
                 t=deltaT
                 timeL=True
+                self.messageSet=temp
             if deltaT<self.threshold:
                 timeL=True
+                self.messageSet=temp
                 return
             if self.messageSet.empty():
                 timeL=True
+                self.messageSet=temp
                 return
         #check frequence
         floodBan=False
