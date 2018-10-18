@@ -29,8 +29,8 @@ class FloodLimit:
         msgReco={'date':date,
                 'msgId':msgId}
         self.messageSet.put(msgReco)
-        if self.messageSet.qsize()>2:
-            ban=self.floodCheck(msgReco,bot)
+
+        ban=self.floodCheck(msgReco,bot)
         return True
     def floodCheck(self,msgTop,bot):
          
