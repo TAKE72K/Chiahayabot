@@ -1,10 +1,11 @@
 from datetime import datetime as dt
 from datetime import timedelta as td
+import queue
 import telegram
 class FloodLimit:
     
     def __init__(self,msgInit,banF=0.5,restrictT=32,threshold=3):
-        self.messageSet=[]
+        self.messageSet=queue.Queue(40)
         self.userId=msgInit.from_user.id
         self.userName=msgInit.from_user.first_name
         self.chatId=msgInit.chat.id
@@ -16,7 +17,7 @@ class FloodLimit:
         msgId=msgInit.message_id
         msgReco={'date':date,
                 'msgId':msgId}
-        self.messageSet.append(msgReco)
+        self.messageSet.put(msgReco)
     def detectMsg(self,msg,bot):
         if msg.from_user.id != self.userId:
             return False
@@ -27,34 +28,39 @@ class FloodLimit:
         msgId=msg.message_id
         msgReco={'date':date,
                 'msgId':msgId}
-        self.messageSet.append(msgReco)
+        self.messageSet.put(msgReco)
         
         ban=self.floodCheck(msgReco,bot)
         return True
     def floodCheck(self,msgTop,bot):
+         
         timeL=False
         t=0
         #check time ligal
         while not timeL:
-            btm=self.messageSet.pop(0)
+            if self.messageSet.qsize()<2:
+                break
+            btm=self.messageSet.get()
             deltaT=(msgTop['date']-btm['date']).total_seconds()
+            
             if deltaT<60 and deltaT>=self.threshold:
                 t=deltaT
                 timeL=True
-                self.messageSet.insert(0,btm)
             if deltaT<self.threshold:
                 timeL=True
-                self.messageSet.insert(0,btm)
+                return
+            if self.messageSet.empty():
+                timeL=True
                 return
         #check frequence
         floodBan=False
-        userF=len(self.messageSet)/t
+        userF=self.messageSet.qsize()/t
         if userF>self.frequence:
             floodBan=True
         #ban user
         if floodBan:
             print(self.userName)
-            print(self.messageSet)
+            #print(self.messageSet)
             bot.restrict_chat_member(self.chatId,self.userId,
             until_date=dt.now()+td(0,self.restrictT,0),
             can_send_messages=False, can_send_media_messages=False,
@@ -64,3 +70,7 @@ class FloodLimit:
             self.messageSet=[msgTop]
             return True
         return False
+        
+def ban(msg,bot):
+    if '@ban' in msg.text:
+        
