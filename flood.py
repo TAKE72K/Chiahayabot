@@ -73,4 +73,4 @@ class FloodLimit:
         
 def ban(msg,bot):
     if '@ban' in msg.text:
-        
+        pass
