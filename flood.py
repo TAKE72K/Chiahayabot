@@ -5,7 +5,7 @@ import telegram
 class FloodLimit:
     
     def __init__(self,msgInit,banF=0.5,restrictT=32,threshold=3):
-        self.messageSet=queue.Queue(40)
+        self.messageSet=queue.Queue()
         self.userId=msgInit.from_user.id
         self.userName=msgInit.from_user.first_name
         self.chatId=msgInit.chat.id
@@ -17,7 +17,7 @@ class FloodLimit:
         msgId=msgInit.message_id
         msgReco={'date':date,
                 'msgId':msgId}
-        self.messageSet.put(msgReco)
+        self.messageSet.put_nowait(msgReco)
     def detectMsg(self,msg,bot):
         if msg.from_user.id != self.userId:
             return False
@@ -28,7 +28,7 @@ class FloodLimit:
         msgId=msg.message_id
         msgReco={'date':date,
                 'msgId':msgId}
-        self.messageSet.put(msgReco)
+        self.messageSet.put_nowait(msgReco)
 
         ban=self.floodCheck(msgReco,bot)
         return True
@@ -39,7 +39,7 @@ class FloodLimit:
         #check time ligal
         while not timeL:
             temp=self.messageSet
-            btm=self.messageSet.get()
+            btm=self.messageSet.get_nowait()
             deltaT=(msgTop['date']-btm['date']).total_seconds()
             
             if deltaT<60 and deltaT>=self.threshold:
