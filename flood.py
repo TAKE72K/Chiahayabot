@@ -29,8 +29,8 @@ class FloodLimit:
         msgReco={'date':date,
                 'msgId':msgId}
         self.messageSet.put(msgReco)
-        
-        ban=self.floodCheck(msgReco,bot)
+        if self.messageSet.qsize()>2:
+            ban=self.floodCheck(msgReco,bot)
         return True
     def floodCheck(self,msgTop,bot):
          
@@ -38,8 +38,7 @@ class FloodLimit:
         t=0
         #check time ligal
         while not timeL:
-            if self.messageSet.qsize()<2:
-                break
+
             btm=self.messageSet.get()
             deltaT=(msgTop['date']-btm['date']).total_seconds()
             
