@@ -1043,7 +1043,7 @@ def sora(bot,update):
     global fl
     global stop_flood
     #flood prevent
-    if stop_flood==1:
+    if stop_flood=='activate':
         ban=False
         for i in fl:
             retu=i.detectMsg(update.message,bot)
