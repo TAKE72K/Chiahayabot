@@ -34,7 +34,7 @@ from postgre import dbDump,dbrandGet,dbGet
 
 DATABASE_URL = os.environ['DATABASE_URL']
 eventing=os.environ['EVing']
-
+stop_flood=os.environ['act']
 
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 #db
@@ -1042,7 +1042,7 @@ def sora(bot,update):
 
     global fl
     #flood prevent
-    if update.message.chat.id==-1001289458175:
+    if stop_flood==1:
         ban=False
         for i in fl:
             retu=i.detectMsg(update.message,bot)

@@ -3,7 +3,7 @@ from datetime import timedelta as td
 import telegram
 class FloodLimit:
     
-    def __init__(self,msgInit,banF=0.5,restrictT=32,threshold=3):
+    def __init__(self,msgInit,banF=0.5,restrictT=60,threshold=5):
         self.messageSet=[]
         self.userId=msgInit.from_user.id
         self.userName=msgInit.from_user.first_name
@@ -64,3 +64,9 @@ class FloodLimit:
             self.messageSet=[msgTop]
             return True
         return False
+        
+def ban(msg,bot):
+    if '@ban' in msg.text:
+        day=msg.text.replace('@ban')
+        day=int(day)
+        
