@@ -1041,6 +1041,7 @@ def sora(bot,update):
             return
 
     global fl
+    global stop_flood
     #flood prevent
     if stop_flood==1:
         ban=False
