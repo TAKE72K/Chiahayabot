@@ -6,7 +6,7 @@ import telegram
 listFloodLimit=[]
 class FloodLimit:
     
-    def __init__(self,msgInit,banF=1,restrictT=60,threshold=3):
+    def __init__(self,msgInit,banF=1,restrictT=60,threshold=1):
         self.messageSet=[]
         self.userId=msgInit.from_user.id
         self.userName=msgInit.from_user.first_name
@@ -45,11 +45,11 @@ class FloodLimit:
             
             deltaT=(msgTop['date']-btm['date']).total_seconds()
             print(str(msgTop['date'])+'-'+str(btm['date'])+'='+str(deltaT))
-            if len(self.messageSet)==0:
+            if len(self.messageSet)==0 or deltaT<self.threshold:
                 timeL=True
                 self.messageSet.insert(0,btm)
                 return
-            if deltaT<5 and deltaT>1:
+            if deltaT<5 and deltaT>self.threshold:
                 t=deltaT
                 timeL=True
                 self.messageSet.insert(0,btm)
