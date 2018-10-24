@@ -1037,7 +1037,6 @@ def sora(bot,update):
                 dicc=json.loads(r)
                 bot.send_message(chat_id=update.message.chat_id, text=dicc['summary'])
                 #bot.send_message(chat_id=update.message.chat_id, text=summary(test))
-            
             return
 
     global fl
@@ -1092,8 +1091,9 @@ def sora(bot,update):
 
 def unknown(bot, update):
     global fl
+    global stop_flood
     #flood prevent
-    if update.message.chat.id==-1001289458175:
+    if stop_flood=='activate':
         ban=False
         for i in fl:
             retu=i.detectMsg(update.message,bot)
