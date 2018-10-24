@@ -54,7 +54,7 @@ class FloodLimit:
                 return
         #check frequence
         floodBan=False
-        print(str(len(self.messageSet))+(t))
+        print(str(len(self.messageSet))+str(t))
         userF=len(self.messageSet)/t
         print(self.userName+str(userF))
         if userF>self.frequence:
