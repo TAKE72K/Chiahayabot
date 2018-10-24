@@ -42,6 +42,7 @@ class FloodLimit:
         #check time ligal
         while not timeL:
             btm=self.messageSet.pop(0)
+            print(str(msgTop['date'])+str(btm['date']))
             deltaT=(msgTop['date']-btm['date']).total_seconds()
             if deltaT<5:
                 t=deltaT
@@ -53,6 +54,7 @@ class FloodLimit:
                 return
         #check frequence
         floodBan=False
+        print(str(len(self.messageSet))+(t))
         userF=len(self.messageSet)/t
         print(self.userName+str(userF))
         if userF>self.frequence:
