@@ -71,16 +71,18 @@ class FloodLimit:
             return True
         return False
 def floodDec(funct):
-    global listFloodLimit
-    ban=False
-    for i in listFloodLimit:
-        retu=i.detectMsg(update.message,bot)
-        if retu:
-            ban=True
-    if not ban:
-        a=FloodLimit(update.message)
-        listFloodLimit.append(a)
-    return funct
+    @wraps(funct)
+    def wrapped(bot, update, *args, **kwargs):
+        global listFloodLimit
+        ban=False
+        for i in listFloodLimit:
+            retu=i.detectMsg(update.message,bot)
+            if retu:
+                ban=True
+        if not ban:
+            a=FloodLimit(update.message)
+            listFloodLimit.append(a)
+        return funct
 def ban(msg,bot):
     if '@ban' in msg.text:
         day=msg.text.replace('@ban')
