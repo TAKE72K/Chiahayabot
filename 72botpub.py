@@ -5,6 +5,7 @@ from random import randrange
 import os
 import sys
 from flood import FloodLimit
+from flood import listFloodLimit as fl
 from flood import floodDec as fd
 from telegram.utils.request import Request
 import telegram.bot
@@ -936,7 +937,7 @@ def update_lastm(bot,job):
         else:
             worksheet.update_cell(cell.row,cell.col+1,i[1])
 
-fl=[]            
+global fl            
             
 def sora(bot,update):
     y=None
