@@ -16,6 +16,7 @@ class FloodLimit:
         msgId=msgInit.message_id
         msgReco={'date':date,
                 'msgId':msgId}
+        print(msgReco)
         self.messageSet.append(msgReco)
     def detectMsg(self,msg,bot):
         if msg.from_user.id != self.userId:
@@ -27,6 +28,7 @@ class FloodLimit:
         msgId=msg.message_id
         msgReco={'date':date,
                 'msgId':msgId}
+        print(msgReco)
         self.messageSet.append(msgReco)
         
         ban=self.floodCheck(msgReco,bot)
