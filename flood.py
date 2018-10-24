@@ -43,7 +43,7 @@ class FloodLimit:
         while not timeL:
             btm=self.messageSet.pop(0)
             deltaT=(msgTop['date']-btm['date']).total_seconds()
-            if deltaT<60 and deltaT>=self.threshold:
+            if deltaT<5 and deltaT>=self.threshold:
                 t=deltaT
                 timeL=True
                 self.messageSet.insert(0,btm)
