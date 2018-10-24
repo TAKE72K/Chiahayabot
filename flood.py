@@ -42,8 +42,9 @@ class FloodLimit:
         #check time ligal
         while not timeL:
             btm=self.messageSet.pop(0)
-            print(str(msgTop['date'])+str(btm['date']))
+            
             deltaT=(msgTop['date']-btm['date']).total_seconds()
+            print(str(msgTop['date'])+'-'+str(btm['date'])+'='+str(deltaT))
             if deltaT<5:
                 t=deltaT
                 timeL=True
