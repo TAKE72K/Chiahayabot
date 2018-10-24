@@ -45,14 +45,15 @@ class FloodLimit:
             
             deltaT=(msgTop['date']-btm['date']).total_seconds()
             print(str(msgTop['date'])+'-'+str(btm['date'])+'='+str(deltaT))
-            if deltaT<5:
-                t=deltaT
-                timeL=True
-                self.messageSet.insert(0,btm)
             if len(self.messageSet)==0:
                 timeL=True
                 self.messageSet.insert(0,btm)
                 return
+            if deltaT<5:
+                t=deltaT
+                timeL=True
+                self.messageSet.insert(0,btm)
+
         #check frequence
         floodBan=False
         print(str(len(self.messageSet))+str(t))
