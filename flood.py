@@ -1,6 +1,9 @@
 from datetime import datetime as dt
 from datetime import timedelta as td
+from functools import wraps
 import telegram
+
+listFloodLimit=[]
 class FloodLimit:
     
     def __init__(self,msgInit,banF=1,restrictT=60,threshold=3):
@@ -67,7 +70,17 @@ class FloodLimit:
             self.messageSet=[msgTop]
             return True
         return False
-        
+def floodDec(funct):
+    global listFloodLimit
+    ban=False
+    for i in listFloodLimit:
+        retu=i.detectMsg(update.message,bot)
+        if retu:
+            ban=True
+    if not ban:
+        a=FloodLimit(update.message)
+        listFloodLimit.append(a)
+    return funct
 def ban(msg,bot):
     if '@ban' in msg.text:
         day=msg.text.replace('@ban')

@@ -5,6 +5,7 @@ from random import randrange
 import os
 import sys
 from flood import FloodLimit
+from flood import floodDec as fd
 from telegram.utils.request import Request
 import telegram.bot
 from telegram.ext import messagequeue as mq
@@ -670,7 +671,7 @@ def caps(bot, update, args):
     bot.send_chat_action(chat_id=update.message.chat_id, action=telegram.ChatAction.TYPING)
     text_caps = ' '.join(args).upper()
     bot.send_message(chat_id=update.message.chat_id, text=text_caps)
-    
+@fd    
 def urope(bot,update):
     result=gasya()
     text_1='<pre>'+result['flavorText']+'</pre>\n\n'
