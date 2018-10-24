@@ -6,7 +6,7 @@ import telegram
 listFloodLimit=[]
 class FloodLimit:
     
-    def __init__(self,msgInit,banF=0.75,restrictT=60,threshold=3):
+    def __init__(self,msgInit,banF=1,restrictT=60,threshold=3):
         self.messageSet=[]
         self.userId=msgInit.from_user.id
         self.userName=msgInit.from_user.first_name
@@ -17,7 +17,7 @@ class FloodLimit:
         
         date=msgInit.date
         msgId=msgInit.message_id
-        msgReco={'date':date,
+        msgReco={'date':dt.now(),
                 'msgId':msgId}
         print('cre'+self.userName+str(msgReco))
         self.messageSet.append(msgReco)
@@ -29,7 +29,7 @@ class FloodLimit:
         
         date=msg.date
         msgId=msg.message_id
-        msgReco={'date':date,
+        msgReco={'date':dt.now(),
                 'msgId':msgId}
         print('det'+self.userName+str(msgReco))
         self.messageSet.append(msgReco)
@@ -53,7 +53,6 @@ class FloodLimit:
                 return
         #check frequence
         floodBan=False
-        t=t+1
         userF=len(self.messageSet)/t
         print(self.userName+str(userF))
         if userF>self.frequence:
