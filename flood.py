@@ -83,6 +83,7 @@ def floodDec(funct):
             a=FloodLimit(update.message)
             listFloodLimit.append(a)
         return funct(bot, update, *args, **kwargs)
+    return wrapped
 def ban(msg,bot):
     if '@ban' in msg.text:
         day=msg.text.replace('@ban')
