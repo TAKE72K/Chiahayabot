@@ -49,7 +49,7 @@ class FloodLimit:
                 timeL=True
                 self.messageSet.insert(0,btm)
                 return
-            if deltaT<5:
+            if deltaT<5 and deltaT>1:
                 t=deltaT
                 timeL=True
                 self.messageSet.insert(0,btm)
