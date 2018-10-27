@@ -491,6 +491,8 @@ def bomb(bot,update,args):
 
 def hatsugen(bot,update,args):
     hatsu="""
+{}
+    
 ／￣￣￣＼　 
 |　ー　ー  |　 ／￣￣￣￣￣￣￣￣￣￣＼
 |　 ◉　◉ |　 | {:　<12}|
@@ -502,7 +504,7 @@ def hatsugen(bot,update,args):
     """
     if not args:
         kotoba=['かわかわ','わわわ']
-        text=hatsu.format(kotoba[0],kotoba[1])
+        text=hatsu.format(update.message.from_user.first_name,kotoba[0],kotoba[1])
     else:
         
         kotoba=fullen(''.join(args))
@@ -516,7 +518,7 @@ def hatsugen(bot,update,args):
                 kotoba[1]=kotoba[1][:12]
         else:
             kotoba=[kotoba[:12],kotoba[12:24]]
-        text=hatsu.format(kotoba[0],kotoba[1])        
+        text=hatsu.format(update.message.from_user.first_name,kotoba[0],kotoba[1])        
     bot.send_message(chat_id=update.message.chat_id,text=text)        
             
         
