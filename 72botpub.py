@@ -515,7 +515,7 @@ def hatsugen(bot,update,args):
                 kotoba[0]=kotoba[1][12:]
                 kotoba[1]=kotoba[1][:12]
         else:
-            kotoba=[kotoba[:12],p[12:24]]
+            kotoba=[kotoba[:12],kotoba[12:24]]
         text=hatsu.format(kotoba[0],kotoba[1])        
     bot.send_message(chat_id=update.message.chat_id,text=text)        
             
