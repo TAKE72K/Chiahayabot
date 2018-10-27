@@ -489,6 +489,39 @@ def bomb(bot,update,args):
     bot.send_chat_action(chat_id=update.message.chat_id, action=telegram.ChatAction.TYPING)
     bot.send_message(chat_id=update.message.chat_id,text=text)
 
+def hatsugen(bot,update,args):
+    hatsu="""
+／￣￣￣＼　 
+|　ー　ー  |　 ／￣￣￣￣￣￣￣￣￣￣＼
+|　 ◉　◉ |　 | {:　<12d}|
+\　　 ▱　/　∠ {:　<12d}|
+  ＼　　 イ　　＼＿＿＿＿＿＿＿＿＿＿／
+  ／　　　＼
+/　|　　　 \ \　支離滅裂な
+|　|　　　  | |　思考・発言
+    """
+    if not args:
+        kotoba=['かわかわ','わわわ']
+        text=hatsu.format(kotoba[0],kotoba[1])
+    else:
+        
+        kotoba=fullen(''.join(args))
+        if '，' in kotoba:
+            kotoba=kotoba[:25].split('，')
+            if len(kotoba[0])>12:
+                kotoba[1]=kotoba[0][12:]
+                kotoba[0]=kotoba[0][:12]
+            if len(kotoba[1])>12:
+                kotoba[0]=kotoba[1][12:]
+                kotoba[1]=kotoba[1][:12]
+        else:
+            kotoba=[kotoba[:12],p[12:24]]
+        text=hatsu.format(kotoba[0],kotoba[1])        
+    bot.send_message(chat_id=update.message.chat_id,text=text)        
+            
+        
+        
+    
 def splen(seq, length):
     return [seq[i:i+length] for i in range(0, len(seq), length)]
 def grave(bot,update,pname=None):
@@ -1350,6 +1383,7 @@ def main():
     dispatcher.add_handler(CommandHandler('grave',grave))
     dispatcher.add_handler(CommandHandler('time',tis))
     dispatcher.add_handler(CommandHandler('kenka',kenka))
+    dispatcher.add_handler(CommandHandler('kawa',hatsugen))
     dispatcher.add_handler(CommandHandler('about',about))
     dispatcher.add_handler(CommandHandler('state',state))
     dispatcher.add_handler(CommandHandler('quote',quote))
