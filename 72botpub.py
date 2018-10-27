@@ -1383,7 +1383,7 @@ def main():
     dispatcher.add_handler(CommandHandler('grave',grave))
     dispatcher.add_handler(CommandHandler('time',tis))
     dispatcher.add_handler(CommandHandler('kenka',kenka))
-    dispatcher.add_handler(CommandHandler('kawa',hatsugen))
+    dispatcher.add_handler(CommandHandler('kawa',hatsugen,pass_args=True))
     dispatcher.add_handler(CommandHandler('about',about))
     dispatcher.add_handler(CommandHandler('state',state))
     dispatcher.add_handler(CommandHandler('quote',quote))
