@@ -1099,7 +1099,8 @@ def sora(bot,update):
         bot.send_message(chat_id=update.message.chat_id,text="我愛そらそら")
     
     elif test.find("72")!=-1:
-        bot.send_sticker(chat_id=update.message.chat_id, sticker="CAADBQAD5gQAAsZRxhVjgK6PcwABUaUC")
+        if update.message.chat_id==-1001232423456:
+            bot.send_sticker(chat_id=update.message.chat_id, sticker="CAADBQAD5gQAAsZRxhVjgK6PcwABUaUC")
         #bot.send_message(chat_id=update.message.chat_id, text="媽的，72是有錯一樣！一直7272不會煩嗎？")
         #bot.leave_chat(chat_id=update.message.chat_id)
         #bot.send_message(chat_id=update.message.chat_id, text="939393939393939393!!!!!!!!!!")
