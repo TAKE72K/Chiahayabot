@@ -270,8 +270,9 @@ job_m=daily_remind.run_daily(callback11,t)
 #unsolve:TypeError: can't compare offset-naive and offset-aware times
 
 def prophoto(bot, update):
-    prophoto=bot.get_user_profile_photos(update.message.from_user.id)
-    bot.send_photo(chat_id=update.message.chat_id,photo=prophoto)
+    prophotos=bot.get_user_profile_photos(update.message.from_user.id)["photo"]
+    for i in prophotos:
+        bot.send_photo(chat_id=update.message.chat_id,photo=i)
     
 def start(bot, update,args):
     payload=' '.join(args)
