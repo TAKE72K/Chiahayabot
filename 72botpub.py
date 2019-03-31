@@ -272,7 +272,7 @@ job_m=daily_remind.run_daily(callback11,t)
 def prophoto(bot, update):
     prophotos=bot.get_user_profile_photos(update.message.from_user.id)["photos"]
     for i in prophotos:
-        bot.send_photo(chat_id=update.message.chat_id,photo=i["file_id"])
+        bot.send_photo(chat_id=update.message.chat_id,photo=i[-1]["file_id"])
     
 def start(bot, update,args):
     payload=' '.join(args)
