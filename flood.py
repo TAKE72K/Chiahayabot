@@ -4,6 +4,7 @@ from functools import wraps
 import telegram
 
 listFloodLimit=[]
+
 class FloodLimit:
     
     def __init__(self,msgInit,banF=1,restrictT=31,threshold=3):
@@ -69,7 +70,7 @@ class FloodLimit:
             until_date=dt.now()+td(0,self.restrictT,0),
             can_send_messages=False, can_send_media_messages=False,
             can_send_other_messages=False)
-            bot.send_message(chat_id=self.chatId, text=self.userName+'閉嘴\n秒速'+"{0:.2f}".format(userF)+'則訊息，很快嘛ㄏㄏ')
+            bot.send_message(chat_id=self.chatId, text=self.userName+'閉嘴\n秒速'+"{0:.2f}".format(userF)+'則訊息，很快嘛ㄏㄏ，人造ファイヤファイボワイパー、タイガータイガータタタタタイガー、チャペアペカラキナ、チャペアペカラキナ、ミョーホントゥスケ   \nワイパー、ファイヤーファイヤー虎虎カラキナ、チャペアペファーマー海女海女ジャスパー、虎タイガー、虎タイガー、人造繊維、イエッタイガー')
             for i in self.messageSet:
                 bot.delete_message(chat_id=self.chatId, message_id=i["msgId"])
             self.messageSet=[msgTop]
