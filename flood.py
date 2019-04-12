@@ -70,7 +70,8 @@ class FloodLimit:
             can_send_messages=False, can_send_media_messages=False,
             can_send_other_messages=False)
             bot.send_message(chat_id=self.chatId, text=self.userName+'閉嘴\n秒速'+"{0:.2f}".format(userF)+'則訊息，很快嘛ㄏㄏ')
-
+            for i in self.messageSet:
+                bot.delete_message(chat_id=self.chatId, message_id=i["msgId"])
             self.messageSet=[msgTop]
             return True
         return False
