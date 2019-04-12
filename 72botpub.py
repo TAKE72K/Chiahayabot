@@ -1121,9 +1121,9 @@ def sora(bot,update):
             for u in new_chat_members:
                 text='野生的'+u.first_name+'出現了'
                 bot.send_message(chat_id=update.message.chat_id,text=text)
-        if update.message.left_chat_member!=None:
+        '''if update.message.left_chat_member!=None:
             text=update.message.left_chat_member.first_name+'，6666666666！'
-            bot.send_message(chat_id=update.message.chat_id,text=text)
+            bot.send_message(chat_id=update.message.chat_id,text=text)'''
         '''if update.message.sticker!=None and update.message.chat.id==-313454366:
             bot.send_message(chat_id=-313454366,text=update.message.sticker.file_id)'''
 
