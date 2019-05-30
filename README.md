@@ -21,12 +21,6 @@ This bot allow group members to record and classify picture by idol's name which
 Just reply hashtag**idol's name** and it'll be recorded.
 > For example `re:"pic" #chihaya`
 
-# Quote trend
-## Main group
-<img src="https://drive.google.com/uc?export=view&id=1DIwxAE12XpiG6f9XWVugxX8IOZDXDLMZ" alt="Main group" width="768"  >
-
-## Game group
-<img src="https://drive.google.com/uc?export=view&id=1dUZ4fHFoxYE5zMUa5Zro-HC3DXujoXj7" alt="Game group" width="768"  >
 
 # Contributing
 Just make PR , it's [Welcome!!](https://www.project-imas.com/wiki/Welcome!!)
